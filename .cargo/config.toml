@@ -1,0 +1,7 @@
+# Runtime-ul C inclus în .exe: pe Windows 7 din laboratoare de obicei lipsește
+# Visual C++ Redistributable.
+[target.'cfg(target_os = "windows")']
+rustflags = ["-C", "target-feature=+crt-static"]
+
+[target.i686-win7-windows-gnu]
+linker = "i686-w64-mingw32-gcc"
