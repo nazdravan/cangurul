@@ -1,0 +1,41 @@
+// Misca cangurul in jos
+PROCEDURA D
+ROTIRE
+SALT
+ROTIRE
+SALT
+ROTIRE
+ROTIRE
+SFIRSITUL PROCEDURII
+
+// Misca cangurul la 
+// sfirsitul patratului
+PROCEDURA N
+SALT
+SFIRSITUL PROCEDURII
+
+// Procedura deseneaza
+// un patrat
+PROCEDURA P
+repeta 4 ori
+PAS
+ROTIRE
+sfirsitul repetarii
+SFIRSITUL PROCEDURII
+
+[
+// Deseneaza 10 patrate
+// in jos
+REPETA 10 ORI
+executa p
+executa n
+executa d
+SFIRSITUL REPETARII
+
+// deseneaza 7 patrate
+// spre dreapta
+REPETA 7 ORI
+executa p
+executa n
+SFIRSITUL REPETARII
+]

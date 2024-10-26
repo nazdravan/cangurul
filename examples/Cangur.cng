@@ -1,0 +1,257 @@
+procedura Litera_R
+pas
+pas
+pas
+rotire
+pas
+pas
+rotire
+pas
+pas
+pas
+rotire
+pas
+pas
+rotire
+rotire
+salt
+salt
+pas
+pas
+rotire
+rotire
+pas
+pas
+rotire
+pas
+pas
+rotire
+pas
+rotire
+rotire
+rotire
+pas
+rotire
+pas
+rotire
+rotire
+salt
+salt
+salt
+salt
+rotire
+salt
+sfirsitul procedurii
+
+procedura Litera_G
+pas
+pas
+pas
+rotire
+rotire
+salt
+salt
+salt
+rotire
+rotire
+rotire
+pas
+pas
+pas
+pas
+rotire
+rotire
+rotire
+pas
+pas
+pas
+rotire
+rotire
+rotire
+pas
+pas
+rotire
+rotire
+rotire
+pas
+pas
+rotire
+salt
+salt
+rotire
+salt
+salt
+salt
+sfirsitul procedurii
+
+procedura Litera_U
+rotire
+pas
+pas
+pas
+pas
+rotire
+rotire
+rotire
+pas
+pas
+pas
+rotire
+rotire
+rotire
+pas
+pas
+pas
+pas
+rotire
+salt
+sfirsitul procedurii
+
+procedura Litera_C
+pas
+pas
+pas
+rotire
+rotire
+salt
+salt
+salt
+rotire
+rotire
+rotire
+pas
+pas
+pas
+pas
+rotire
+rotire
+rotire
+pas
+pas
+pas
+rotire
+rotire
+rotire
+salt
+salt
+salt
+salt
+rotire
+salt
+sfirsitul procedurii
+
+procedura Litera_A
+pas
+pas
+pas
+rotire
+pas
+pas
+pas
+pas
+rotire
+salt
+salt
+salt
+rotire
+pas
+pas
+pas
+pas
+rotire
+rotire
+salt
+salt
+rotire
+rotire
+rotire
+pas
+pas
+pas
+rotire
+rotire
+rotire
+salt
+salt
+rotire
+salt
+sfirsitul procedurii
+
+procedura Litera_N
+Rotire
+Pas
+Pas
+Pas
+Pas
+Rotire
+Rotire
+Salt
+Salt
+Salt
+Rotire
+Pas
+Rotire
+Pas
+Rotire
+Rotire
+Rotire
+Pas
+Rotire
+Pas
+Rotire
+Rotire
+Rotire
+Pas
+Rotire
+Pas
+Rotire
+Rotire
+Pas
+Pas
+Pas
+Pas
+Rotire
+Salt
+sfirsitul procedurii
+
+procedura Rind_Nou
+rotire
+Salt
+Salt
+Salt
+Salt
+Salt
+Rotire
+Cit nu e_margine
+salt
+sfirsitul ciclului
+Rotire
+Rotire
+Sfirsitul procedurii
+
+[
+rotire
+salt
+salt
+salt
+salt
+salt
+rotire
+rotire
+rotire
+Salt
+Executa Litera_C
+Executa Litera_A
+Executa Litera_N
+Executa Rind_Nou
+Salt
+Salt
+Salt
+Salt
+Salt
+Executa Litera_G
+Executa Litera_U
+Executa Litera_R
+Executa Rind_Nou
+
+]
