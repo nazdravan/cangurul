@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+<style>
+  .o { stroke: #5A2C10; stroke-width: 2.4; stroke-linejoin: round; stroke-linecap: round; }
+  .fur { fill: #E8863A; }
+  .dark { fill: #C9672A; }
+  .belly { fill: #FBE3BF; }
+  .ear { fill: #F4A9A0; }
+  .eye { fill: #2B1608; }
+  .nose { fill: #3A1C0A; }
+  .hi { fill: #fff; }
+</style>
+  <path class="o fur" d="M32 66 C32 50 40 42 50 42 C60 42 68 50 68 66 C68 78 61 85 50 85 C39 85 32 78 32 66 Z"/>
+  <path class="o fur" d="M34 89 C30 89 30 84 34 82 C38 80 44 81 46 84 C47 88 44 90 40 90 Z"/>
+  <path class="o fur" d="M66 89 C70 89 70 84 66 82 C62 80 56 81 54 84 C53 88 56 90 60 90 Z"/>
+  <path class="o dark" d="M44 72 C42 80 46 88 52 95 C57 89 58 80 56 72 C53 68 47 68 44 72 Z"/>
+  <ellipse class="o dark" cx="39" cy="17" rx="5" ry="12" transform="rotate(-16 39 17)"/>
+  <ellipse class="o dark" cx="61" cy="17" rx="5" ry="12" transform="rotate(16 61 17)"/>
+  <path class="o fur" d="M36 33 C36 24 42 20 50 20 C58 20 64 24 64 33 C64 41 58 46 50 46 C42 46 36 41 36 33 Z"/>
+</svg>

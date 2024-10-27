@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+<style>
+  .o { stroke: #5A2C10; stroke-width: 2.4; stroke-linejoin: round; stroke-linecap: round; }
+  .fur { fill: #E8863A; }
+  .dark { fill: #C9672A; }
+  .belly { fill: #FBE3BF; }
+  .ear { fill: #F4A9A0; }
+  .eye { fill: #2B1608; }
+  .nose { fill: #3A1C0A; }
+  .hi { fill: #fff; }
+</style>
+  <path class="o dark" d="M40 70 C30 76 17 83 5 90 C18 90 33 87 47 80 Z"/>
+  <path class="o fur" d="M38 74 C34 60 40 44 52 40 C62 37 68 46 68 58 C68 70 62 80 52 82 C45 83 40 80 38 74 Z"/>
+  <path class="o belly" d="M55 46 C64 48 67 59 64 69 C62 76 57 79 52 79 C55 68 56 57 55 46 Z"/>
+  <path class="o fur" d="M36 77 C36 68 44 64 52 66 C58 68 60 75 57 81 L74 83 C79 84 79 90 74 90 L45 90 C39 90 36 84 36 77 Z"/>
+  <path class="o" style="fill:none;stroke-width:7.5" d="M58 50 C64 52 69 56 73 61"/>
+  <path d="M58 50 C64 52 69 56 73 61" fill="none" stroke="#E8863A" stroke-width="3.2" stroke-linecap="round"/>
+  <ellipse class="o fur" cx="53" cy="18" rx="4.6" ry="11" transform="rotate(-18 53 18)"/>
+  <ellipse class="o fur" cx="60" cy="16" rx="5" ry="12" transform="rotate(8 60 16)"/>
+  <ellipse class="ear" cx="60.4" cy="17" rx="2.2" ry="7.5" transform="rotate(8 60 16)"/>
+  <path class="o fur" d="M51 33 C51 25 57 21 64 22 C70 23 74 27 79 29 C85 31 87 35 85 38 C83 41 77 41 71 41 C66 42 60 43 56 41 C52 39 51 36 51 33 Z"/>
+  <ellipse class="nose" cx="85" cy="33.5" rx="2.6" ry="2.1"/>
+  <circle class="eye" cx="66" cy="29" r="3"/>
+  <circle class="hi" cx="67" cy="28" r="1.05"/>
+  <path d="M74 38.5 C77 39.5 80 39.2 82 38" fill="none" stroke="#5A2C10" stroke-width="1.4" stroke-linecap="round"/>
+</svg>
