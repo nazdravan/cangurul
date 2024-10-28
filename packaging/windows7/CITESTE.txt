@@ -1,0 +1,20 @@
+CANGURUL 3 — versiunea pentru Windows 7 / 8 / 10 / 11 (32 și 64 de biți)
+
+Pornire: dublu-click pe Cangurul.exe. Nu are nevoie de instalare.
+Dosarul se poate copia oriunde (inclusiv pe stick), dar fișierele trebuie
+păstrate împreună:
+
+  Cangurul.exe   programul
+  combase.dll    necesar doar pe Windows 7 (pe sistemele noi este ignorat)
+  soft-gl\       OpenGL software, folosit automat dacă placa video nu are
+                 driver potrivit (mai lent, dar funcționează)
+  Exemple\       programele-exemplu din versiunea originală
+
+Dacă programul pornește, dar animația este foarte lentă, probabil se folosește
+soft-gl: instalați driverul plăcii video.
+
+Pentru a forța modul software (pentru verificare):
+  Cangurul.exe --software-gl
+
+Pe Windows 7 nu funcționează cititoarele de ecran (Narrator); celelalte
+funcții sunt identice cu versiunea pentru Windows 10/11.

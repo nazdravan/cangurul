@@ -1,0 +1,7 @@
+; Windows 7 nu are combase.dll (a apărut în Windows 8). Unele biblioteci Rust
+; importă de acolo funcții care pe Windows 7 se află în ole32.dll, așa că acest
+; DLL doar le redirecționează. Pe Windows 8+ sistemul folosește combase.dll-ul
+; propriu (KnownDLL), iar acesta este ignorat.
+LIBRARY combase.dll
+EXPORTS
+    CoTaskMemFree = ole32.CoTaskMemFree
