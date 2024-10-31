@@ -1,0 +1,5 @@
+Cangurul 3 este software liber: îl puteți redistribui și modifica în termenii
+licenței GNU General Public License, versiunea 3 sau, la alegere, orice versiune
+ulterioară, publicată de Free Software Foundation. Programul este distribuit
+FĂRĂ NICIO GARANȚIE. Textul complet al licenței este în fișierul LICENSE.txt.
+
