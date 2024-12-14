@@ -21,7 +21,22 @@ Fișierele `.cng` din versiunea veche se deschid și rulează fără modificări
 - programul și setările se păstrează între porniri;
 - deschiderea fișierelor prin drag & drop sau ca argument în linia de comandă.
 
-## Pornire
+## Pornire rapidă
+
+Arhivele gata construite sunt pe pagina [Releases](../../releases):
+
+```
+cangurul-<versiune>-linux-x86_64.tar.gz           # Linux
+cangurul-<versiune>-windows-x64-portable.zip      # Windows 10/11, 64 de biți
+cangurul-<versiune>-windows-x86-portable.zip      # Windows 10/11, 32 de biți
+cangurul-<versiune>-windows7-x86-portable.zip     # Windows 7, 8, 10, 11 (32 și 64 de biți)
+SHA256SUMS.txt                                    # sumele de control
+```
+
+Nu e nevoie de instalare: se dezarhivează și se pornește `Cangurul.exe`
+(pe Linux, `cangurul`).
+
+### Din cod sursă
 
 Trebuie instalat [Rust](https://rustup.rs). Apoi, în acest dosar:
 
@@ -32,10 +47,10 @@ cargo run --release -- program.cng  # deschide direct un fișier
 
 Executabilul rezultat este în `target/release/` (`cangurul.exe` pe Windows) și
 poate fi copiat pe alte calculatoare: nu are nevoie de alte fișiere. Pe Windows
-iconița cangurului este inclusă automat în `.exe`.
+iconița cangurului este inclusă automat în `.exe`. Pentru afișare se folosește
+OpenGL 2.0, ca să meargă și pe calculatoarele mai vechi din laboratoare.
 
-Pentru afișare se folosește OpenGL 2.0, ca să meargă și pe calculatoarele mai
-vechi din laboratoare.
+---
 
 ## Windows 7 (32 și 64 de biți)
 
