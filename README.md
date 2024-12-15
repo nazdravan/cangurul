@@ -1,10 +1,30 @@
-<p align="center"><img src="assets/logo.png" width="128" alt=""></p>
+<div align="center">
 
-# Cangurul 3
+<p align="center">
+  <img src="assets/logo.png" alt="Cangurul" width="130">
+</p>
 
-Mediu de învățare a algoritmilor pentru elevi, scris în **Rust**.
+<img src="docs/assets/cangurul-banner.png" alt="Cangurul" />
 
+
+**Mediu de învățare a algoritmilor pentru elevi — programul scris cu comenzi simple îl face pe cangur să sară pe câmp și să deseneze linii.**
+
+[![Licență](https://img.shields.io/badge/licen%C8%9B%C4%83-GPL--3.0-3b82f6?style=flat-square)](LICENSE)
+[![Rust](https://img.shields.io/badge/Rust-2024-B7410E?style=flat-square&logo=rust&logoColor=white)](Cargo.toml)
+[![egui](https://img.shields.io/badge/UI-egui%20%2F%20eframe-EB8137?style=flat-square)](https://github.com/emilk/egui)
+[![Windows](https://img.shields.io/badge/Windows-7%20%7C%2010%20%7C%2011-0078D6?style=flat-square&logo=windows&logoColor=white)](#windows-7-32-și-64-de-biți)
+[![Linux](https://img.shields.io/badge/Linux-x86__64-FCC624?style=flat-square&logo=linux&logoColor=black)](packaging/linux/)
+
+[**Pornire rapidă**](#pornire-rapidă) · [Limbajul](#limbajul) · [Analizorul de cod](#analizorul-de-cod) · [Releases](../../releases) · [Issues](../../issues)
+
+</div>
+
+<br />
+
+Rescris în **Rust** după programul „Cangurul” (versiunea 2).
 Fișierele `.cng` din versiunea veche se deschid și rulează fără modificări.
+
+<img src="docs/assets/screenshot.png" alt="Cangurul: un exemplu original după execuție" />
 
 ## Ce e nou față de versiunea originală
 
