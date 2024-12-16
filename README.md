@@ -26,21 +26,6 @@ Fișierele `.cng` din versiunea veche se deschid și rulează fără modificări
 
 <img src="docs/assets/screenshot.png" alt="Cangurul: un exemplu original după execuție" />
 
-## Ce e nou față de versiunea originală
-
-- interfață modernă, temă luminoasă și întunecată;
-- editor cu numerotarea rândurilor și evidențierea sintaxei;
-- animație fluidă și rândul care se execută evidențiat în editor;
-- execuție pas cu pas, pauză, viteză reglabilă sau execuție instantă;
-- **analizor de cod**: programul e verificat în timp ce scrii, înainte de rulare
-  (vezi mai jos);
-- butoane care inserează comenzile (PAS, SALT, REPETĂ, CÎT, DACĂ…);
-- interfața în română, rusă și engleză; cuvintele-cheie pot fi scrise
-  în oricare dintre aceste limbi, cu sau fără diacritice;
-- dimensiunea câmpului reglabilă, salturile pot fi afișate punctat;
-- programul și setările se păstrează între porniri;
-- deschiderea fișierelor prin drag & drop sau ca argument în linia de comandă.
-
 ## Pornire rapidă
 
 Arhivele gata construite sunt pe pagina [Releases](../../releases):
@@ -72,37 +57,20 @@ OpenGL 2.0, ca să meargă și pe calculatoarele mai vechi din laboratoare.
 
 ---
 
-## Windows 7 (32 și 64 de biți)
+## Ce e nou față de versiunea originală
 
-Un `.exe` construit normal cere Windows 10+ (cerință a Rust de la versiunea
-1.78). Pentru laboratoarele cu Windows 7 există o variantă separată, construită
-din Linux cu:
-
-```sh
-packaging/windows7/package.sh   # rezultatul: dist/release/cangurul-<versiune>-windows7-x86-portable.zip
-```
-
-Scriptul instalează singur Rust nightly în `.cache/` și descarcă ce îi trebuie;
-din sistem cere doar `curl`, `7z` și compilatorul MinGW pe 32 de biți
-(`mingw-w64-gcc` pe Arch, `gcc-mingw-w64-i686` pe Debian/Ubuntu). Arhiva
-(~23 MB) merge pe Windows 7, 8, 10 și 11, pe 32 și pe 64 de biți, fără
-instalare și fără actualizări suplimentare de Windows:
-
-- folosește `msvcrt.dll` (există pe orice Windows 7), nu UCRT, care pe
-  Windows 7 cere actualizarea KB2999226;
-- `combase.dll` din arhivă (3,5 KB) redirecționează o funcție pe care
-  bibliotecile Rust noi o caută acolo, dar care pe Windows 7 este în
-  `ole32.dll`; pe Windows 8+ e ignorat;
-- dosarul `soft-gl` conține Mesa (OpenGL software). Dacă placa video nu are
-  driver cu OpenGL 2.0 (driver „Standard VGA”, mașini virtuale), programul se
-  repornește singur cu Mesa. Mai lent, dar funcționează. Se poate forța cu
-  `Cangurul.exe --software-gl`;
-- în această variantă lipsește doar suportul pentru cititoare de ecran
-  (biblioteca respectivă cere Windows 8+). În cod e funcția `accessibility`,
-  activă implicit în celelalte build-uri.
-
-**Atenție:** varianta a fost verificată static (fiecare funcție importată din
-Windows există în Windows 7), dar nu a fost încă pornită pe un Windows 7 real.
+- interfață modernă, temă luminoasă și întunecată;
+- editor cu numerotarea rândurilor și evidențierea sintaxei;
+- animație fluidă și rândul care se execută evidențiat în editor;
+- execuție pas cu pas, pauză, viteză reglabilă sau execuție instantă;
+- **analizor de cod**: programul e verificat în timp ce scrii, înainte de rulare
+  (vezi mai jos);
+- butoane care inserează comenzile (PAS, SALT, REPETĂ, CÎT, DACĂ…);
+- interfața în română, rusă și engleză; cuvintele-cheie pot fi scrise
+  în oricare dintre aceste limbi, cu sau fără diacritice;
+- dimensiunea câmpului reglabilă, salturile pot fi afișate punctat;
+- programul și setările se păstrează între porniri;
+- deschiderea fișierelor prin drag & drop sau ca argument în linia de comandă.
 
 ## Limbajul
 
@@ -159,6 +127,40 @@ apelează pe ele însele fără oprire, program principal gol.
   exemplul original „Spirala” n-ar funcționa;
 - după `DACĂ` și după `ALTFEL` urmează câte o singură comandă (poate fi și
   un `REPETĂ` sau `CÎT` întreg), ca în versiunea veche.
+
+## Windows 7 (32 și 64 de biți)
+
+Un `.exe` construit normal cere Windows 10+ (cerință a Rust de la versiunea
+1.78). Pentru laboratoarele cu Windows 7 există o variantă separată, construită
+din Linux cu:
+
+```sh
+packaging/windows7/package.sh   # rezultatul: dist/release/cangurul-<versiune>-windows7-x86-portable.zip
+```
+
+Scriptul instalează singur Rust nightly în `.cache/` și descarcă ce îi trebuie;
+din sistem cere doar `curl`, `7z` și compilatorul MinGW pe 32 de biți
+(`mingw-w64-gcc` pe Arch, `gcc-mingw-w64-i686` pe Debian/Ubuntu). Arhiva
+(~23 MB) merge pe Windows 7, 8, 10 și 11, pe 32 și pe 64 de biți, fără
+instalare și fără actualizări suplimentare de Windows:
+
+- folosește `msvcrt.dll` (există pe orice Windows 7), nu UCRT, care pe
+  Windows 7 cere actualizarea KB2999226;
+- `combase.dll` din arhivă (3,5 KB) redirecționează o funcție pe care
+  bibliotecile Rust noi o caută acolo, dar care pe Windows 7 este în
+  `ole32.dll`; pe Windows 8+ e ignorat;
+- dosarul `soft-gl` conține Mesa (OpenGL software). Dacă placa video nu are
+  driver cu OpenGL 2.0 (driver „Standard VGA”, mașini virtuale), programul se
+  repornește singur cu Mesa. Mai lent, dar funcționează. Se poate forța cu
+  `Cangurul.exe --software-gl`;
+- în această variantă lipsește doar suportul pentru cititoare de ecran
+  (biblioteca respectivă cere Windows 8+). În cod e funcția `accessibility`,
+  activă implicit în celelalte build-uri.
+
+**Atenție:** varianta a fost verificată static (fiecare funcție importată din
+Windows există în Windows 7), dar nu a fost încă pornită pe un Windows 7 real.
+
+---
 
 ## Structura codului
 
