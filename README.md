@@ -59,18 +59,17 @@ OpenGL 2.0, ca să meargă și pe calculatoarele mai vechi din laboratoare.
 
 ## Ce e nou față de versiunea originală
 
-- interfață modernă, temă luminoasă și întunecată;
-- editor cu numerotarea rândurilor și evidențierea sintaxei;
-- animație fluidă și rândul care se execută evidențiat în editor;
-- execuție pas cu pas, pauză, viteză reglabilă sau execuție instantă;
-- **analizor de cod**: programul e verificat în timp ce scrii, înainte de rulare
-  (vezi mai jos);
-- butoane care inserează comenzile (PAS, SALT, REPETĂ, CÎT, DACĂ…);
-- interfața în română, rusă și engleză; cuvintele-cheie pot fi scrise
-  în oricare dintre aceste limbi, cu sau fără diacritice;
-- dimensiunea câmpului reglabilă, salturile pot fi afișate punctat;
-- programul și setările se păstrează între porniri;
-- deschiderea fișierelor prin drag & drop sau ca argument în linia de comandă.
+| | |
+|---|---|
+| **Interfață** | temă luminoasă și întunecată; interfața în română, rusă și engleză |
+| **Editor** | numerotarea rândurilor, evidențierea sintaxei, butoane care inserează comenzile (PAS, SALT, REPETĂ, CÎT, DACĂ…) |
+| **Execuție** | animație fluidă, rândul curent evidențiat în editor; pas cu pas, pauză, viteză reglabilă sau instant |
+| **Analizor** | programul e verificat în timp ce scrii, cu sugestii de corectură ([detalii](#analizorul-de-cod)) |
+| **Câmpul** | dimensiune reglabilă; salturile pot fi afișate punctat |
+| **Limbi** | cuvintele-cheie pot fi scrise în română, rusă sau engleză, cu sau fără diacritice |
+| **Fișiere** | programul și setările se păstrează între porniri; deschidere prin drag & drop sau din linia de comandă |
+
+---
 
 ## Limbajul
 
