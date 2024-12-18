@@ -73,26 +73,48 @@ OpenGL 2.0, ca să meargă și pe calculatoarele mai vechi din laboratoare.
 
 ## Limbajul
 
-| Comandă                                     | Ce face                                                      |
-|---------------------------------------------|--------------------------------------------------------------|
-| `PAS`                                       | un pas înainte, lăsând urmă                                  |
-| `SALT`                                      | un pas înainte, fără urmă                                    |
-| `ROTIRE`                                    | rotire cu 90° în sensul acelor ceasornicului                 |
-| `REPETĂ N ORI … SFÎRȘITUL REPETĂRII`        | repetă de N ori                                              |
-| `CÎT [NU] condiție … SFÎRȘITUL CICLULUI`    | repetă cât timp condiția e adevărată                         |
-| `DACĂ [NU] condiție comandă1 ALTFEL comandă2` | ramificare (ALTFEL poate lipsi)                            |
-| `PROCEDURA Nume … SFÎRȘITUL PROCEDURII`     | definește o procedură (înainte de programul principal)       |
-| `EXECUTĂ Nume`                              | apelează procedura                                           |
-| `[ … ]`                                     | programul principal                                          |
-| `// …` și `* … *`                           | comentarii                                                   |
+| Comandă | Ce face |
+|---|---|
+| `PAS` | un pas înainte, lăsând urmă |
+| `SALT` | un pas înainte, fără urmă |
+| `ROTIRE` | rotire cu 90° în sensul acelor ceasornicului |
+| `REPETĂ N ORI … SFÎRȘITUL REPETĂRII` | repetă de N ori |
+| `CÎT [NU] condiție … SFÎRȘITUL CICLULUI` | repetă cât timp condiția e adevărată |
+| `DACĂ [NU] condiție comandă1 ALTFEL comandă2` | ramificare (`ALTFEL` poate lipsi) |
+| `PROCEDURA Nume … SFÎRȘITUL PROCEDURII` | definește o procedură (înainte de programul principal) |
+| `EXECUTĂ Nume` | apelează procedura |
+| `[ … ]` | programul principal |
+| `// …` și `* … *` | comentarii |
 
 Condiții: `E_MARGINE` (cangurul stă cu fața spre marginea câmpului) și
 `E_LINIE` (în fața lui este deja o linie sau marginea).
 
 Cangurul pornește din colțul din stânga-sus și privește spre dreapta.
 
-Taste rapide: **F5** execută / pauză, **F6** pas cu pas, **Esc** stop,
-**F7** verifică, **Ctrl+N / Ctrl+O / Ctrl+S** fișiere.
+### Cuvintele-cheie în trei limbi
+
+| Română | English | Русский |
+|---|---|---|
+| `PAS SALT ROTIRE` | `STEP JUMP ROTATE` | `ШАГ ПРЫЖОК ПОВОРОТ` |
+| `REPETĂ ORI` | `REPEAT TIMES` | `ПОВТОРИ РАЗ` |
+| `CÎT` | `WHILE` | `ПОКА` |
+| `DACĂ ATUNCI ALTFEL` | `IF THEN ELSE` | `ЕСЛИ ТОГДА ИНАЧЕ` |
+| `NU` | `NOT` | `НЕ` |
+| `PROCEDURA EXECUTĂ` | `PROCEDURE EXECUTE` | `ПРОЦЕДУРА ВЫПОЛНИТЬ` |
+| `SFÎRȘITUL REPETĂRII / CICLULUI / PROCEDURII` | `END REPEAT / CYCLE / PROCEDURE` | `КОНЕЦ ПОВТОРА / ЦИКЛА / ПРОЦЕДУРЫ` |
+| `E_MARGINE E_LINIE` | `IS_BORDER IS_LINE` | `КРАЙ ЛИНИЯ` |
+
+### Taste rapide
+
+| Tastă | Acțiune |
+|---|---|
+| **F5** | execută / pauză |
+| **F6** | pas cu pas |
+| **Esc** | stop |
+| **F7** | verifică |
+| **Ctrl+N / Ctrl+O / Ctrl+S** | nou / deschide / salvează |
+
+---
 
 ## Analizorul de cod
 
