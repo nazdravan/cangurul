@@ -118,6 +118,8 @@ Cangurul pornește din colțul din stânga-sus și privește spre dreapta.
 
 ## Analizorul de cod
 
+<img src="docs/assets/analizor.png" alt="Analizorul de cod cu erori și sugestii" />
+
 Programul este analizat la fiecare modificare (se poate opri din *Setări*;
 atunci analiza se face cu **Verifică** / F7). Analizorul nu se oprește la prima
 greșeală, ci le găsește pe toate:
@@ -130,15 +132,10 @@ greșeală, ci le găsește pe toate:
   aplicabilă cu butonul **Corectează** — și pentru nume de proceduri;
 - programul cu erori nu pornește; avertismentele nu blochează rularea.
 
-Erori detectate: cuvinte și condiții necunoscute, `REPETĂ` fără număr, blocuri
-neînchise sau închise greșit (`SFÎRȘITUL CICLULUI` în loc de `SFÎRȘITUL
-REPETĂRII`), `SFÎRȘITUL`/`ALTFEL`/`]` rătăcite, comandă lipsă după `DACĂ`,
-proceduri inexistente sau definite de două ori, proceduri scrise în interiorul
-`[ … ]`, text după programul principal, comentarii neînchise.
-
-Avertismente: proceduri nefolosite, blocuri goale, `REPETĂ 0 ORI`, cicluri
-`CÎT` care nu mută cangurul (pot rula la nesfârșit), proceduri care se
-apelează pe ele însele fără oprire, program principal gol.
+| Tip | Ce se detectează |
+|---|---|
+| **Erori** | cuvinte și condiții necunoscute; `REPETĂ` fără număr; blocuri neînchise sau închise greșit (`SFÎRȘITUL CICLULUI` în loc de `SFÎRȘITUL REPETĂRII`); `SFÎRȘITUL`/`ALTFEL`/`]` rătăcite; comandă lipsă după `DACĂ`; proceduri inexistente sau definite de două ori; proceduri scrise în interiorul `[ … ]`; text după programul principal; comentarii neînchise |
+| **Avertismente** | proceduri nefolosite; blocuri goale; `REPETĂ 0 ORI`; cicluri `CÎT` care nu mută cangurul (pot rula la nesfârșit); proceduri care se apelează pe ele însele fără oprire; program principal gol |
 
 ### Decizii luate acolo unde comportamentul vechi nu era documentat
 
@@ -148,6 +145,8 @@ apelează pe ele însele fără oprire, program principal gol.
   exemplul original „Spirala” n-ar funcționa;
 - după `DACĂ` și după `ALTFEL` urmează câte o singură comandă (poate fi și
   un `REPETĂ` sau `CÎT` întreg), ca în versiunea veche.
+
+---
 
 ## Windows 7 (32 și 64 de biți)
 
