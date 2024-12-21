@@ -184,18 +184,20 @@ Windows există în Windows 7), dar nu a fost încă pornită pe un Windows 7 re
 
 ## Structura codului
 
-| Fișier          | Conținut                                                         |
-|-----------------|------------------------------------------------------------------|
-| `src/lang.rs`   | lexer, parser tolerant la erori și compilator                    |
-| `src/check.rs`  | analiza semantică: avertismente, proceduri, sugestii de corectură |
-| `src/vm.rs`     | mașina virtuală care execută câte o acțiune pe rând              |
-| `src/world.rs`  | câmpul, cangurul, liniile                                        |
-| `src/app.rs`    | interfața grafică (egui / eframe)                                |
-| `src/i18n.rs`   | textele interfeței în română, rusă și engleză                    |
-| `src/software_gl.rs` | repornirea cu OpenGL software (Mesa) pe Windows             |
-| `packaging/`    | arhivele pentru Linux, Windows 10/11 și Windows 7 (vezi `docs/releasing.md`) |
-| `examples/`     | exemplele originale (convertite în UTF-8)                        |
-| `assets/`       | sprite-urile cangurului, logo-ul, fonturi; desenele se generează cu `assets/art/make.py` |
+| Fișier | Conținut |
+|---|---|
+| `src/lang.rs` | lexer, parser tolerant la erori și compilator |
+| `src/check.rs` | analiza semantică: avertismente, proceduri, sugestii de corectură |
+| `src/vm.rs` | mașina virtuală care execută câte o acțiune pe rând |
+| `src/world.rs` | câmpul, cangurul, liniile |
+| `src/app.rs` | interfața grafică (egui / eframe) |
+| `src/i18n.rs` | textele interfeței în română, rusă și engleză |
+| `src/software_gl.rs` | repornirea cu OpenGL software (Mesa) pe Windows |
+| `examples/` | exemplele originale (convertite în UTF-8) |
+| `assets/` | sprite-urile cangurului, logo-ul, fonturi; desenele se generează cu `assets/art/make.py`, bannerul cu `python3 assets/banner.py CANGURUL -o docs/assets/cangurul-banner.png --color "#eb8137"` |
+| `packaging/` | arhivele pentru Linux, Windows 10/11 și Windows 7 |
+
+---
 
 ## Release
 
