@@ -215,9 +215,9 @@ cargo test
 
 Testele verifică limbajul, rularea tuturor exemplelor originale și interfața:
 apasă butoanele reale fără fereastră. Cu `CANGURUL_SHOTS=<dosar> cargo test`
-se salvează și capturi de ecran.
+se salvează și capturi de ecran (cele din `docs/assets/` sunt făcute așa).
 
-## Licențe
+## Licență
 
 Cangurul 3 este software liber, distribuit sub licența
 [GNU General Public License v3](LICENSE) sau, la alegere, orice versiune
