@@ -18,7 +18,7 @@ case "${1:-}" in
             echo "„$v” nu este o versiune de forma 1.2.3 sau 1.2.3-rc.1" >&2
             exit 1
         fi
-        sed -i "/^\[package\]/,/^\[/s/^version = \".*\"/version = \"$v\"/" Cargo.toml
+        sed -i.bak "/^\[package\]/,/^\[/s/^version = \".*\"/version = \"$v\"/" Cargo.toml && rm Cargo.toml.bak
         cargo update --workspace --quiet
         echo "$VERSION -> $v"
         ;;
