@@ -3,8 +3,9 @@
 
     python3 assets/art/make.py
 
-Scrie assets/art/*.svg, assets/sprites/*.png, assets/logo.png și
-assets/cangurul.ico. Cere rsvg-convert (librsvg) și Pillow.
+Scrie assets/art/*.svg, assets/sprites/*.png, assets/logo.png,
+assets/cangurul.ico și assets/cangurul.icns (macOS). Cere rsvg-convert
+(librsvg) și Pillow.
 """
 import io
 import pathlib
@@ -186,6 +187,11 @@ def main() -> None:
     sizes = [16, 24, 32, 48, 64, 128, 256]
     big = render(HERE / "logo.svg", 256)
     big.save(ASSETS / "cangurul.ico", sizes=[(s, s) for s in sizes])
+
+    # macOS: logo-ul ocupă ~80% din pătrat (grila de iconițe Apple), restul e transparent.
+    mac = Image.new("RGBA", (1024, 1024), (0, 0, 0, 0))
+    mac.paste(render(HERE / "logo.svg", 824), (100, 100))
+    mac.save(ASSETS / "cangurul.icns", sizes=[(s, s) for s in (16, 32, 64, 128, 256, 512, 1024)])
 
 
 if __name__ == "__main__":
