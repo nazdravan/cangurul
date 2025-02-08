@@ -1,0 +1,15 @@
+[Desktop Entry]
+Type=Application
+Name=Cangurul
+GenericName=Mediu de învățare a algoritmilor
+GenericName[en]=Algorithm learning environment
+GenericName[ru]=Среда для обучения алгоритмам
+Comment=Cangurul desenează pe câmp după programul tău
+Comment[en]=The kangaroo draws on the field following your program
+Comment[ru]=Кенгуру рисует на поле по вашей программе
+Exec=cangurul %f
+Icon=cangurul
+Terminal=false
+Categories=Education;ComputerScience;
+MimeType=application/x-cangurul;
+Keywords=algoritmi;programare;algorithms;programming;
