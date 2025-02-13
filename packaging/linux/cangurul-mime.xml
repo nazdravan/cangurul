@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Tipul fișierelor .cng, ca dublu-click pe ele să deschidă Cangurul. -->
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="application/x-cangurul">
+    <comment>Cangurul program</comment>
+    <comment xml:lang="ro">Program Cangurul</comment>
+    <comment xml:lang="ru">Программа «Кенгуру»</comment>
+    <sub-class-of type="text/plain"/>
+    <glob pattern="*.cng"/>
+    <icon name="cangurul"/>
+  </mime-type>
+</mime-info>
