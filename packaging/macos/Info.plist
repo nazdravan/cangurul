@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleName</key>
+	<string>Cangurul</string>
+	<key>CFBundleDisplayName</key>
+	<string>Cangurul</string>
+	<key>CFBundleIdentifier</key>
+	<string>io.github.nazdravan.cangurul</string>
+	<key>CFBundleExecutable</key>
+	<string>cangurul</string>
+	<key>CFBundleIconFile</key>
+	<string>cangurul</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>@VERSION@</string>
+	<key>CFBundleVersion</key>
+	<string>@VERSION@</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>ro</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>ro</string>
+		<string>ru</string>
+		<string>en</string>
+	</array>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.education</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>@MIN_MACOS@</string>
+	<key>NSHighResolutionCapable</key>
+	<true/>
+	<key>NSHumanReadableCopyright</key>
+	<string>GPL-3.0-or-later</string>
+</dict>
+</plist>
