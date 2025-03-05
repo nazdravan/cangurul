@@ -112,6 +112,8 @@ jobs:
         if: inputs.version != ''
         run: packaging/version.sh set "$VERSION"
       - run: packaging/linux/package.sh
+      - run: packaging/linux/appimage.sh
+      - run: packaging/linux/deb.sh
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: release-linux-x86_64
