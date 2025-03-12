@@ -1,13 +1,14 @@
 name: Release
 
-# Push pe ramura `release` → build pentru toate platformele → draft GitHub Release
-# „Cangurul v<versiune>” (tag v<versiune>) cu SHA256SUMS.txt. Draft-ul se publică manual.
-# Pornit manual (workflow_dispatch) pe altă ramură: doar build și teste, nu publică nimic.
+# Push pe `main` → teste. Dacă versiunea din Cargo.toml nu e încă publicată →
+# build pentru toate platformele și release-ul „Cangurul v<versiune>” (tag
+# v<versiune>, cu SHA256SUMS.txt) se publică singur, după ce toate fișierele sunt urcate.
+# Pornit manual (workflow_dispatch): build și teste pe orice ramură, fără release.
 # Pașii sunt descriși în docs/releasing.md.
 
 on:
   push:
-    branches: [release]
+    branches: [main]
   workflow_dispatch:
     inputs:
       version:
@@ -35,6 +36,8 @@ jobs:
     outputs:
       version: ${{ steps.v.outputs.version }}
       prerelease: ${{ steps.v.outputs.prerelease }}
+      # true: se construiesc pachetele (versiune nepublicată sau rulare manuală).
+      build: ${{ steps.published.outputs.build }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - id: v
@@ -55,18 +58,24 @@ jobs:
             echo "prerelease=$pre"
           } >>"$GITHUB_OUTPUT"
           echo "### Cangurul v$v (\`${GITHUB_SHA::9}\`)" >>"$GITHUB_STEP_SUMMARY"
-      # Un release publicat nu se suprascrie: oprim totul înainte de build-urile lungi.
-      - name: Verifică dacă versiunea e deja publicată
-        if: github.ref == 'refs/heads/release'
+      # Un release publicat nu se suprascrie: dacă versiunea există deja, la un
+      # push obișnuit pe main se rulează doar testele.
+      - id: published
+        name: Verifică dacă versiunea e deja publicată
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
           VERSION: ${{ steps.v.outputs.version }}
+          EVENT: ${{ github.event_name }}
         run: |
-          if draft="$(gh release view "v$VERSION" --json isDraft --jq .isDraft 2>/dev/null)" && [ "$draft" != "true" ]; then
-            echo "::error::Release-ul v$VERSION este deja publicat. Mărește versiunea (packaging/version.sh set ...) înainte de push pe release."
-            exit 1
+          build=true
+          if [ "$EVENT" = push ] &&
+            draft="$(gh release view "v$VERSION" --json isDraft --jq .isDraft 2>/dev/null)" &&
+            [ "$draft" != "true" ]; then
+            build=false
+            echo "Cangurul v$VERSION e deja publicată: doar teste. Pentru un release nou: packaging/version.sh set <versiune>." >>"$GITHUB_STEP_SUMMARY"
           fi
+          echo "build=$build" >>"$GITHUB_OUTPUT"
 
   test:
     timeout-minutes: 30
@@ -92,6 +101,7 @@ jobs:
     timeout-minutes: 45
     name: Linux x86_64
     needs: version
+    if: needs.version.outputs.build == 'true'
     runs-on: ubuntu-22.04
     env:
       VERSION: ${{ needs.version.outputs.version }}
@@ -124,6 +134,7 @@ jobs:
     timeout-minutes: 60
     name: Windows 10/11 ${{ matrix.arch }}
     needs: version
+    if: needs.version.outputs.build == 'true'
     runs-on: windows-latest
     strategy:
       fail-fast: false
@@ -161,6 +172,7 @@ jobs:
     timeout-minutes: 60
     name: macOS universal
     needs: version
+    if: needs.version.outputs.build == 'true'
     runs-on: macos-latest
     env:
       VERSION: ${{ needs.version.outputs.version }}
@@ -187,6 +199,7 @@ jobs:
     timeout-minutes: 90
     name: Windows 7+ x86
     needs: version
+    if: needs.version.outputs.build == 'true'
     runs-on: ubuntu-latest
     # Același mediu în care build-ul a fost testat local: Arch cu mingw-w64-gcc.
     container: archlinux:latest
@@ -210,9 +223,11 @@ jobs:
 
   release:
     timeout-minutes: 10
-    name: Draft GitHub Release
-    # Doar de pe ramura release; rulările de test se opresc după build.
-    if: github.ref == 'refs/heads/release' && !cancelled() && !contains(needs.*.result, 'failure')
+    name: GitHub Release
+    # Doar la push pe main, cu toate build-urile și testele reușite; rulările manuale se opresc după build.
+    if: >-
+      github.event_name == 'push' && needs.version.outputs.build == 'true' &&
+      !cancelled() && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
     needs: [version, test, linux, macos, windows, windows7]
     runs-on: ubuntu-latest
     permissions:
@@ -226,7 +241,9 @@ jobs:
       - name: Sume de control
         working-directory: artifacts
         run: sha256sum -- * | tee SHA256SUMS.txt
-      - name: Creează sau actualizează draft-ul
+      # Release-ul se creează ca draft, i se urcă toate fișierele și abia apoi se
+      # publică, ca nimeni să nu-l vadă pe jumătate.
+      - name: Publică release-ul
         working-directory: artifacts
         env:
           VERSION: ${{ needs.version.outputs.version }}
@@ -236,25 +253,27 @@ jobs:
         run: |
           tag="v$VERSION"
           title="Cangurul v$VERSION"
-          pre=()
-          if [ "$PRERELEASE" = "true" ]; then pre=(--prerelease); fi
           if draft="$(gh release view "$tag" --json isDraft --jq .isDraft 2>/dev/null)"; then
             if [ "$draft" != "true" ]; then
-              echo "::error::Release-ul $tag este deja publicat. Mărește versiunea (packaging/version.sh set ...) înainte de push pe release."
+              echo "::error::Release-ul $tag a fost deja publicat (de o rulare anterioară)."
               exit 1
             fi
-            echo "Actualizez draft-ul $tag: îi înlocuiesc fișierele"
+            echo "Există un draft $tag rămas: îi înlocuiesc fișierele"
             gh release view "$tag" --json assets --jq '.assets[].name' | while read -r asset; do
               gh release delete-asset "$tag" "$asset" --yes
             done
-            gh release edit "$tag" --draft --title "$title" --target "$GITHUB_SHA" --prerelease="$PRERELEASE"
+            gh release edit "$tag" --title "$title" --target "$GITHUB_SHA"
             gh release upload "$tag" --clobber -- *
           else
-            echo "Creez draft-ul $tag"
-            gh release create "$tag" --draft --title "$title" --target "$GITHUB_SHA" --generate-notes "${pre[@]}" -- *
+            gh release create "$tag" --draft --title "$title" --target "$GITHUB_SHA" --generate-notes -- *
+          fi
+          if [ "$PRERELEASE" = "true" ]; then
+            gh release edit "$tag" --draft=false --prerelease --latest=false
+          else
+            gh release edit "$tag" --draft=false --prerelease=false --latest
           fi
           {
-            echo "Draft **$title** la \`${GITHUB_SHA::9}\`:"
+            echo "Publicat **$title** la \`${GITHUB_SHA::9}\`:"
             echo
             sed 's/^/    /' SHA256SUMS.txt
           } >>"$GITHUB_STEP_SUMMARY"
