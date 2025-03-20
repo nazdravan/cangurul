@@ -13,7 +13,8 @@
 [![Rust](https://img.shields.io/badge/Rust-2024-B7410E?style=flat-square&logo=rust&logoColor=white)](Cargo.toml)
 [![egui](https://img.shields.io/badge/UI-egui%20%2F%20eframe-EB8137?style=flat-square)](https://github.com/emilk/egui)
 [![Windows](https://img.shields.io/badge/Windows-7%20%7C%2010%20%7C%2011-0078D6?style=flat-square&logo=windows&logoColor=white)](#windows-7-32-și-64-de-biți)
-[![Linux](https://img.shields.io/badge/Linux-x86__64-FCC624?style=flat-square&logo=linux&logoColor=black)](packaging/linux/)
+[![Linux](https://img.shields.io/badge/Linux-AppImage-FCC624?style=flat-square&logo=linux&logoColor=black)](packaging/linux/)
+[![macOS](https://img.shields.io/badge/macOS-Apple%20Silicon%20%7C%20Intel-000000?style=flat-square&logo=apple&logoColor=white)](#macos)
 
 [**Pornire rapidă**](#pornire-rapidă) · [Limbajul](#limbajul) · [Analizorul de cod](#analizorul-de-cod) · [Releases](../../releases) · [Issues](../../issues)
 
@@ -31,15 +32,27 @@ Fișierele `.cng` din versiunea veche se deschid și rulează fără modificări
 Arhivele gata construite sunt pe pagina [Releases](../../releases):
 
 ```
-cangurul-<versiune>-linux-x86_64.tar.gz           # Linux
+cangurul-<versiune>-linux-x86_64.AppImage         # Linux, un singur fișier
+cangurul-<versiune>-linux-x86_64.deb              # Ubuntu / Debian / Mint
+cangurul-<versiune>-linux-x86_64.tar.gz           # Linux, arhivă
+cangurul-<versiune>-macos-universal.dmg           # macOS (Apple Silicon și Intel)
 cangurul-<versiune>-windows-x64-portable.zip      # Windows 10/11, 64 de biți
 cangurul-<versiune>-windows-x86-portable.zip      # Windows 10/11, 32 de biți
 cangurul-<versiune>-windows7-x86-portable.zip     # Windows 7, 8, 10, 11 (32 și 64 de biți)
 SHA256SUMS.txt                                    # sumele de control
 ```
 
-Nu e nevoie de instalare: se dezarhivează și se pornește `Cangurul.exe`
-(pe Linux, `cangurul`).
+Nu e nevoie de instalare:
+
+- **Windows:** se dezarhivează și se pornește `Cangurul.exe`;
+- **Linux:** AppImage-ul se face executabil și se pornește
+  (`chmod +x cangurul-*.AppImage && ./cangurul-*.AppImage`); pe Ubuntu / Debian
+  se poate instala `.deb`-ul (`sudo apt install ./cangurul-*.deb`): Cangurul
+  apare în meniu, iar fișierele `.cng` se deschid cu dublu-click;
+- **macOS:** se deschide `.dmg`-ul și `Cangurul.app` se trage peste
+  *Applications*. Nu e semnată cu un certificat Apple, deci la prima pornire:
+  click dreapta → *Deschide* (pe macOS 15+: *Setări de sistem →
+  Confidențialitate și securitate → Deschide oricum*).
 
 ### Din cod sursă
 
