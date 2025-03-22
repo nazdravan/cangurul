@@ -52,7 +52,7 @@ Nu e nevoie de instalare:
 - **macOS:** se deschide `.dmg`-ul și `Cangurul.app` se trage peste
   *Applications*. Nu e semnată cu un certificat Apple, deci la prima pornire:
   click dreapta → *Deschide* (pe macOS 15+: *Setări de sistem →
-  Confidențialitate și securitate → Deschide oricum*).
+  Confidențialitate și securitate → Deschide oricum*), vezi [macOS](#macos).
 
 ### Din cod sursă
 
@@ -195,6 +195,30 @@ Windows există în Windows 7), dar nu a fost încă pornită pe un Windows 7 re
 
 ---
 
+## macOS
+
+Imaginea de disc `cangurul-<versiune>-macos-universal.dmg` conține
+`Cangurul.app`, un singur program pentru Mac-urile cu Apple Silicon (M1…M4) și
+cu Intel, de la macOS 10.13 în sus. Se construiește doar pe un Mac (în release,
+pe runner-ul macOS din GitHub Actions):
+
+```sh
+packaging/macos/package.sh   # rezultatul: dist/release/cangurul-<versiune>-macos-universal.dmg
+```
+
+Aplicația are doar o semnătură ad-hoc, nu una cu certificat Apple Developer,
+așa că Gatekeeper o blochează la prima pornire. Se deschide cu click dreapta →
+*Deschide* sau o dată din Terminal:
+
+```sh
+xattr -dr com.apple.quarantine /Applications/Cangurul.app
+```
+
+Scurtăturile folosesc ⌘ în loc de Ctrl. **Atenție:** varianta nu a fost încă
+pornită pe un Mac real.
+
+---
+
 ## Structura codului
 
 | Fișier | Conținut |
@@ -207,8 +231,8 @@ Windows există în Windows 7), dar nu a fost încă pornită pe un Windows 7 re
 | `src/i18n.rs` | textele interfeței în română, rusă și engleză |
 | `src/software_gl.rs` | repornirea cu OpenGL software (Mesa) pe Windows |
 | `examples/` | exemplele originale (convertite în UTF-8) |
-| `assets/` | sprite-urile cangurului, logo-ul, fonturi; desenele se generează cu `assets/art/make.py`, bannerul cu `python3 assets/banner.py CANGURUL -o docs/assets/cangurul-banner.png --color "#eb8137"` |
-| `packaging/` | arhivele pentru Linux, Windows 10/11 și Windows 7 |
+| `assets/` | sprite-urile cangurului, logo-ul, fonturi; desenele și iconițele (inclusiv `cangurul.icns` pentru macOS) se generează cu `assets/art/make.py`, bannerul cu `python3 assets/banner.py CANGURUL -o docs/assets/cangurul-banner.png --color "#eb8137"` |
+| `packaging/` | AppImage, `.deb` și arhiva pentru Linux, `Cangurul.app` (`.dmg`) pentru macOS, arhivele pentru Windows 10/11 și Windows 7 |
 
 ---
 
