@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Instalatorul .msi pentru Windows 10/11 (WiX Toolset v5), construit de
+  packaging/windows/msi.ps1 din dosarul pregătit de package.ps1.
+  Textele din MSI sunt fără diacritice: MSI nu suportă UTF-8.
+  UpgradeCode nu se schimbă niciodată: după el, o versiune nouă o înlocuiește pe cea veche.
+-->
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Name="Cangurul" Manufacturer="nazdravan" Version="$(Version)"
+           UpgradeCode="B8F192C8-B465-4E71-B7C1-A66922A15892" Scope="perMachine" Compressed="yes">
+    <SummaryInformation Description="Cangurul - mediu de invatare a algoritmilor" />
+    <MajorUpgrade DowngradeErrorMessage="O versiune mai noua a programului Cangurul este deja instalata." />
+    <MediaTemplate EmbedCab="yes" CompressionLevel="high" />
+
+    <Icon Id="AppIcon" SourceFile="$(Icon)" />
+    <Property Id="ARPPRODUCTICON" Value="AppIcon" />
+    <Property Id="ARPURLINFOABOUT" Value="https://github.com/nazdravan/cangurul" />
+    <Property Id="ARPHELPLINK" Value="https://github.com/nazdravan/cangurul/issues" />
+
+    <!-- C:\Program Files\Cangurul (pe x86: Program Files (x86) pe un Windows pe 64 de biți). -->
+    <StandardDirectory Id="ProgramFiles6432Folder">
+      <Directory Id="INSTALLFOLDER" Name="Cangurul">
+        <Component Id="MainExecutable">
+          <File Id="MainExe" Source="$(Stage)\Cangurul.exe" KeyPath="yes" />
+          <!-- Dublu-click pe un fișier .cng îl deschide în Cangurul. -->
+          <ProgId Id="Cangurul.Program" Description="Program Cangurul" Icon="MainExe" IconIndex="0">
+            <Extension Id="cng" ContentType="text/plain">
+              <Verb Id="open" TargetFile="MainExe" Argument="&quot;%1&quot;" />
+            </Extension>
+          </ProgId>
+        </Component>
+        <Files Include="$(Stage)\*.txt" />
+        <Directory Id="ExamplesFolder" Name="Exemple">
+          <Files Include="$(Stage)\Exemple\*.cng" />
+        </Directory>
+      </Directory>
+    </StandardDirectory>
+
+    <StandardDirectory Id="ProgramMenuFolder">
+      <Component Id="StartMenuShortcut">
+        <Shortcut Id="AppShortcut" Name="Cangurul" Description="Cangurul - mediu de invatare a algoritmilor"
+                  Target="[INSTALLFOLDER]Cangurul.exe" WorkingDirectory="INSTALLFOLDER" Icon="AppIcon" />
+        <RegistryValue Root="HKLM" Key="Software\nazdravan\Cangurul" Name="StartMenuShortcut"
+                       Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </StandardDirectory>
+  </Package>
+</Wix>
