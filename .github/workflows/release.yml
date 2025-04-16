@@ -162,6 +162,14 @@ jobs:
       - name: Build și arhivă
         shell: pwsh
         run: packaging/windows/package.ps1 -Arch ${{ matrix.arch }}
+      - name: WiX Toolset
+        shell: pwsh
+        run: |
+          dotnet tool install --global wix --version 5.0.2
+          "$env:USERPROFILE\.dotnet\tools" | Out-File -Append -Encoding utf8 $env:GITHUB_PATH
+      - name: Instalatorul .msi
+        shell: pwsh
+        run: packaging/windows/msi.ps1 -Arch ${{ matrix.arch }}
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: release-windows-${{ matrix.arch }}
