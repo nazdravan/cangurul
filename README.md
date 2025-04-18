@@ -36,15 +36,20 @@ cangurul-<versiune>-linux-x86_64.AppImage         # Linux, un singur fișier
 cangurul-<versiune>-linux-x86_64.deb              # Ubuntu / Debian / Mint
 cangurul-<versiune>-linux-x86_64.tar.gz           # Linux, arhivă
 cangurul-<versiune>-macos-universal.dmg           # macOS (Apple Silicon și Intel)
+cangurul-<versiune>-windows-x64.msi               # Windows 10/11, 64 de biți, instalator
+cangurul-<versiune>-windows-x86.msi               # Windows 10/11, 32 de biți, instalator
 cangurul-<versiune>-windows-x64-portable.zip      # Windows 10/11, 64 de biți
 cangurul-<versiune>-windows-x86-portable.zip      # Windows 10/11, 32 de biți
 cangurul-<versiune>-windows7-x86-portable.zip     # Windows 7, 8, 10, 11 (32 și 64 de biți)
 SHA256SUMS.txt                                    # sumele de control
 ```
 
-Nu e nevoie de instalare:
+Pe fiecare platformă:
 
-- **Windows:** se dezarhivează și se pornește `Cangurul.exe`;
+- **Windows:** `.msi`-ul instalează Cangurul în *Program Files*, cu scurtătură în
+  meniul Start, iar fișierele `.cng` se deschid cu dublu-click (pentru mai
+  multe calculatoare: `msiexec /i cangurul-*.msi /qn`). Fără instalare: se
+  dezarhivează zip-ul și se pornește `Cangurul.exe`;
 - **Linux:** AppImage-ul se face executabil și se pornește
   (`chmod +x cangurul-*.AppImage && ./cangurul-*.AppImage`); pe Ubuntu / Debian
   se poate instala `.deb`-ul (`sudo apt install ./cangurul-*.deb`): Cangurul
@@ -232,7 +237,7 @@ pornită pe un Mac real.
 | `src/software_gl.rs` | repornirea cu OpenGL software (Mesa) pe Windows |
 | `examples/` | exemplele originale (convertite în UTF-8) |
 | `assets/` | sprite-urile cangurului, logo-ul, fonturi; desenele și iconițele (inclusiv `cangurul.icns` pentru macOS) se generează cu `assets/art/make.py`, bannerul cu `python3 assets/banner.py CANGURUL -o docs/assets/cangurul-banner.png --color "#eb8137"` |
-| `packaging/` | AppImage, `.deb` și arhiva pentru Linux, `Cangurul.app` (`.dmg`) pentru macOS, arhivele pentru Windows 10/11 și Windows 7 |
+| `packaging/` | AppImage, `.deb` și arhiva pentru Linux, `Cangurul.app` (`.dmg`) pentru macOS, `.msi` și arhivele pentru Windows 10/11, arhiva pentru Windows 7 |
 
 ---
 
