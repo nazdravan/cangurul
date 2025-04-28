@@ -18,6 +18,8 @@
 
 [**Pornire rapidă**](#pornire-rapidă) · [Limbajul](#limbajul) · [Analizorul de cod](#analizorul-de-cod) · [Releases](../../releases) · [Issues](../../issues)
 
+**Română** · [English](README.en.md) · [Русский](README.ru.md)
+
 </div>
 
 <br />
