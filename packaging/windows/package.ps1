@@ -22,7 +22,7 @@ if (Test-Path $stage) { Remove-Item -Recurse -Force $stage }
 New-Item -ItemType Directory -Force "$stage/Exemple", 'dist/release' | Out-Null
 Copy-Item "target/$target/release/cangurul.exe" "$stage/Cangurul.exe"
 Copy-Item examples/*.cng "$stage/Exemple/"
-Get-Content assets/license-header.txt, assets/fonts/LICENSE.txt | Set-Content -Encoding utf8 "$stage/LICENTE.txt"
+Get-Content -Encoding utf8 assets/license-header.txt, assets/fonts/LICENSE.txt | Set-Content -Encoding utf8 "$stage/LICENTE.txt"
 Copy-Item LICENSE "$stage/LICENSE.txt"
 Compress-Archive -Path $stage -DestinationPath "dist/release/$name.zip" -Force
 Write-Host "Gata: dist/release/$name.zip"
