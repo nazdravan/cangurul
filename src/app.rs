@@ -1012,20 +1012,24 @@ impl CangurApp {
                         format!("{} {}", kw.execute, kw.name),
                     ),
                 ];
+                // Primul rînd: acțiunile; al doilea: ciclurile, condiția și procedurile.
                 ui.add_enabled_ui(editable, |ui| {
-                    ui.horizontal_wrapped(|ui| {
-                        ui.spacing_mut().item_spacing = vec2(6.0, 6.0);
-                        for (label, color, snippet) in &snippets {
-                            let b = egui::Button::new(
-                                RichText::new(label)
-                                    .color(*color)
-                                    .family(FontFamily::Monospace),
-                            );
-                            if ui.add(b).on_hover_text(snippet).clicked() {
-                                self.insert_snippet(&ctx, snippet);
+                    ui.spacing_mut().item_spacing = vec2(6.0, 6.0);
+                    let (actions, control) = snippets.split_at(3);
+                    for row in [actions, control] {
+                        ui.horizontal_wrapped(|ui| {
+                            for (label, color, snippet) in row {
+                                let b = egui::Button::new(
+                                    RichText::new(label)
+                                        .color(*color)
+                                        .family(FontFamily::Monospace),
+                                );
+                                if ui.add(b).on_hover_text(snippet).clicked() {
+                                    self.insert_snippet(&ctx, snippet);
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 });
                 ui.add_space(8.0);
                 self.problems_panel(ui, &pal);
