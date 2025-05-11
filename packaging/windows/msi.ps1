@@ -16,7 +16,7 @@ $msiVersion = $version -replace '-.*$', ''
 
 $stage = "dist/stage/cangurul-$version-windows-$Arch-portable"
 if (-not (Test-Path "$stage/Cangurul.exe")) {
-    throw "Lipseste $stage: rulati intai packaging/windows/package.ps1 -Arch $Arch"
+    throw "Lipseste ${stage}: rulati intai packaging/windows/package.ps1 -Arch $Arch"
 }
 $out = "dist/release/cangurul-$version-windows-$Arch.msi"
 wix build packaging/windows/cangurul.wxs -arch $Arch -pdbtype none `
