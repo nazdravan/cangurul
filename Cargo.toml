@@ -11,7 +11,7 @@ default = ["accessibility"]
 accessibility = ["eframe/accesskit"]
 
 [dependencies]
-eframe = { version = "0.37", default-features = false, features = ["default_fonts", "glow", "persistence", "wayland", "x11"] }
+eframe = { version = "0.37", default-features = false, features = ["clipboard", "default_fonts", "glow", "persistence", "wayland", "x11"] }
 egui = { version = "0.37", features = ["monochrome_emoji_fonts"] }
 encoding_rs = "0.8.42"
 image = { version = "0.25", default-features = false, features = ["png"] }
