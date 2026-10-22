@@ -1470,7 +1470,7 @@ mod tests {
                 "{name}"
             );
             let full = format_program(src);
-            assert_eq!(format_program(&full), full, "{name}");
+            assert_eq!(full, *src, "exemplul {name} nu este formatat");
             assert_eq!(compile(&full).unwrap().code, a.code, "{name}");
         }
     }

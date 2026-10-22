@@ -1,10 +1,10 @@
 [
 cit nu e_margine
-pas
-daca nu e_margine 
-salt
-altfel
-rotire
+    pas
+    daca nu e_margine
+        salt
+    altfel
+        rotire
 sfirsitul ciclului
 *
 Acest program se 

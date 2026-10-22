@@ -3,9 +3,9 @@
 //       Spirala
 [
 while not is_line
-while not is_line
-step
-end cycle
-rotate
+    while not is_line
+        step
+    end cycle
+    rotate
 end cycle
 ]
