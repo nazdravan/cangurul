@@ -289,6 +289,9 @@ pub struct CangurApp {
     analyzed: Option<String>,
     /// Porțiunea de text la care trebuie dus cursorul (click în lista de probleme).
     jump_to: Option<Range<usize>>,
+    /// Editorul primește focusul după ce e desenat (click-ul pe un buton
+    /// i l-ar lua în același cadru).
+    focus_editor: bool,
 }
 
 /// O problemă de afișat în editor și în lista de probleme.
@@ -329,6 +332,7 @@ impl CangurApp {
             analysis: lang::Analysis::default(),
             analyzed: None,
             jump_to: None,
+            focus_editor: false,
         };
         app.apply_theme(&cc.egui_ctx);
         if let Some(p) = open {
@@ -686,7 +690,7 @@ impl CangurApp {
             .cursor
             .set_char_range(Some(CCursorRange::one(CCursor::new(cursor))));
         state.store(ctx, id);
-        ctx.memory_mut(|m| m.request_focus(id));
+        self.focus_editor = true;
     }
 
     // ------------------------------------------------------------- UI ---
@@ -1166,7 +1170,7 @@ impl CangurApp {
                 .cursor
                 .set_char_range(Some(CCursorRange::two(CCursor::new(a), CCursor::new(b))));
             state.store(ui.ctx(), id);
-            ui.ctx().memory_mut(|m| m.request_focus(id));
+            self.focus_editor = true;
             scroll_to = Some(a);
         }
 
@@ -1188,6 +1192,9 @@ impl CangurApp {
             .layouter(&mut layouter)
             .show(ui);
         let _ = out.response.response.clone().labelled_by(label);
+        if std::mem::take(&mut self.focus_editor) {
+            out.response.response.request_focus();
+        }
 
         if out.response.changed() {
             self.s.dirty = true;
@@ -1904,6 +1911,9 @@ mod tests {
             h.run_steps(2);
             h.get_by_label("REPETĂ N").click();
             h.run_steps(2);
+            // Cursorul rămâne în editor după click pe buton.
+            let editor = egui::Id::unique(EDITOR_ID);
+            assert!(h.ctx.memory(|m| m.has_focus(editor)));
             assert_eq!(
                 h.state().s.code,
                 "[\nPAS\nROTIRE\nREPETĂ 4 ORI\n    PAS\nSFÎRȘITUL REPETĂRII\n]\n"
