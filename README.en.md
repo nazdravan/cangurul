@@ -83,7 +83,7 @@ also works on older school lab computers.
 | | |
 |---|---|
 | **Interface** | light and dark theme; interface in Romanian, Russian and English |
-| **Editor** | line numbers, syntax highlighting, buttons that insert commands (STEP, JUMP, REPEAT, WHILE, IF…) |
+| **Editor** | line numbers, syntax highlighting, buttons that insert commands (STEP, JUMP, REPEAT, WHILE, IF…), suggestions while typing, auto-indent on Enter, formatting |
 | **Running** | smooth animation, the current line highlighted in the editor; step by step, pause, adjustable speed or instant |
 | **Analyzer** | the program is checked as you type, with suggested fixes ([details](#code-analyzer)) |
 | **The field** | adjustable size; jumps can be shown as dotted lines |
@@ -136,6 +136,7 @@ The kangaroo starts in the top-left corner, facing right.
 | **F6** | step |
 | **Esc** | stop |
 | **F7** | check |
+| **Ctrl+Shift+F** | format (indentation, IF / ELSE on separate lines) |
 | **Ctrl+N / Ctrl+O / Ctrl+S** | new / open / save (⌘ on macOS) |
 
 ---

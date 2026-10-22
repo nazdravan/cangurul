@@ -82,7 +82,7 @@ OpenGL 2.0, ca să meargă și pe calculatoarele mai vechi din laboratoare.
 | | |
 |---|---|
 | **Interfață** | temă luminoasă și întunecată; interfața în română, rusă și engleză |
-| **Editor** | numerotarea rândurilor, evidențierea sintaxei, butoane care inserează comenzile (PAS, SALT, REPETĂ, CÎT, DACĂ…) |
+| **Editor** | numerotarea rândurilor, evidențierea sintaxei, butoane care inserează comenzile (PAS, SALT, REPETĂ, CÎT, DACĂ…), variante propuse în timp ce scrii, indentare automată la Enter, formatare |
 | **Execuție** | animație fluidă, rândul curent evidențiat în editor; pas cu pas, pauză, viteză reglabilă sau instant |
 | **Analizor** | programul e verificat în timp ce scrii, cu sugestii de corectură ([detalii](#analizorul-de-cod)) |
 | **Câmpul** | dimensiune reglabilă; salturile pot fi afișate punctat |
@@ -132,6 +132,7 @@ Cangurul pornește din colțul din stânga-sus și privește spre dreapta.
 | **F6** | pas cu pas |
 | **Esc** | stop |
 | **F7** | verifică |
+| **Ctrl+Shift+F** | formatează (indentare, DACĂ / ALTFEL pe rânduri separate) |
 | **Ctrl+N / Ctrl+O / Ctrl+S** | nou / deschide / salvează |
 
 ---
