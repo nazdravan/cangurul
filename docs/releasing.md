@@ -54,6 +54,13 @@ Dacă un build a eșuat, corectează și fă din nou push pe `main`, cu aceeași
 versiune: cât timp versiunea nu e publicată, fiecare push reîncearcă release-ul.
 Dacă release-ul publicat are o greșeală, se face o versiune nouă (`3.1.1`).
 
+Commit-ul din care se face release-ul nu trebuie să modifice fișierele din
+`.github/workflows/`: tokenul workflow-ului nu are voie să creeze tag-uri pe
+astfel de commit-uri, iar publicarea pică cu `HTTP 403: Resource not accessible
+by integration` (după ce toate build-urile au reușit). Schimbările de workflow
+se urcă într-un commit separat, înaintea celui cu versiunea; dacă s-a întâmplat
+deja, orice commit nou care nu atinge workflow-ul reîncearcă release-ul.
+
 ## Rulare de test
 
 Din *Actions → Release → Run workflow* se poate porni workflow-ul pe orice
