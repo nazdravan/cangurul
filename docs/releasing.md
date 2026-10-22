@@ -6,8 +6,8 @@ la fiecare push pe `main`:
 - se rulează testele;
 - dacă versiunea din `Cargo.toml` **nu e încă publicată**, se construiesc
   pachetele pentru toate platformele și se publică release-ul „Cangurul
-  v<versiune>”, cu tag-ul `v<versiune>`, fișierul `SHA256SUMS.txt` și note
-  generate din commit-uri. Release-ul e creat întâi ca draft, i se urcă toate
+  v<versiune>”, cu tag-ul `v<versiune>`, fișierul `SHA256SUMS.txt` și notele
+  versiunii din `CHANGELOG.md`, urmate de lista commit-urilor generată de GitHub. Release-ul e creat întâi ca draft, i se urcă toate
   fișierele și abia apoi devine public;
 - dacă versiunea e deja publicată, nu se construiește nimic în plus: un push
   obișnuit nu face release. Un release publicat nu e niciodată suprascris;
@@ -24,11 +24,25 @@ packaging/version.sh              # afișează versiunea
 packaging/version.sh set 3.1.0    # o schimbă în Cargo.toml și Cargo.lock
 ```
 
+## Jurnalul modificărilor
+
+Fiecare versiune are o secțiune `## [3.1.0] — <data>` în `CHANGELOG.md`
+(română), `CHANGELOG.en.md` și `CHANGELOG.ru.md`, cu subtitlurile *Adăugat*,
+*Schimbat*, *Reparat*. Secțiunea din `CHANGELOG.md` devine nota release-ului;
+fără ea workflow-ul se oprește înainte de build-uri.
+
+```sh
+packaging/changelog.sh            # notele versiunii din Cargo.toml
+packaging/changelog.sh 3.1.0      # notele altei versiuni
+```
+
 ## Pași
 
-1. Pe `main`, mărește versiunea, fă commit și push:
+1. Pe `main`, mărește versiunea, scrie secțiunea ei în cele trei jurnale de
+   modificări, fă commit și push:
    ```sh
    packaging/version.sh set 3.1.0
+   git add CHANGELOG*.md
    git commit -am "Versiunea 3.1.0"
    git push
    ```

@@ -76,6 +76,13 @@ jobs:
             echo "Cangurul v$VERSION e deja publicată: doar teste. Pentru un release nou: packaging/version.sh set <versiune>." >>"$GITHUB_STEP_SUMMARY"
           fi
           echo "build=$build" >>"$GITHUB_OUTPUT"
+      # Notele release-ului vin din CHANGELOG.md: fără secțiunea versiunii nu se
+      # pornesc build-urile (ar eșua abia la publicare).
+      - name: Verifică CHANGELOG.md
+        if: github.event_name == 'push' && steps.published.outputs.build == 'true'
+        env:
+          VERSION: ${{ steps.v.outputs.version }}
+        run: packaging/changelog.sh "$VERSION" >/dev/null
 
   test:
     timeout-minutes: 30
@@ -241,6 +248,11 @@ jobs:
     permissions:
       contents: write
     steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Notele din CHANGELOG.md
+        env:
+          VERSION: ${{ needs.version.outputs.version }}
+        run: packaging/changelog.sh "$VERSION" >"$RUNNER_TEMP/notes.md"
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           pattern: release-*
@@ -270,10 +282,12 @@ jobs:
             gh release view "$tag" --json assets --jq '.assets[].name' | while read -r asset; do
               gh release delete-asset "$tag" "$asset" --yes
             done
-            gh release edit "$tag" --title "$title" --target "$GITHUB_SHA"
+            gh release edit "$tag" --title "$title" --target "$GITHUB_SHA" --notes-file "$RUNNER_TEMP/notes.md"
             gh release upload "$tag" --clobber -- *
           else
-            gh release create "$tag" --draft --title "$title" --target "$GITHUB_SHA" --generate-notes -- *
+            # Notele din CHANGELOG.md, urmate de cele generate de GitHub (lista commit-urilor).
+            gh release create "$tag" --draft --title "$title" --target "$GITHUB_SHA" \
+              --notes-file "$RUNNER_TEMP/notes.md" --generate-notes -- *
           fi
           if [ "$PRERELEASE" = "true" ]; then
             gh release edit "$tag" --draft=false --prerelease --latest=false
