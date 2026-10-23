@@ -2,6 +2,7 @@
 #   dist/release/cangurul-<versiune>-windows-<x64|x86>.msi
 # Se ruleaza dupa package.ps1 (foloseste dosarul pregatit de acesta). Cere WiX
 # Toolset v5: dotnet tool install --global wix --version 5.0.2
+# Extensia UI (ferestrele instalatorului) se adauga singura, o data pe calculator.
 param(
     [Parameter(Mandatory)]
     [ValidateSet('x64', 'x86')]
@@ -19,7 +20,10 @@ if (-not (Test-Path "$stage/Cangurul.exe")) {
     throw "Lipseste ${stage}: rulati intai packaging/windows/package.ps1 -Arch $Arch"
 }
 $out = "dist/release/cangurul-$version-windows-$Arch.msi"
+wix extension add --global WixToolset.UI.wixext/5.0.2
+if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 wix build packaging/windows/cangurul.wxs -arch $Arch -pdbtype none `
+    -ext WixToolset.UI.wixext -culture ro-RO -loc packaging/windows/cangurul.ro-RO.wxl `
     -d "Version=$msiVersion" -d "Stage=$((Resolve-Path $stage).Path)" `
     -d "Icon=$((Resolve-Path 'assets/cangurul.ico').Path)" -o $out
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }

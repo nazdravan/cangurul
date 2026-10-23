@@ -2,10 +2,19 @@
 <!--
   Instalatorul .msi pentru Windows 10/11 (WiX Toolset v5), construit de
   packaging/windows/msi.ps1 din dosarul pregătit de package.ps1.
-  Textele din MSI sunt fără diacritice: MSI nu suportă UTF-8.
+  Textele din MSI sunt fără diacritice: MSI nu suportă UTF-8. Ferestrele
+  instalatorului sunt în română (-culture ro-RO); textele noastre sunt în
+  cangurul.ro-RO.wxl (codepage 1250: ă, â, î, ş, ţ cu sedilă, fără ș, ț).
   UpgradeCode nu se schimbă niciodată: după el, o versiune nouă o înlocuiește pe cea veche.
 -->
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <!-- Acțiunea care verifică dosarul ales vine din extensia UI, separat pentru fiecare arhitectură. -->
+  <?if $(sys.BUILDARCH) = x64 ?>
+    <?define UiArch = X64 ?>
+  <?else?>
+    <?define UiArch = X86 ?>
+  <?endif?>
+
   <Package Name="Cangurul" Manufacturer="nazdravan" Version="$(Version)"
            UpgradeCode="B8F192C8-B465-4E71-B7C1-A66922A15892" Scope="perMachine" Compressed="yes">
     <SummaryInformation Description="Cangurul - mediu de invatare a algoritmilor" />
@@ -17,7 +26,16 @@
     <Property Id="ARPURLINFOABOUT" Value="https://github.com/nazdravan/cangurul" />
     <Property Id="ARPHELPLINK" Value="https://github.com/nazdravan/cangurul/issues" />
 
-    <!-- C:\Program Files\Cangurul (pe x86: Program Files (x86) pe un Windows pe 64 de biți). -->
+    <!-- Dosarul ales la instalare se ține minte: o versiune nouă se instalează în același loc. -->
+    <Property Id="INSTALLFOLDER" Secure="yes">
+      <RegistrySearch Id="InstallFolderSearch" Root="HKLM" Key="Software\nazdravan\Cangurul"
+                      Name="InstallFolder" Type="raw" />
+    </Property>
+    <!-- Scurtătura de pe desktop: bifată implicit; fără ea: msiexec /i cangurul-*.msi DESKTOPSHORTCUT="" -->
+    <Property Id="DESKTOPSHORTCUT" Value="1" Secure="yes" />
+
+    <!-- Implicit C:\Program Files\Cangurul (pe x86: Program Files (x86) pe un Windows pe 64 de biți);
+         se poate schimba în instalator sau cu msiexec /i cangurul-*.msi INSTALLFOLDER="D:\Cangurul". -->
     <StandardDirectory Id="ProgramFiles6432Folder">
       <Directory Id="INSTALLFOLDER" Name="Cangurul">
         <Component Id="MainExecutable">
@@ -28,6 +46,10 @@
               <Verb Id="open" TargetFile="MainExe" Argument="&quot;%1&quot;" />
             </Extension>
           </ProgId>
+        </Component>
+        <Component Id="InstallFolderRegistry">
+          <RegistryValue Root="HKLM" Key="Software\nazdravan\Cangurul" Name="InstallFolder"
+                         Type="string" Value="[INSTALLFOLDER]" KeyPath="yes" />
         </Component>
         <Files Include="$(Stage)\*.txt" />
         <Directory Id="ExamplesFolder" Name="Exemple">
@@ -44,5 +66,93 @@
                        Type="integer" Value="1" KeyPath="yes" />
       </Component>
     </StandardDirectory>
+
+    <!-- Pentru o instalare perMachine, desktopul tuturor utilizatorilor. -->
+    <StandardDirectory Id="DesktopFolder">
+      <Component Id="DesktopShortcut" Condition="DESKTOPSHORTCUT">
+        <Shortcut Id="DesktopAppShortcut" Name="Cangurul" Description="Cangurul - mediu de invatare a algoritmilor"
+                  Target="[INSTALLFOLDER]Cangurul.exe" WorkingDirectory="INSTALLFOLDER" Icon="AppIcon" />
+        <RegistryValue Root="HKLM" Key="Software\nazdravan\Cangurul" Name="DesktopShortcut"
+                       Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </StandardDirectory>
+
+    <UIRef Id="CangurulUI" />
   </Package>
+
+  <!--
+    Ferestrele instalatorului: Bun venit -> dosarul și scurtătura de pe desktop -> Instalează.
+    Ca WixUI_InstallDir din extensia UI, dar fără fereastra cu licența și cu
+    CangurulDirDlg în loc de InstallDirDlg.
+  -->
+  <Fragment>
+    <UI Id="CangurulUI">
+      <TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
+      <TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="12" />
+      <TextStyle Id="WixUI_Font_Title" FaceName="Tahoma" Size="9" Bold="yes" />
+      <Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
+      <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+      <Property Id="ARPNOMODIFY" Value="1" />
+
+      <DialogRef Id="BrowseDlg" />
+      <DialogRef Id="DiskCostDlg" />
+      <DialogRef Id="ErrorDlg" />
+      <DialogRef Id="FatalError" />
+      <DialogRef Id="FilesInUse" />
+      <DialogRef Id="MsiRMFilesInUse" />
+      <DialogRef Id="PrepareDlg" />
+      <DialogRef Id="ProgressDlg" />
+      <DialogRef Id="ResumeDlg" />
+      <DialogRef Id="UserExit" />
+
+      <Publish Dialog="BrowseDlg" Control="OK" Event="DoAction" Value="WixUIValidatePath_$(UiArch)" Order="3" Condition="NOT WIXUI_DONTVALIDATEPATH" />
+      <Publish Dialog="BrowseDlg" Control="OK" Event="SpawnDialog" Value="InvalidDirDlg" Order="4" Condition="NOT WIXUI_DONTVALIDATEPATH AND WIXUI_INSTALLDIR_VALID&lt;&gt;&quot;1&quot;" />
+
+      <Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999" />
+
+      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="CangurulDirDlg" Condition="NOT Installed" />
+      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg" Condition="Installed AND PATCH" />
+
+      <Publish Dialog="CangurulDirDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" />
+      <Publish Dialog="CangurulDirDlg" Control="Next" Event="SetTargetPath" Value="[WIXUI_INSTALLDIR]" Order="1" />
+      <Publish Dialog="CangurulDirDlg" Control="Next" Event="DoAction" Value="WixUIValidatePath_$(UiArch)" Order="2" Condition="NOT WIXUI_DONTVALIDATEPATH" />
+      <Publish Dialog="CangurulDirDlg" Control="Next" Event="SpawnDialog" Value="InvalidDirDlg" Order="3" Condition="NOT WIXUI_DONTVALIDATEPATH AND WIXUI_INSTALLDIR_VALID&lt;&gt;&quot;1&quot;" />
+      <Publish Dialog="CangurulDirDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg" Order="4" Condition="WIXUI_DONTVALIDATEPATH OR WIXUI_INSTALLDIR_VALID=&quot;1&quot;" />
+      <Publish Dialog="CangurulDirDlg" Control="ChangeFolder" Property="_BrowseProperty" Value="[WIXUI_INSTALLDIR]" Order="1" />
+      <Publish Dialog="CangurulDirDlg" Control="ChangeFolder" Event="SpawnDialog" Value="BrowseDlg" Order="2" />
+
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="CangurulDirDlg" Order="1" Condition="NOT Installed" />
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="2" Condition="Installed AND NOT PATCH" />
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="2" Condition="Installed AND PATCH" />
+
+      <Publish Dialog="MaintenanceWelcomeDlg" Control="Next" Event="NewDialog" Value="MaintenanceTypeDlg" />
+      <Publish Dialog="MaintenanceTypeDlg" Control="RepairButton" Event="NewDialog" Value="VerifyReadyDlg" />
+      <Publish Dialog="MaintenanceTypeDlg" Control="RemoveButton" Event="NewDialog" Value="VerifyReadyDlg" />
+      <Publish Dialog="MaintenanceTypeDlg" Control="Back" Event="NewDialog" Value="MaintenanceWelcomeDlg" />
+
+      <!-- InstallDirDlg din extensia UI, cu bifa pentru scurtătura de pe desktop. -->
+      <Dialog Id="CangurulDirDlg" Width="370" Height="270" Title="!(loc.InstallDirDlg_Title)">
+        <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="!(loc.WixUINext)" />
+        <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="!(loc.WixUIBack)" />
+        <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.WixUICancel)">
+          <Publish Event="SpawnDialog" Value="CancelDlg" />
+        </Control>
+
+        <Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Transparent="yes" NoPrefix="yes" Text="!(loc.InstallDirDlgDescription)" />
+        <Control Id="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Transparent="yes" NoPrefix="yes" Text="!(loc.InstallDirDlgTitle)" />
+        <Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="!(loc.InstallDirDlgBannerBitmap)" />
+        <Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0" />
+        <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
+
+        <Control Id="FolderLabel" Type="Text" X="20" Y="60" Width="290" Height="30" NoPrefix="yes" Text="!(loc.InstallDirDlgFolderLabel)" />
+        <Control Id="Folder" Type="PathEdit" X="20" Y="100" Width="320" Height="18" Property="WIXUI_INSTALLDIR" Indirect="yes" />
+        <Control Id="ChangeFolder" Type="PushButton" X="20" Y="120" Width="56" Height="17" Text="!(loc.InstallDirDlgChange)" />
+
+        <Control Id="DesktopShortcutCheckBox" Type="CheckBox" X="20" Y="160" Width="320" Height="17"
+                 Property="DESKTOPSHORTCUT" CheckBoxValue="1" Text="!(loc.DesktopShortcutCheckBox)" />
+      </Dialog>
+    </UI>
+
+    <UIRef Id="WixUI_Common" />
+  </Fragment>
 </Wix>

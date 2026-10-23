@@ -48,9 +48,12 @@ SHA256SUMS.txt                                    # sumele de control
 
 Pe fiecare platformă:
 
-- **Windows:** `.msi`-ul instalează Cangurul în *Program Files*, cu scurtătură în
-  meniul Start, iar fișierele `.cng` se deschid cu dublu-click (pentru mai
-  multe calculatoare: `msiexec /i cangurul-*.msi /qn`). Fără instalare: se
+- **Windows:** `.msi`-ul instalează Cangurul în *Program Files* sau în alt
+  dosar ales la instalare, cu scurtătură în meniul Start și, dacă e bifată, pe
+  desktop, iar fișierele `.cng` se deschid cu dublu-click. O versiune nouă se
+  instalează în același dosar. Pentru mai multe calculatoare:
+  `msiexec /i cangurul-*.msi /qn`, cu `INSTALLFOLDER="D:\Cangurul"` pentru alt
+  dosar și `DESKTOPSHORTCUT=""` fără scurtătura de pe desktop. Fără instalare: se
   dezarhivează zip-ul și se pornește `Cangurul.exe`;
 - **Linux:** AppImage-ul se face executabil și se pornește
   (`chmod +x cangurul-*.AppImage && ./cangurul-*.AppImage`); pe Ubuntu / Debian

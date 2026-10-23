@@ -76,7 +76,7 @@ creează niciun release. Așa se pot încerca pachetele înainte de a mări vers
 | `cangurul-<v>-linux-x86_64.deb` | Ubuntu / Debian / Mint (Ubuntu 22.04+), cu meniu și asocierea fișierelor `.cng` | `packaging/linux/deb.sh`, ubuntu-22.04 |
 | `cangurul-<v>-linux-x86_64.tar.gz` | Linux pe 64 de biți, arhivă simplă | `packaging/linux/package.sh`, ubuntu-22.04 |
 | `cangurul-<v>-macos-universal.dmg` | macOS 10.13+, Apple Silicon și Intel (`Cangurul.app`) | `packaging/macos/package.sh`, macos-latest |
-| `cangurul-<v>-windows-x64.msi` | Windows 10/11 pe 64 de biți, instalator: meniul Start, asocierea fișierelor `.cng`, actualizare peste versiunea veche | `packaging/windows/msi.ps1 -Arch x64` (WiX Toolset v5) |
+| `cangurul-<v>-windows-x64.msi` | Windows 10/11 pe 64 de biți, instalator: dosarul ales la instalare, meniul Start, scurtătura de pe desktop (opțională), asocierea fișierelor `.cng`, actualizare peste versiunea veche | `packaging/windows/msi.ps1 -Arch x64` (WiX Toolset v5) |
 | `cangurul-<v>-windows-x86.msi` | Windows 10/11 pe 32 de biți, instalator | `packaging/windows/msi.ps1 -Arch x86` |
 | `cangurul-<v>-windows-x64-portable.zip` | Windows 10/11 pe 64 de biți | `packaging/windows/package.ps1 -Arch x64` |
 | `cangurul-<v>-windows-x86-portable.zip` | Windows 10/11 pe 32 de biți | `packaging/windows/package.ps1 -Arch x86` |

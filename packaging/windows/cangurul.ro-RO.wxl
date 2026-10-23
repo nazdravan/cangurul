@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Textele noastre din instalator; restul vin din WixUI_ro-RO.wxl al extensiei UI. Codepage 1250: fără ș, ț cu virgulă. -->
+<WixLocalization Culture="ro-RO" Codepage="1250" xmlns="http://wixtoolset.org/schemas/v4/wxl">
+  <String Id="DesktopShortcutCheckBox" Value="Creează o scurtătură pe &amp;desktop" />
+</WixLocalization>
