@@ -22,6 +22,7 @@
   "hero_compat": "<code>.cng</code> programs from Cangurul 2 open and run without any changes.",
   "btn_default": "Download Cangurul",
   "btn_windows": "Download for Windows",
+  "btn_win7": "Download for Windows 7",
   "btn_mac": "Download for macOS",
   "btn_linux": "Download for Linux",
   "btn_other": "Other systems",

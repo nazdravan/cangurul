@@ -154,9 +154,16 @@ def render(template, values):
     return PLACEHOLDER.sub(sub, template)
 
 
-def news_html(md, t):
+def version_key(v):
+    return tuple(int(x) for x in re.findall(r"\d+", v.split("-")[0])[:3])
+
+
+def news_html(md, t, released):
+    """Ultimele versiuni din jurnal, fără cele încă nepublicate (jurnalul se
+    scrie înaintea release-ului)."""
     out = []
-    for s in changelog_sections(md, NEWS_COUNT):
+    sections = [s for s in changelog_sections(md, NEWS_COUNT + 5) if version_key(s["version"]) <= version_key(released)]
+    for s in sections[:NEWS_COUNT]:
         date = format_date(s["date"], t["months"], t["date_format"])
         out.append(
             f'<article class="release" data-reveal><div class="release-head"><h3>{html.escape(s["version"])}</h3>'
@@ -172,6 +179,7 @@ def build(release, out):
     template = (SITE / "template.html").read_text(encoding="utf-8")
     kinds = json.dumps({
         "windows": assets["win-x64-msi"]["url"],
+        "win7": assets["win7-zip"]["url"],
         "mac": assets["mac-dmg"]["url"],
         "linux": assets["linux-appimage"]["url"],
     })
@@ -187,7 +195,7 @@ def build(release, out):
             "kinds_json": kinds,
             # Mărimea titlului se calculează din rândul lui cel mai lung (style.css).
             "h1_chars": str(max(len(t["hero_title_1"]), len(t["hero_title_2"]) + 2)),
-            "news_html": news_html((ROOT / t["changelog_file"]).read_text(encoding="utf-8"), t),
+            "news_html": news_html((ROOT / t["changelog_file"]).read_text(encoding="utf-8"), t, version),
         })
         for code in LANGS:
             values[f"current_{code}"] = 'aria-current="page"' if code == lang else ""

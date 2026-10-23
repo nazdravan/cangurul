@@ -22,6 +22,7 @@
   "hero_compat": "Программы <code>.cng</code> из Cangurul 2 открываются и работают без изменений.",
   "btn_default": "Скачать Cangurul",
   "btn_windows": "Скачать для Windows",
+  "btn_win7": "Скачать для Windows 7",
   "btn_mac": "Скачать для macOS",
   "btn_linux": "Скачать для Linux",
   "btn_other": "Другие системы",
@@ -53,7 +54,7 @@
   "cmp_line": "Выполняемая строка подсвечена в редакторе",
   "cmp_theme": "Светлая и тёмная тема",
   "cmp_field": "Поле настраиваемого размера, прыжки пунктиром",
-  "cmp_os": "Linux и macOS, кроме Windows",
+  "cmp_os": "Linux и macOS, помимо Windows",
 
   "news_title": "Новое",
   "news_all": "Все изменения",

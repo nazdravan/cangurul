@@ -1,6 +1,7 @@
 # Testele scriptului care construiește pagina de prezentare:
 #   python3 -m unittest discover -s site/tests -v
 import json
+import re
 import sys
 import tempfile
 import unittest
@@ -130,6 +131,20 @@ class BuildTest(unittest.TestCase):
         for f in ("style.css", "main.js", "logo.png", "screenshot.png", "analizor.png", "og.png"):
             self.assertTrue((self.out / "assets" / f).exists(), f)
         self.assertTrue((self.out / ".nojekyll").exists())
+
+    def test_news_skip_versions_not_released_yet(self):
+        md = "## [3.0.4] — 2026-11-01\n\n- viitor\n\n## [3.0.3] — 2026-10-23\n\n- acum\n"
+        t = {"months": RO_MONTHS, "date_format": "{d} {month} {y}"}
+        html = build.news_html(md, t, "3.0.3")
+        self.assertNotIn("viitor", html)
+        self.assertIn("acum", html)
+
+    def test_russian_says_besides_windows(self):
+        self.assertIn("помимо Windows", self.page("ru/index.html"))
+
+    def test_win7_download_offered_to_button(self):
+        self.assertIn("windows7-x86-portable.zip", re.search(r'data-kinds="([^"]*)"', self.page("index.html"))[1])
+        self.assertIn('data-label-win7="', self.page("index.html"))
 
     def test_render_missing_key(self):
         with self.assertRaises(KeyError):

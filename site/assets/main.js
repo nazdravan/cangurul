@@ -4,10 +4,22 @@
 
 export function pickDownload(ua, platform, maxTouchPoints = 0) {
   if (/Android|iPhone|iPad|iPod|CrOS/i.test(ua)) return null;
+  // Windows 7 și 8 (NT 6.x): .msi cere Windows 10+, deci arhiva pentru Windows 7.
+  if (/Windows NT 6\./.test(ua)) return "win7";
   if (/Win/i.test(platform) || /Windows/i.test(ua)) return "windows";
   if (/Mac/i.test(platform)) return maxTouchPoints > 1 ? null : "mac";
   if (/Linux/i.test(platform) || /X11/.test(ua)) return "linux";
   return null;
+}
+
+export function withHash(href, hash) {
+  return href.split("#")[0] + (hash || "");
+}
+
+function setupLanguages() {
+  for (const a of document.querySelectorAll(".langs a")) {
+    a.addEventListener("click", () => { a.href = withHash(a.getAttribute("href"), location.hash); });
+  }
 }
 
 function setupDownload() {
@@ -16,7 +28,7 @@ function setupDownload() {
   const system = pickDownload(navigator.userAgent, navigator.platform || "", navigator.maxTouchPoints || 0);
   if (!system) return;
   const url = JSON.parse(button.dataset.kinds || "{}")[system];
-  const label = button.dataset[`label${system[0].toUpperCase()}${system.slice(1)}`];
+  const label = button.getAttribute(`data-label-${system}`);
   if (!url || !label) return;
   button.href = url;
   button.textContent = label;
@@ -39,5 +51,6 @@ function setupReveal() {
 
 if (typeof document !== "undefined") {
   setupDownload();
+  setupLanguages();
   setupReveal();
 }
