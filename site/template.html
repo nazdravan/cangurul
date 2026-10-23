@@ -184,7 +184,13 @@
 
 <footer class="foot">
   <div class="wrap foot-row">
-    <p class="author">{{{ footer_made }}} Nicolae Postica · <a href="https://github.com/nazdravan">{{{ footer_github_user }}}</a></p>
+    <div class="author">
+      <img class="author-photo" src="{{ root }}assets/author.png" width="320" height="320" alt="{{ author_alt }}" loading="lazy">
+      <div>
+        <p class="author-name">{{{ footer_made }}} Nicolae Postica</p>
+        <p class="author-links"><a href="mailto:nicolae.postica2@gmail.com">nicolae.postica2@gmail.com</a> · <a href="https://github.com/nazdravan">{{{ footer_github_user }}}</a></p>
+      </div>
+    </div>
     <p class="foot-links">
       <a href="https://github.com/nazdravan/cangurul">{{{ footer_source }}}</a>
       <a href="https://github.com/nazdravan/cangurul/blob/main/{{ readme_file }}">{{{ footer_docs }}}</a>

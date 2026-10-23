@@ -120,6 +120,13 @@ class BuildTest(unittest.TestCase):
             self.assertIn("Nicolae Postica", html)
             self.assertIn('href="https://github.com/nazdravan"', html)
 
+    def test_author_portrait_and_email(self):
+        for p in ("index.html", "en/index.html", "ru/index.html"):
+            html = self.page(p)
+            self.assertIn('href="mailto:nicolae.postica2@gmail.com"', html)
+            self.assertRegex(html, r'<img class="author-photo" src="(\.\./)?assets/author\.png"')
+        self.assertTrue((self.out / "assets" / "author.png").exists())
+
     def test_home_links_stay_in_language(self):
         self.assertIn('class="brand" href="./"', self.page("en/index.html"))
         self.assertIn('href="../" hreflang="ro"', self.page("en/index.html"))
