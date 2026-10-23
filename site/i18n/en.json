@@ -16,7 +16,8 @@
 
   "hero_version": "Version",
   "hero_free": "free · open source",
-  "hero_title": "Cangurul, rewritten from&nbsp;scratch.",
+  "hero_title_1": "Cangurul, rewritten",
+  "hero_title_2": "from scratch.",
   "hero_lead": "Students write simple commands — <code>STEP</code>, <code>JUMP</code>, <code>ROTATE</code> — and the kangaroo hops across the field, drawing as it goes. That is how they learn what an algorithm, a loop and a procedure are.",
   "hero_compat": "<code>.cng</code> programs from Cangurul 2 open and run without any changes.",
   "btn_default": "Download Cangurul",
@@ -33,6 +34,8 @@
   "f2_text": "The program is checked on every edit, before it runs: misspelled words, unclosed blocks, missing procedures, loops that may never end. For a misspelled word, the <b>Fix</b> button puts in the right one.",
   "f3_title": "You can see it run",
   "f3_text": "The kangaroo moves smoothly and the editor highlights the line being executed. Run it step by step, pause it, slow it down or finish instantly.",
+  "f1_alt": "The editor: command buttons and the program with highlighted commands",
+  "f3_alt": "The field where the kangaroo drew the letters CANGUR, with the Run and Step buttons",
   "analyzer_alt": "The analyzer points out a mistake in the program and suggests a fix",
 
   "compare_title": "Compared to Cangurul 2",

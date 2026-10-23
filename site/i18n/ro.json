@@ -16,7 +16,8 @@
 
   "hero_version": "Versiunea",
   "hero_free": "gratuit · open source",
-  "hero_title": "Cangurul, rescris de&nbsp;la&nbsp;zero.",
+  "hero_title_1": "Cangurul, rescris",
+  "hero_title_2": "de la zero.",
   "hero_lead": "Elevii scriu comenzi simple — <code>PAS</code>, <code>SALT</code>, <code>ROTIRE</code> — iar cangurul sare pe câmp și desenează. Așa se învață ce e un algoritm, un ciclu și o procedură.",
   "hero_compat": "Programele <code>.cng</code> din Cangurul 2 se deschid și rulează fără nicio modificare.",
   "btn_default": "Descarcă Cangurul",
@@ -33,6 +34,8 @@
   "f2_text": "Programul e verificat la fiecare modificare, înainte de execuție: cuvinte scrise greșit, blocuri neînchise, proceduri inexistente, cicluri care pot rula la nesfârșit. Pentru un cuvânt greșit, butonul <b>Corectează</b> pune varianta bună.",
   "f3_title": "Execuția se vede",
   "f3_text": "Cangurul se mișcă lin, iar în editor e evidențiat rândul pe care îl execută. Se poate merge pas cu pas, cu pauză, mai încet sau instant.",
+  "f1_alt": "Editorul: butoanele cu comenzi și programul cu comenzile colorate",
+  "f3_alt": "Câmpul pe care cangurul a desenat literele CANGUR, cu butoanele Execută și Pas cu pas",
   "analyzer_alt": "Analizorul arată o greșeală în program și propune corectura",
 
   "compare_title": "Față de Cangurul 2",

@@ -18,15 +18,17 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" type="image/png" href="{{ root }}assets/logo.png">
+<link rel="preload" href="{{ root }}assets/NotoSans-Bold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{{ root }}assets/style.css">
 <script type="module" src="{{ root }}assets/main.js"></script>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="check" viewBox="0 0 20 20"><path d="M4 10.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol></svg>
 
 <header class="top">
   <div class="wrap top-row">
     <a class="brand" href="./">
-      <img src="{{ root }}assets/logo.png" width="32" height="32" alt="">
+      <img src="{{ root }}assets/logo.png" width="28" height="28" alt="">
       <span>Cangurul</span>
     </a>
     <nav class="nav" aria-label="{{ nav_label }}">
@@ -46,54 +48,68 @@
 <main>
   <section class="hero">
     <div class="wrap">
-      <p class="eyebrow">{{{ hero_version }}} {{ version }} · {{{ hero_free }}}</p>
-      <h1>{{{ hero_title }}}</h1>
-      <p class="lead">{{{ hero_lead }}}</p>
-      <p class="compat">{{{ hero_compat }}}</p>
-      <div class="cta">
-        <a id="download-main" class="button" href="#descarca"
-           data-kinds="{{ kinds_json }}"
-           data-label-windows="{{ btn_windows }}" data-label-mac="{{ btn_mac }}" data-label-linux="{{ btn_linux }}">{{{ btn_default }}}</a>
-        <a class="cta-other" href="#descarca">{{{ btn_other }}} ↓</a>
+      <h1 style="--chars: {{ h1_chars }}">
+        <span class="line"><span>{{ hero_title_1 }}</span></span>
+        <span class="line"><span>{{ hero_title_2 }}</span><img class="roo" src="{{ root }}assets/kangaroo.svg" width="100" height="100" alt=""></span>
+      </h1>
+      <div class="hero-text">
+        <p class="lead">{{{ hero_lead }}}</p>
+        <p class="compat">{{{ hero_compat }}}</p>
+        <div class="cta">
+          <a id="download-main" class="button" href="#descarca"
+             data-kinds="{{ kinds_json }}"
+             data-label-windows="{{ btn_windows }}" data-label-mac="{{ btn_mac }}" data-label-linux="{{ btn_linux }}">{{{ btn_default }}}</a>
+          <a class="cta-other" href="#descarca">{{{ btn_other }}} ↓</a>
+        </div>
+        <p class="version">{{{ hero_version }}} {{ version }} · {{{ hero_free }}}</p>
       </div>
     </div>
-    <div class="wrap wrap-wide">
-      <img class="shot" src="{{ root }}assets/screenshot.png" width="1280" height="800" alt="{{ screenshot_alt }}">
+    <div class="shot-band">
+      <div class="wrap">
+        <img class="shot shot-hero" src="{{ root }}assets/screenshot.png" width="1280" height="800" alt="{{ screenshot_alt }}">
+      </div>
     </div>
   </section>
 
   <section id="ce-face" class="features">
     <div class="wrap">
-      <h2>{{{ features_title }}}</h2>
-      <div class="features-grid">
-        <div class="feature-list">
-          <div class="feature"><h3>{{{ f1_title }}}</h3><p>{{{ f1_text }}}</p></div>
-          <div class="feature"><h3>{{{ f2_title }}}</h3><p>{{{ f2_text }}}</p></div>
-          <div class="feature"><h3>{{{ f3_title }}}</h3><p>{{{ f3_text }}}</p></div>
-        </div>
-        <img class="shot shot-side" src="{{ root }}assets/analizor.png" width="1280" height="800" alt="{{ analyzer_alt }}" loading="lazy">
+      <h2 data-reveal>{{{ features_title }}}</h2>
+      <div class="feature" data-reveal>
+        <div class="feature-text"><h3>{{{ f1_title }}}</h3><p>{{{ f1_text }}}</p></div>
+        <figure class="crop" style="--x: 0; --y: 55; --w: 430; --h: 330"><img src="{{ root }}assets/screenshot.png" width="1280" height="800" alt="{{ f1_alt }}" loading="lazy"></figure>
+      </div>
+      <div class="feature" data-reveal>
+        <div class="feature-text"><h3>{{{ f2_title }}}</h3><p>{{{ f2_text }}}</p></div>
+        <figure class="crop" style="--x: 0; --y: 170; --w: 430; --h: 575"><img src="{{ root }}assets/analizor.png" width="1280" height="800" alt="{{ analyzer_alt }}" loading="lazy"></figure>
+      </div>
+      <div class="feature" data-reveal>
+        <div class="feature-text"><h3>{{{ f3_title }}}</h3><p>{{{ f3_text }}}</p></div>
+        <figure class="crop" style="--x: 430; --y: 50; --w: 850; --h: 690"><img src="{{ root }}assets/screenshot.png" width="1280" height="800" alt="{{ f3_alt }}" loading="lazy"></figure>
       </div>
     </div>
   </section>
 
   <section id="comparatie" class="compare">
-    <div class="wrap">
-      <h2>{{{ compare_title }}}</h2>
-      <p class="section-lead">{{{ compare_lead }}}</p>
-      <table class="compare-table">
+    <div class="wrap compare-grid">
+      <div class="compare-head">
+        <h2 data-reveal>{{{ compare_title }}}</h2>
+        <p class="section-lead" data-reveal>{{{ compare_lead }}}</p>
+        <img class="roo-tired" src="{{ root }}assets/kangaroo-tired.svg" width="100" height="100" alt="" loading="lazy" data-reveal>
+      </div>
+      <table class="compare-table" data-reveal>
         <thead>
           <tr><td></td><th scope="col">{{{ compare_v2 }}}</th><th scope="col">{{{ compare_v3 }}}</th></tr>
         </thead>
         <tbody>
-          <tr class="same"><th scope="row">{{{ cmp_same }}}</th><td><span class="yes" aria-label="{{ compare_yes }}">✓</span></td><td><span class="yes" aria-label="{{ compare_yes }}">✓</span> {{{ cmp_same_v3 }}}</td></tr>
-          <tr><th scope="row">{{{ cmp_analyzer }}}</th><td><span class="no" aria-label="{{ compare_no }}">—</span></td><td><span class="yes" aria-label="{{ compare_yes }}">✓</span></td></tr>
-          <tr><th scope="row">{{{ cmp_syntax }}}</th><td><span class="no" aria-label="{{ compare_no }}">—</span></td><td><span class="yes" aria-label="{{ compare_yes }}">✓</span></td></tr>
-          <tr><th scope="row">{{{ cmp_suggest }}}</th><td><span class="no" aria-label="{{ compare_no }}">—</span></td><td><span class="yes" aria-label="{{ compare_yes }}">✓</span></td></tr>
-          <tr><th scope="row">{{{ cmp_step }}}</th><td><span class="no" aria-label="{{ compare_no }}">—</span></td><td><span class="yes" aria-label="{{ compare_yes }}">✓</span></td></tr>
-          <tr><th scope="row">{{{ cmp_line }}}</th><td><span class="no" aria-label="{{ compare_no }}">—</span></td><td><span class="yes" aria-label="{{ compare_yes }}">✓</span></td></tr>
-          <tr><th scope="row">{{{ cmp_theme }}}</th><td><span class="no" aria-label="{{ compare_no }}">—</span></td><td><span class="yes" aria-label="{{ compare_yes }}">✓</span></td></tr>
-          <tr><th scope="row">{{{ cmp_field }}}</th><td><span class="no" aria-label="{{ compare_no }}">—</span></td><td><span class="yes" aria-label="{{ compare_yes }}">✓</span></td></tr>
-          <tr><th scope="row">{{{ cmp_os }}}</th><td><span class="no" aria-label="{{ compare_no }}">—</span></td><td><span class="yes" aria-label="{{ compare_yes }}">✓</span></td></tr>
+          <tr class="same"><th scope="row">{{{ cmp_same }}}</th><td><svg class="yes" role="img" aria-label="{{ compare_yes }}" viewBox="0 0 20 20" width="20" height="20"><use href="#check"></use></svg></td><td><svg class="yes" role="img" aria-label="{{ compare_yes }}" viewBox="0 0 20 20" width="20" height="20"><use href="#check"></use></svg> <span class="same-note">{{{ cmp_same_v3 }}}</span></td></tr>
+          <tr><th scope="row">{{{ cmp_analyzer }}}</th><td><span class="no" role="img" aria-label="{{ compare_no }}"></span></td><td><svg class="yes" role="img" aria-label="{{ compare_yes }}" viewBox="0 0 20 20" width="20" height="20"><use href="#check"></use></svg></td></tr>
+          <tr><th scope="row">{{{ cmp_syntax }}}</th><td><span class="no" role="img" aria-label="{{ compare_no }}"></span></td><td><svg class="yes" role="img" aria-label="{{ compare_yes }}" viewBox="0 0 20 20" width="20" height="20"><use href="#check"></use></svg></td></tr>
+          <tr><th scope="row">{{{ cmp_suggest }}}</th><td><span class="no" role="img" aria-label="{{ compare_no }}"></span></td><td><svg class="yes" role="img" aria-label="{{ compare_yes }}" viewBox="0 0 20 20" width="20" height="20"><use href="#check"></use></svg></td></tr>
+          <tr><th scope="row">{{{ cmp_step }}}</th><td><span class="no" role="img" aria-label="{{ compare_no }}"></span></td><td><svg class="yes" role="img" aria-label="{{ compare_yes }}" viewBox="0 0 20 20" width="20" height="20"><use href="#check"></use></svg></td></tr>
+          <tr><th scope="row">{{{ cmp_line }}}</th><td><span class="no" role="img" aria-label="{{ compare_no }}"></span></td><td><svg class="yes" role="img" aria-label="{{ compare_yes }}" viewBox="0 0 20 20" width="20" height="20"><use href="#check"></use></svg></td></tr>
+          <tr><th scope="row">{{{ cmp_theme }}}</th><td><span class="no" role="img" aria-label="{{ compare_no }}"></span></td><td><svg class="yes" role="img" aria-label="{{ compare_yes }}" viewBox="0 0 20 20" width="20" height="20"><use href="#check"></use></svg></td></tr>
+          <tr><th scope="row">{{{ cmp_field }}}</th><td><span class="no" role="img" aria-label="{{ compare_no }}"></span></td><td><svg class="yes" role="img" aria-label="{{ compare_yes }}" viewBox="0 0 20 20" width="20" height="20"><use href="#check"></use></svg></td></tr>
+          <tr><th scope="row">{{{ cmp_os }}}</th><td><span class="no" role="img" aria-label="{{ compare_no }}"></span></td><td><svg class="yes" role="img" aria-label="{{ compare_yes }}" viewBox="0 0 20 20" width="20" height="20"><use href="#check"></use></svg></td></tr>
         </tbody>
       </table>
     </div>
@@ -101,61 +117,65 @@
 
   <section id="noutati" class="news">
     <div class="wrap">
-      <h2>{{{ news_title }}}</h2>
-      {{{ news_html }}}
-      <p><a class="more" href="https://github.com/nazdravan/cangurul/blob/main/{{ changelog_file }}">{{{ news_all }}} →</a></p>
+      <h2 data-reveal>{{{ news_title }}}</h2>
+      <div class="releases">
+        {{{ news_html }}}
+      </div>
+      <p class="more-row" data-reveal><a class="more" href="https://github.com/nazdravan/cangurul/blob/main/{{ changelog_file }}">{{{ news_all }}} →</a></p>
     </div>
   </section>
 
   <section id="descarca" class="download">
     <div class="wrap">
-      <h2>{{{ dl_title }}}</h2>
-      <p class="section-lead">{{{ dl_lead }}} Cangurul {{ version }}, {{{ dl_released }}} {{ date }}.</p>
+      <h2 data-reveal>{{{ dl_title }}}</h2>
+      <p class="section-lead" data-reveal>{{{ dl_lead }}} Cangurul {{ version }}, {{{ dl_released }}} {{ date }}.</p>
       <div class="platforms">
-        <div class="platform">
+        <div class="platform" data-reveal>
           <h3>{{{ dl_win }}}</h3>
-          <p class="file-group">{{{ dl_msi }}} <span class="note">— {{{ dl_msi_note }}}</span></p>
+          <p class="file-group">{{{ dl_msi }}}</p>
           <ul class="files">
-            <li><a href="{{ url_win_x64_msi }}">.msi · {{{ dl_64 }}}</a> <span class="size">{{ size_win_x64_msi }}</span></li>
-            <li><a href="{{ url_win_x86_msi }}">.msi · {{{ dl_32 }}}</a> <span class="size">{{ size_win_x86_msi }}</span></li>
+            <li><a href="{{ url_win_x64_msi }}">.msi · {{{ dl_64 }}}</a><span class="size">{{ size_win_x64_msi }}</span></li>
+            <li><a href="{{ url_win_x86_msi }}">.msi · {{{ dl_32 }}}</a><span class="size">{{ size_win_x86_msi }}</span></li>
           </ul>
+          <p class="note">{{{ dl_msi_note }}}</p>
           <p class="file-group">{{{ dl_portable }}}</p>
           <ul class="files">
-            <li><a href="{{ url_win_x64_zip }}">.zip · {{{ dl_64 }}}</a> <span class="size">{{ size_win_x64_zip }}</span></li>
-            <li><a href="{{ url_win_x86_zip }}">.zip · {{{ dl_32 }}}</a> <span class="size">{{ size_win_x86_zip }}</span></li>
+            <li><a href="{{ url_win_x64_zip }}">.zip · {{{ dl_64 }}}</a><span class="size">{{ size_win_x64_zip }}</span></li>
+            <li><a href="{{ url_win_x86_zip }}">.zip · {{{ dl_32 }}}</a><span class="size">{{ size_win_x86_zip }}</span></li>
           </ul>
         </div>
-        <div class="platform">
+        <div class="platform" data-reveal>
           <h3>{{{ dl_win7 }}}</h3>
-          <p class="file-group"><span class="note">{{{ dl_win7_note }}}</span></p>
           <ul class="files">
-            <li><a href="{{ url_win7_zip }}">.zip</a> <span class="size">{{ size_win7_zip }}</span></li>
+            <li><a href="{{ url_win7_zip }}">.zip</a><span class="size">{{ size_win7_zip }}</span></li>
           </ul>
+          <p class="note">{{{ dl_win7_note }}}</p>
         </div>
-        <div class="platform">
+        <div class="platform" data-reveal>
           <h3>{{{ dl_linux }}}</h3>
           <ul class="files">
-            <li><a href="{{ url_linux_appimage }}">AppImage</a> <span class="note">{{{ dl_appimage }}}</span> <span class="size">{{ size_linux_appimage }}</span></li>
-            <li><a href="{{ url_linux_deb }}">.deb</a> <span class="note">{{{ dl_deb }}}</span> <span class="size">{{ size_linux_deb }}</span></li>
-            <li><a href="{{ url_linux_tar }}">.tar.gz</a> <span class="note">{{{ dl_tar }}}</span> <span class="size">{{ size_linux_tar }}</span></li>
+            <li><a href="{{ url_linux_appimage }}">AppImage</a><span class="size">{{ size_linux_appimage }}</span></li>
+            <li><a href="{{ url_linux_deb }}">.deb</a><span class="size">{{ size_linux_deb }}</span></li>
+            <li><a href="{{ url_linux_tar }}">.tar.gz</a><span class="size">{{ size_linux_tar }}</span></li>
           </ul>
+          <p class="note">AppImage: {{{ dl_appimage }}}. .deb: {{{ dl_deb }}}.</p>
         </div>
-        <div class="platform">
+        <div class="platform" data-reveal>
           <h3>{{{ dl_mac }}}</h3>
           <ul class="files">
-            <li><a href="{{ url_mac_dmg }}">.dmg</a> <span class="note">{{{ dl_dmg }}}</span> <span class="size">{{ size_mac_dmg }}</span></li>
+            <li><a href="{{ url_mac_dmg }}">.dmg</a><span class="size">{{ size_mac_dmg }}</span></li>
           </ul>
-          <p class="note">{{{ dl_mac_note }}}</p>
+          <p class="note">{{{ dl_dmg }}}. {{{ dl_mac_note }}}</p>
         </div>
       </div>
-      <div class="lab">
+      <div class="lab" data-reveal>
         <h3>{{{ lab_title }}}</h3>
         <p>{{{ lab_text }}}</p>
         <pre><code>msiexec /i {{ name_win_x64_msi }} /qn INSTALLFOLDER="D:\Cangurul" DESKTOPSHORTCUT=""</code></pre>
         <p class="note">{{{ lab_options }}}</p>
       </div>
       <p class="extra">
-        <a href="{{ url_sha256 }}">{{{ checksums }}}</a> ·
+        <a href="{{ url_sha256 }}">{{{ checksums }}}</a>
         <a href="https://github.com/nazdravan/cangurul/releases">{{{ all_releases }}}</a>
       </p>
     </div>
@@ -164,7 +184,7 @@
 
 <footer class="foot">
   <div class="wrap foot-row">
-    <p>{{{ footer_made }}} Nicolae Postica · <a href="https://github.com/nazdravan">{{{ footer_github_user }}}</a></p>
+    <p class="author">{{{ footer_made }}} Nicolae Postica · <a href="https://github.com/nazdravan">{{{ footer_github_user }}}</a></p>
     <p class="foot-links">
       <a href="https://github.com/nazdravan/cangurul">{{{ footer_source }}}</a>
       <a href="https://github.com/nazdravan/cangurul/blob/main/{{ readme_file }}">{{{ footer_docs }}}</a>
@@ -173,6 +193,7 @@
       <a href="https://github.com/nazdravan/cangurul/blob/main/LICENSE">{{{ footer_license }}}</a>
     </p>
   </div>
+  <p class="wordmark" aria-hidden="true">Cangurul</p>
 </footer>
 
 </body>

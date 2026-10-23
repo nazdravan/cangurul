@@ -140,6 +140,8 @@ IMAGES = {
     "screenshot.png": ROOT / "docs/assets/screenshot.png",
     "analizor.png": ROOT / "docs/assets/analizor.png",
     "og.png": ROOT / "docs/assets/cangurul-banner.png",
+    "kangaroo.svg": ROOT / "assets/art/east.svg",
+    "kangaroo-tired.svg": ROOT / "assets/art/tired.svg",
 }
 
 
@@ -157,8 +159,9 @@ def news_html(md, t):
     for s in changelog_sections(md, NEWS_COUNT):
         date = format_date(s["date"], t["months"], t["date_format"])
         out.append(
-            f'<article class="release"><h3>{html.escape(s["version"])} '
-            f'<time datetime="{s["date"]}">{date}</time></h3>\n{md_to_html(s["body"])}</article>'
+            f'<article class="release" data-reveal><div class="release-head"><h3>{html.escape(s["version"])}</h3>'
+            f'<time datetime="{s["date"]}">{date}</time></div>\n'
+            f'<div class="release-body">{md_to_html(s["body"])}</div></article>'
         )
     return "\n".join(out)
 
@@ -182,6 +185,8 @@ def build(release, out):
             "version": version,
             "date": format_date(release["publishedAt"], t["months"], t["date_format"]),
             "kinds_json": kinds,
+            # Mărimea titlului se calculează din rândul lui cel mai lung (style.css).
+            "h1_chars": str(max(len(t["hero_title_1"]), len(t["hero_title_2"]) + 2)),
             "news_html": news_html((ROOT / t["changelog_file"]).read_text(encoding="utf-8"), t),
         })
         for code in LANGS:
