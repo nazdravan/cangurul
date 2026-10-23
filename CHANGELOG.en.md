@@ -5,6 +5,20 @@
 The notable changes in each version. Versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [3.0.3] — 2026-10-23
+
+### Added
+
+- Windows `.msi` installer: the install folder can be changed, and a
+  checkbox (ticked by default) creates a Cangurul shortcut on the desktop.
+  Unattended: `msiexec /i cangurul-*.msi /qn INSTALLFOLDER="D:\Cangurul"
+  DESKTOPSHORTCUT=""`.
+
+### Changed
+
+- The `.msi` installer windows are in Romanian, without the license page.
+- A new version installs into the folder chosen during the previous install.
+
 ## [3.0.2] — 2026-10-22
 
 ### Added
@@ -69,6 +83,7 @@ The first version rewritten in Rust, based on the “Cangurul” program
   diacritics.
 - Packages for Windows (including Windows 7), Linux and macOS.
 
+[3.0.3]: https://github.com/nazdravan/cangurul/compare/v3.0.2...v3.0.3
 [3.0.2]: https://github.com/nazdravan/cangurul/compare/v3.0.1...v3.0.2
 [3.0.1]: https://github.com/nazdravan/cangurul/compare/v3.0.0...v3.0.1
 [3.0.0]: https://github.com/nazdravan/cangurul/releases/tag/v3.0.0

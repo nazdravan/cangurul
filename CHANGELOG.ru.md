@@ -5,6 +5,20 @@
 Важные изменения в каждой версии. Нумерация следует
 [Semantic Versioning](https://semver.org/lang/ru/).
 
+## [3.0.3] — 2026-10-23
+
+### Добавлено
+
+- Установщик `.msi` для Windows: папку установки можно изменить, а флажок
+  (отмечен по умолчанию) создаёт ярлык Cangurul на рабочем столе. Без окон:
+  `msiexec /i cangurul-*.msi /qn INSTALLFOLDER="D:\Cangurul"
+  DESKTOPSHORTCUT=""`.
+
+### Изменено
+
+- Окна установщика `.msi` на румынском, без страницы с лицензией.
+- Новая версия устанавливается в папку, выбранную при прошлой установке.
+
 ## [3.0.2] — 2026-10-22
 
 ### Добавлено
@@ -70,6 +84,7 @@
   диакритикой или без.
 - Пакеты для Windows (включая Windows 7), Linux и macOS.
 
+[3.0.3]: https://github.com/nazdravan/cangurul/compare/v3.0.2...v3.0.3
 [3.0.2]: https://github.com/nazdravan/cangurul/compare/v3.0.1...v3.0.2
 [3.0.1]: https://github.com/nazdravan/cangurul/compare/v3.0.0...v3.0.1
 [3.0.0]: https://github.com/nazdravan/cangurul/releases/tag/v3.0.0
