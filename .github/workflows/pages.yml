@@ -1,0 +1,66 @@
+name: Pages
+
+# Pagina de prezentare https://nazdravan.github.io/cangurul/ (sursa în site/).
+# Se reconstruiește după fiecare rulare reușită a workflow-ului Release (un
+# release publicat de Release nu pornește alte workflow-uri, deci nu se poate
+# folosi `on: release`), la schimbarea paginii sau a jurnalelor pe `main` și
+# manual. Linkurile și noutățile vin din ultimul release publicat.
+
+on:
+  workflow_run:
+    workflows: [Release]
+    types: [completed]
+    branches: [main]
+  push:
+    branches: [main]
+    paths:
+      - site/**
+      - CHANGELOG*.md
+      - docs/assets/**
+      - assets/logo.png
+      - assets/art/**
+      - .github/workflows/pages.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Teste
+        run: |
+          node --test 'site/tests/*.test.mjs'
+          python3 -m unittest discover -s site/tests
+      # Fără tag: ultimul release publicat (nu draft, nu pre-release).
+      - name: Ultimul release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release view --repo "$GITHUB_REPOSITORY" --json tagName,publishedAt,url,assets > release.json
+      - name: Pagina
+        run: python3 site/build.py --release release.json --out _site
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

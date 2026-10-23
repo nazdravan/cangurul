@@ -16,7 +16,7 @@
 [![Linux](https://img.shields.io/badge/Linux-AppImage-FCC624?style=flat-square&logo=linux&logoColor=black)](packaging/linux/)
 [![macOS](https://img.shields.io/badge/macOS-Apple%20Silicon%20%7C%20Intel-000000?style=flat-square&logo=apple&logoColor=white)](#macos)
 
-[**Quick start**](#quick-start) · [The language](#the-language) · [Code analyzer](#code-analyzer) · [Changelog](CHANGELOG.en.md) · [Releases](../../releases) · [Issues](../../issues)
+[**Website**](https://nazdravan.github.io/cangurul/en/) · [Quick start](#quick-start) · [The language](#the-language) · [Code analyzer](#code-analyzer) · [Changelog](CHANGELOG.en.md) · [Releases](../../releases) · [Issues](../../issues)
 
 [Română](README.md) · **English** · [Русский](README.ru.md)
 

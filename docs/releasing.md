@@ -68,6 +68,21 @@ ramură, opțional cu o versiune de test (de ex. `3.1.0-rc.1`). Se fac doar
 testele și build-urile, iar pachetele rămân ca artefacte ale rulării. Nu se
 creează niciun release. Așa se pot încerca pachetele înainte de a mări versiunea.
 
+## Pagina programului
+
+<https://nazdravan.github.io/cangurul/> (sursa în `site/`) se reconstruiește
+singură de workflow-ul **Pages** după fiecare rulare reușită a lui Release:
+versiunea, linkurile fișierelor și noutățile vin din ultimul release publicat și
+din `CHANGELOG*.md`. Dacă release-ului îi lipsește un fișier, pagina nu se
+publică și rămâne cea veche. Pornire manuală: *Actions → Pages → Run workflow*.
+Local:
+
+```sh
+gh release view --json tagName,publishedAt,url,assets > /tmp/release.json
+python3 site/build.py --release /tmp/release.json --out _site
+python3 -m http.server -d _site
+```
+
 ## Ce se construiește
 
 | Fișier | Pentru | Unde se construiește |

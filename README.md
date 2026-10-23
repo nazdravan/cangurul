@@ -16,7 +16,7 @@
 [![Linux](https://img.shields.io/badge/Linux-AppImage-FCC624?style=flat-square&logo=linux&logoColor=black)](packaging/linux/)
 [![macOS](https://img.shields.io/badge/macOS-Apple%20Silicon%20%7C%20Intel-000000?style=flat-square&logo=apple&logoColor=white)](#macos)
 
-[**Pornire rapidă**](#pornire-rapidă) · [Limbajul](#limbajul) · [Analizorul de cod](#analizorul-de-cod) · [Modificări](CHANGELOG.md) · [Releases](../../releases) · [Issues](../../issues)
+[**Pagina programului**](https://nazdravan.github.io/cangurul/) · [Pornire rapidă](#pornire-rapidă) · [Limbajul](#limbajul) · [Analizorul de cod](#analizorul-de-cod) · [Modificări](CHANGELOG.md) · [Releases](../../releases) · [Issues](../../issues)
 
 **Română** · [English](README.en.md) · [Русский](README.ru.md)
 

@@ -16,7 +16,7 @@
 [![Linux](https://img.shields.io/badge/Linux-AppImage-FCC624?style=flat-square&logo=linux&logoColor=black)](packaging/linux/)
 [![macOS](https://img.shields.io/badge/macOS-Apple%20Silicon%20%7C%20Intel-000000?style=flat-square&logo=apple&logoColor=white)](#macos)
 
-[**Быстрый старт**](#быстрый-старт) · [Язык](#язык) · [Анализатор кода](#анализатор-кода) · [Изменения](CHANGELOG.ru.md) · [Releases](../../releases) · [Issues](../../issues)
+[**Сайт**](https://nazdravan.github.io/cangurul/ru/) · [Быстрый старт](#быстрый-старт) · [Язык](#язык) · [Анализатор кода](#анализатор-кода) · [Изменения](CHANGELOG.ru.md) · [Releases](../../releases) · [Issues](../../issues)
 
 [Română](README.md) · [English](README.en.md) · **Русский**
 
