@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 # Construiește pagina de prezentare (GitHub Pages) din site/, din descrierea
 # ultimului release și din CHANGELOG*.md. Doar biblioteca standard.
+import argparse
 import html
+import json
 import re
+import shutil
+from pathlib import Path
 
 SECTION = re.compile(r"^## \[(?P<version>[^\]]+)\] — (?P<date>\d{4}-\d{2}-\d{2})$", re.M)
 # Liniile de referință de la sfârșitul jurnalului: [3.0.3]: https://…
@@ -124,3 +128,93 @@ def md_to_html(md):
     flush_para()
     flush_list()
     return "\n".join(blocks)
+
+
+ROOT = Path(__file__).resolve().parent.parent
+SITE = ROOT / "site"
+LANGS = {"ro": "", "en": "en/", "ru": "ru/"}
+NEWS_COUNT = 3
+PLACEHOLDER = re.compile(r"\{\{\{\s*(\w+)\s*\}\}\}|\{\{\s*(\w+)\s*\}\}")
+IMAGES = {
+    "logo.png": ROOT / "assets/logo.png",
+    "screenshot.png": ROOT / "docs/assets/screenshot.png",
+    "analizor.png": ROOT / "docs/assets/analizor.png",
+    "og.png": ROOT / "docs/assets/cangurul-banner.png",
+}
+
+
+def render(template, values):
+    """{{{ cheie }}} = HTML brut, {{ cheie }} = text escapat; o cheie lipsă e o eroare."""
+    def sub(m):
+        raw, escaped = m[1], m[2]
+        value = values[raw or escaped]
+        return value if raw else html.escape(value)
+    return PLACEHOLDER.sub(sub, template)
+
+
+def news_html(md, t):
+    out = []
+    for s in changelog_sections(md, NEWS_COUNT):
+        date = format_date(s["date"], t["months"], t["date_format"])
+        out.append(
+            f'<article class="release"><h3>{html.escape(s["version"])} '
+            f'<time datetime="{s["date"]}">{date}</time></h3>\n{md_to_html(s["body"])}</article>'
+        )
+    return "\n".join(out)
+
+
+def build(release, out):
+    assets = release_assets(release)
+    version = release["tagName"].removeprefix("v")
+    template = (SITE / "template.html").read_text(encoding="utf-8")
+    kinds = json.dumps({
+        "windows": assets["win-x64-msi"]["url"],
+        "mac": assets["mac-dmg"]["url"],
+        "linux": assets["linux-appimage"]["url"],
+    })
+    for lang, path in LANGS.items():
+        t = json.loads((SITE / "i18n" / f"{lang}.json").read_text(encoding="utf-8"))
+        values = {k: v for k, v in t.items() if isinstance(v, str)}
+        values.update({
+            "root": "../" if path else "",
+            "path": path,
+            "home_ro": "../" if path else "./",
+            "version": version,
+            "date": format_date(release["publishedAt"], t["months"], t["date_format"]),
+            "kinds_json": kinds,
+            "news_html": news_html((ROOT / t["changelog_file"]).read_text(encoding="utf-8"), t),
+        })
+        for code in LANGS:
+            values[f"current_{code}"] = 'aria-current="page"' if code == lang else ""
+        for kind, a in assets.items():
+            key = kind.replace("-", "_")
+            values[f"url_{key}"] = a["url"]
+            values[f"name_{key}"] = a["name"]
+            values[f"size_{key}"] = format_size(a["size"], lang)
+        page = out / path / "index.html"
+        page.parent.mkdir(parents=True, exist_ok=True)
+        page.write_text(render(template, values), encoding="utf-8")
+
+    (out / "assets").mkdir(parents=True, exist_ok=True)
+    for f in (SITE / "assets").iterdir():
+        shutil.copy2(f, out / "assets" / f.name)
+    for name, src in IMAGES.items():
+        shutil.copy2(src, out / "assets" / name)
+    (out / ".nojekyll").write_text("")
+
+
+def main():
+    p = argparse.ArgumentParser(description="Construiește pagina de prezentare.")
+    p.add_argument("--release", required=True, help="JSON de la gh release view --json tagName,publishedAt,url,assets")
+    p.add_argument("--out", required=True, help="dosarul în care se scrie pagina")
+    args = p.parse_args()
+    release = json.loads(Path(args.release).read_text(encoding="utf-8"))
+    out = Path(args.out)
+    if out.exists():
+        shutil.rmtree(out)
+    build(release, out)
+    print(f"Gata: {out}")
+
+
+if __name__ == "__main__":
+    main()

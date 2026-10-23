@@ -3,3 +3,5 @@
 /dist
 # Installerul versiunii 2, păstrat doar ca referință
 /Cangurul_V_*.exe
+/_site
+__pycache__/

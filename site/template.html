@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="{{ lang }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{{ title }}}</title>
+<meta name="description" content="{{ description }}">
+<link rel="canonical" href="https://nazdravan.github.io/cangurul/{{ path }}">
+<link rel="alternate" hreflang="ro" href="https://nazdravan.github.io/cangurul/">
+<link rel="alternate" hreflang="en" href="https://nazdravan.github.io/cangurul/en/">
+<link rel="alternate" hreflang="ru" href="https://nazdravan.github.io/cangurul/ru/">
+<link rel="alternate" hreflang="x-default" href="https://nazdravan.github.io/cangurul/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{{ title }}}">
+<meta property="og:description" content="{{ description }}">
+<meta property="og:url" content="https://nazdravan.github.io/cangurul/{{ path }}">
+<meta property="og:image" content="https://nazdravan.github.io/cangurul/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" type="image/png" href="{{ root }}assets/logo.png">
+<link rel="stylesheet" href="{{ root }}assets/style.css">
+<script type="module" src="{{ root }}assets/main.js"></script>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-row">
+    <a class="brand" href="./">
+      <img src="{{ root }}assets/logo.png" width="32" height="32" alt="">
+      <span>Cangurul</span>
+    </a>
+    <nav class="nav" aria-label="{{ nav_label }}">
+      <a href="#ce-face">{{{ nav_features }}}</a>
+      <a href="#comparatie">{{{ nav_compare }}}</a>
+      <a href="#noutati">{{{ nav_news }}}</a>
+      <a href="#descarca">{{{ nav_download }}}</a>
+    </nav>
+    <nav class="langs" aria-label="{{ lang_label }}">
+      <a href="{{ home_ro }}" hreflang="ro" lang="ro" {{{ current_ro }}}>RO</a>
+      <a href="{{ root }}en/" hreflang="en" lang="en" {{{ current_en }}}>EN</a>
+      <a href="{{ root }}ru/" hreflang="ru" lang="ru" {{{ current_ru }}}>RU</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">{{{ hero_version }}} {{ version }} · {{{ hero_free }}}</p>
+      <h1>{{{ hero_title }}}</h1>
+      <p class="lead">{{{ hero_lead }}}</p>
+      <p class="compat">{{{ hero_compat }}}</p>
+      <div class="cta">
+        <a id="download-main" class="button" href="#descarca"
+           data-kinds="{{ kinds_json }}"
+           data-label-windows="{{ btn_windows }}" data-label-mac="{{ btn_mac }}" data-label-linux="{{ btn_linux }}">{{{ btn_default }}}</a>
+        <a class="cta-other" href="#descarca">{{{ btn_other }}} ↓</a>
+      </div>
+    </div>
+    <div class="wrap wrap-wide">
+      <img class="shot" src="{{ root }}assets/screenshot.png" width="1280" height="800" alt="{{ screenshot_alt }}">
+    </div>
+  </section>
+
+  <section id="ce-face" class="features">
+    <div class="wrap">
+      <h2>{{{ features_title }}}</h2>
+      <div class="features-grid">
+        <div class="feature-list">
+          <div class="feature"><h3>{{{ f1_title }}}</h3><p>{{{ f1_text }}}</p></div>
+          <div class="feature"><h3>{{{ f2_title }}}</h3><p>{{{ f2_text }}}</p></div>
+          <div class="feature"><h3>{{{ f3_title }}}</h3><p>{{{ f3_text }}}</p></div>
+        </div>
+        <img class="shot shot-side" src="{{ root }}assets/analizor.png" width="1280" height="800" alt="{{ analyzer_alt }}" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <section id="comparatie" class="compare">
+    <div class="wrap">
+      <h2>{{{ compare_title }}}</h2>
+      <p class="section-lead">{{{ compare_lead }}}</p>
+      <table class="compare-table">
+        <thead>
+          <tr><td></td><th scope="col">{{{ compare_v2 }}}</th><th scope="col">{{{ compare_v3 }}}</th></tr>
+        </thead>
+        <tbody>
+          <tr class="same"><th scope="row">{{{ cmp_same }}}</th><td><span class="yes" aria-label="{{ compare_yes }}">✓</span></td><td><span class="yes" aria-label="{{ compare_yes }}">✓</span> {{{ cmp_same_v3 }}}</td></tr>
+          <tr><th scope="row">{{{ cmp_analyzer }}}</th><td><span class="no" aria-label="{{ compare_no }}">—</span></td><td><span class="yes" aria-label="{{ compare_yes }}">✓</span></td></tr>
+          <tr><th scope="row">{{{ cmp_syntax }}}</th><td><span class="no" aria-label="{{ compare_no }}">—</span></td><td><span class="yes" aria-label="{{ compare_yes }}">✓</span></td></tr>
+          <tr><th scope="row">{{{ cmp_suggest }}}</th><td><span class="no" aria-label="{{ compare_no }}">—</span></td><td><span class="yes" aria-label="{{ compare_yes }}">✓</span></td></tr>
+          <tr><th scope="row">{{{ cmp_step }}}</th><td><span class="no" aria-label="{{ compare_no }}">—</span></td><td><span class="yes" aria-label="{{ compare_yes }}">✓</span></td></tr>
+          <tr><th scope="row">{{{ cmp_line }}}</th><td><span class="no" aria-label="{{ compare_no }}">—</span></td><td><span class="yes" aria-label="{{ compare_yes }}">✓</span></td></tr>
+          <tr><th scope="row">{{{ cmp_theme }}}</th><td><span class="no" aria-label="{{ compare_no }}">—</span></td><td><span class="yes" aria-label="{{ compare_yes }}">✓</span></td></tr>
+          <tr><th scope="row">{{{ cmp_field }}}</th><td><span class="no" aria-label="{{ compare_no }}">—</span></td><td><span class="yes" aria-label="{{ compare_yes }}">✓</span></td></tr>
+          <tr><th scope="row">{{{ cmp_os }}}</th><td><span class="no" aria-label="{{ compare_no }}">—</span></td><td><span class="yes" aria-label="{{ compare_yes }}">✓</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="noutati" class="news">
+    <div class="wrap">
+      <h2>{{{ news_title }}}</h2>
+      {{{ news_html }}}
+      <p><a class="more" href="https://github.com/nazdravan/cangurul/blob/main/{{ changelog_file }}">{{{ news_all }}} →</a></p>
+    </div>
+  </section>
+
+  <section id="descarca" class="download">
+    <div class="wrap">
+      <h2>{{{ dl_title }}}</h2>
+      <p class="section-lead">{{{ dl_lead }}} Cangurul {{ version }}, {{{ dl_released }}} {{ date }}.</p>
+      <div class="platforms">
+        <div class="platform">
+          <h3>{{{ dl_win }}}</h3>
+          <p class="file-group">{{{ dl_msi }}} <span class="note">— {{{ dl_msi_note }}}</span></p>
+          <ul class="files">
+            <li><a href="{{ url_win_x64_msi }}">.msi · {{{ dl_64 }}}</a> <span class="size">{{ size_win_x64_msi }}</span></li>
+            <li><a href="{{ url_win_x86_msi }}">.msi · {{{ dl_32 }}}</a> <span class="size">{{ size_win_x86_msi }}</span></li>
+          </ul>
+          <p class="file-group">{{{ dl_portable }}}</p>
+          <ul class="files">
+            <li><a href="{{ url_win_x64_zip }}">.zip · {{{ dl_64 }}}</a> <span class="size">{{ size_win_x64_zip }}</span></li>
+            <li><a href="{{ url_win_x86_zip }}">.zip · {{{ dl_32 }}}</a> <span class="size">{{ size_win_x86_zip }}</span></li>
+          </ul>
+        </div>
+        <div class="platform">
+          <h3>{{{ dl_win7 }}}</h3>
+          <p class="file-group"><span class="note">{{{ dl_win7_note }}}</span></p>
+          <ul class="files">
+            <li><a href="{{ url_win7_zip }}">.zip</a> <span class="size">{{ size_win7_zip }}</span></li>
+          </ul>
+        </div>
+        <div class="platform">
+          <h3>{{{ dl_linux }}}</h3>
+          <ul class="files">
+            <li><a href="{{ url_linux_appimage }}">AppImage</a> <span class="note">{{{ dl_appimage }}}</span> <span class="size">{{ size_linux_appimage }}</span></li>
+            <li><a href="{{ url_linux_deb }}">.deb</a> <span class="note">{{{ dl_deb }}}</span> <span class="size">{{ size_linux_deb }}</span></li>
+            <li><a href="{{ url_linux_tar }}">.tar.gz</a> <span class="note">{{{ dl_tar }}}</span> <span class="size">{{ size_linux_tar }}</span></li>
+          </ul>
+        </div>
+        <div class="platform">
+          <h3>{{{ dl_mac }}}</h3>
+          <ul class="files">
+            <li><a href="{{ url_mac_dmg }}">.dmg</a> <span class="note">{{{ dl_dmg }}}</span> <span class="size">{{ size_mac_dmg }}</span></li>
+          </ul>
+          <p class="note">{{{ dl_mac_note }}}</p>
+        </div>
+      </div>
+      <div class="lab">
+        <h3>{{{ lab_title }}}</h3>
+        <p>{{{ lab_text }}}</p>
+        <pre><code>msiexec /i {{ name_win_x64_msi }} /qn INSTALLFOLDER="D:\Cangurul" DESKTOPSHORTCUT=""</code></pre>
+        <p class="note">{{{ lab_options }}}</p>
+      </div>
+      <p class="extra">
+        <a href="{{ url_sha256 }}">{{{ checksums }}}</a> ·
+        <a href="https://github.com/nazdravan/cangurul/releases">{{{ all_releases }}}</a>
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-row">
+    <p>{{{ footer_made }}} Nicolae Postica · <a href="https://github.com/nazdravan">{{{ footer_github_user }}}</a></p>
+    <p class="foot-links">
+      <a href="https://github.com/nazdravan/cangurul">{{{ footer_source }}}</a>
+      <a href="https://github.com/nazdravan/cangurul/blob/main/{{ readme_file }}">{{{ footer_docs }}}</a>
+      <a href="https://github.com/nazdravan/cangurul/blob/main/{{ changelog_file }}">{{{ footer_changelog }}}</a>
+      <a href="https://github.com/nazdravan/cangurul/issues">{{{ footer_issues }}}</a>
+      <a href="https://github.com/nazdravan/cangurul/blob/main/LICENSE">{{{ footer_license }}}</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
