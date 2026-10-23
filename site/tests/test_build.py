@@ -1,5 +1,6 @@
 # Testele scriptului care construiește pagina de prezentare:
 #   python3 -m unittest discover -s site/tests -v
+import json
 import sys
 import unittest
 from pathlib import Path
@@ -37,6 +38,38 @@ class ChangelogTest(unittest.TestCase):
             '<a href="https://semver.org/">SemVer</a>',
             build.md_to_html("[SemVer](https://semver.org/)"),
         )
+
+
+RO_MONTHS = ["ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie",
+             "august", "septembrie", "octombrie", "noiembrie", "decembrie"]
+
+
+def release():
+    return json.loads((HERE / "release.json").read_text(encoding="utf-8"))
+
+
+class ReleaseTest(unittest.TestCase):
+    def test_release_assets_maps_all_kinds(self):
+        a = build.release_assets(release())
+        self.assertEqual(set(a), set(build.ASSET_KINDS))
+        self.assertEqual(a["win-x64-msi"]["name"], "cangurul-3.0.3-windows-x64.msi")
+        self.assertEqual(a["sha256"]["name"], "SHA256SUMS.txt")
+
+    def test_missing_asset_names_the_file(self):
+        r = release()
+        r["assets"] = [x for x in r["assets"] if not x["name"].endswith(".dmg")]
+        with self.assertRaises(SystemExit) as e:
+            build.release_assets(r)
+        self.assertIn("macos-universal.dmg", str(e.exception))
+
+    def test_format_size(self):
+        self.assertEqual(build.format_size(9213164, "ro"), "8,8 MB")
+        self.assertEqual(build.format_size(9213164, "en"), "8.8 MB")
+        self.assertEqual(build.format_size(9213164, "ru"), "8,8 МБ")
+
+    def test_format_date(self):
+        self.assertEqual(build.format_date("2026-10-23T12:20:00Z", RO_MONTHS, "{d} {month} {y}"), "23 octombrie 2026")
+        self.assertEqual(build.format_date("2026-10-03", RO_MONTHS, "{month} {d}, {y}"), "octombrie 3, 2026")
 
 
 if __name__ == "__main__":

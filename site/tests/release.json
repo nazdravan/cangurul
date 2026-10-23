@@ -1,0 +1,57 @@
+{
+ "assets": [
+  {
+   "name": "cangurul-3.0.3-linux-x86_64.AppImage",
+   "size": 7412216,
+   "url": "https://github.com/nazdravan/cangurul/releases/download/v3.0.3/cangurul-3.0.3-linux-x86_64.AppImage"
+  },
+  {
+   "name": "cangurul-3.0.3-linux-x86_64.deb",
+   "size": 5054504,
+   "url": "https://github.com/nazdravan/cangurul/releases/download/v3.0.3/cangurul-3.0.3-linux-x86_64.deb"
+  },
+  {
+   "name": "cangurul-3.0.3-linux-x86_64.tar.gz",
+   "size": 7010636,
+   "url": "https://github.com/nazdravan/cangurul/releases/download/v3.0.3/cangurul-3.0.3-linux-x86_64.tar.gz"
+  },
+  {
+   "name": "cangurul-3.0.3-macos-universal.dmg",
+   "size": 10561060,
+   "url": "https://github.com/nazdravan/cangurul/releases/download/v3.0.3/cangurul-3.0.3-macos-universal.dmg"
+  },
+  {
+   "name": "cangurul-3.0.3-windows-x64-portable.zip",
+   "size": 5080834,
+   "url": "https://github.com/nazdravan/cangurul/releases/download/v3.0.3/cangurul-3.0.3-windows-x64-portable.zip"
+  },
+  {
+   "name": "cangurul-3.0.3-windows-x64.msi",
+   "size": 4362240,
+   "url": "https://github.com/nazdravan/cangurul/releases/download/v3.0.3/cangurul-3.0.3-windows-x64.msi"
+  },
+  {
+   "name": "cangurul-3.0.3-windows-x86-portable.zip",
+   "size": 4992970,
+   "url": "https://github.com/nazdravan/cangurul/releases/download/v3.0.3/cangurul-3.0.3-windows-x86-portable.zip"
+  },
+  {
+   "name": "cangurul-3.0.3-windows-x86.msi",
+   "size": 4345856,
+   "url": "https://github.com/nazdravan/cangurul/releases/download/v3.0.3/cangurul-3.0.3-windows-x86.msi"
+  },
+  {
+   "name": "cangurul-3.0.3-windows7-x86-portable.zip",
+   "size": 23210097,
+   "url": "https://github.com/nazdravan/cangurul/releases/download/v3.0.3/cangurul-3.0.3-windows7-x86-portable.zip"
+  },
+  {
+   "name": "SHA256SUMS.txt",
+   "size": 916,
+   "url": "https://github.com/nazdravan/cangurul/releases/download/v3.0.3/SHA256SUMS.txt"
+  }
+ ],
+ "publishedAt": "2026-10-23T11:53:48Z",
+ "tagName": "v3.0.3",
+ "url": "https://github.com/nazdravan/cangurul/releases/tag/v3.0.3"
+}

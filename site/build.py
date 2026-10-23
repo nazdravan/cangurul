@@ -24,6 +24,49 @@ def changelog_sections(md, count):
     return sections
 
 
+# Fișierele unui release: cheia folosită în pagină -> sfârșitul numelui,
+# după `cangurul-<versiune>-` (SHA256SUMS.txt are numele întreg).
+ASSET_KINDS = {
+    "win-x64-msi": "windows-x64.msi",
+    "win-x86-msi": "windows-x86.msi",
+    "win-x64-zip": "windows-x64-portable.zip",
+    "win-x86-zip": "windows-x86-portable.zip",
+    "win7-zip": "windows7-x86-portable.zip",
+    "linux-appimage": "linux-x86_64.AppImage",
+    "linux-deb": "linux-x86_64.deb",
+    "linux-tar": "linux-x86_64.tar.gz",
+    "mac-dmg": "macos-universal.dmg",
+    "sha256": "SHA256SUMS.txt",
+}
+
+
+def release_assets(release):
+    """Cheie -> {name, url, size}. Un fișier lipsă oprește build-ul: pagina
+    veche, cu linkuri bune, rămâne publicată."""
+    version = release["tagName"].removeprefix("v")
+    by_name = {a["name"]: a for a in release["assets"]}
+    assets = {}
+    for kind, suffix in ASSET_KINDS.items():
+        name = suffix if kind == "sha256" else f"cangurul-{version}-{suffix}"
+        if name not in by_name:
+            raise SystemExit(f"Release-ul {release['tagName']} nu are fișierul {name}")
+        a = by_name[name]
+        assets[kind] = {"name": name, "url": a["url"], "size": a["size"]}
+    return assets
+
+
+def format_size(n, lang):
+    mb = f"{n / 1024 / 1024:.1f}"
+    if lang == "en":
+        return f"{mb} MB"
+    return mb.replace(".", ",") + (" МБ" if lang == "ru" else " MB")
+
+
+def format_date(iso, months, pattern):
+    y, m, d = (int(x) for x in iso[:10].split("-"))
+    return pattern.format(d=d, month=months[m - 1], y=y)
+
+
 def inline(text):
     """`cod`, **bold** și [text](url) pe un text deja escapat."""
     parts = re.split(r"(`[^`]*`)", text)
