@@ -5,6 +5,15 @@
 The notable changes in each version. Versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [3.0.4] — 2026-10-24
+
+### Fixed
+
+- The kangaroo in the top row of the field is shown whole: on large screens
+  (on a Mac, for example) its ears were cut off.
+- The **Settings** menu stays open while you tick its options and closes when
+  you click outside it.
+
 ## [3.0.3] — 2026-10-23
 
 ### Added
