@@ -108,7 +108,7 @@ doar pe un Mac). Rezultatul ajunge în
   `.msi`-ului), Windows SmartScreen va afișa „Windows a protejat computerul”; se continuă cu *Mai multe
   informații → Executare oricum*. Pe macOS, aplicația are doar o semnătură
   ad-hoc, deci Gatekeeper o blochează la prima pornire; ocolirea e descrisă în
-  `packaging/macos/CITESTE.txt`, inclus în `.dmg`. Semnarea și notarizarea
+  README (secțiunea macOS) și pe pagina programului. Semnarea și notarizarea
   reală cer un cont Apple Developer.
 - `.msi`-ul primește doar partea numerică a versiunii (`3.1.0-rc.1` → `3.1.0`),
   pentru că MSI nu acceptă altceva. `UpgradeCode` din

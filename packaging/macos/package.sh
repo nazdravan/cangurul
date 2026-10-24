@@ -20,19 +20,19 @@ name=$APP-$VERSION-macos-universal
 stage=$ROOT/dist/stage/$name
 app=$stage/Cangurul.app
 rm -rf "$stage" "$OUT/$name.dmg"
-mkdir -p "$app/Contents/MacOS" "$app/Contents/Resources" "$stage/Exemple" "$OUT"
+mkdir -p "$app/Contents/MacOS" "$app/Contents/Resources" "$OUT"
 lipo -create -output "$app/Contents/MacOS/cangurul" \
     target/aarch64-apple-darwin/release/cangurul target/x86_64-apple-darwin/release/cangurul
 sed -e "s/@VERSION@/$VERSION/g" -e "s/@MIN_MACOS@/$MACOSX_DEPLOYMENT_TARGET/g" \
     packaging/macos/Info.plist >"$app/Contents/Info.plist"
 cp assets/cangurul.icns "$app/Contents/Resources/cangurul.icns"
-cp examples/*.cng "$stage/Exemple/"
-cp README.md packaging/macos/CITESTE.txt "$stage/"
-cp LICENSE "$stage/LICENSE.txt"
-{ cat assets/license-header.txt; cat assets/fonts/LICENSE.txt; } >"$stage/LICENTE.txt"
+# În fereastra .dmg-ului rămân doar aplicația și Applications; licențele
+# merg în aplicație, iar exemplele sunt deja în program (meniul Exemple).
+cp LICENSE "$app/Contents/Resources/LICENSE.txt"
+{ cat assets/license-header.txt; cat assets/fonts/LICENSE.txt; } >"$app/Contents/Resources/LICENTE.txt"
 
 # Semnătură ad-hoc: fără ea, pe Apple Silicon aplicația nici nu pornește.
-# Nu înlocuiește semnarea cu un certificat Apple Developer (vezi CITESTE.txt).
+# Nu înlocuiește semnarea cu un certificat Apple Developer (vezi README, secțiunea macOS).
 codesign --force --deep --sign - "$app"
 codesign --verify --deep --strict "$app"
 lipo -info "$app/Contents/MacOS/cangurul"
