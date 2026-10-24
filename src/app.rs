@@ -316,6 +316,9 @@ pub struct CangurApp {
     /// Editorul primește focusul după ce e desenat (click-ul pe un buton
     /// i l-ar lua în același cadru).
     focus_editor: bool,
+    /// Editorul se derulează la început: alt program a fost încărcat, iar
+    /// derularea rămasă de la cel vechi l-ar ascunde pe cel nou, mai scurt.
+    scroll_top: bool,
     /// Variantele propuse în timp ce elevul scrie.
     completion: Option<Completion>,
 }
@@ -420,6 +423,7 @@ impl CangurApp {
             analyzed: None,
             jump_to: None,
             focus_editor: false,
+            scroll_top: false,
             completion: None,
         };
         app.apply_theme(&cc.egui_ctx);
@@ -669,6 +673,7 @@ impl CangurApp {
         match std::fs::read(path) {
             Ok(bytes) => {
                 self.s.code = decode_cng(&bytes);
+                self.scroll_top = true;
                 self.cursor = None;
                 self.s.path = Some(path.to_path_buf());
                 self.s.dirty = false;
@@ -715,6 +720,7 @@ impl CangurApp {
         match p {
             Pending::New => {
                 self.s.code = "[\n\n]\n".into();
+                self.scroll_top = true;
                 self.s.path = None;
                 self.s.dirty = false;
                 self.cursor = Some(2..2);
@@ -730,6 +736,7 @@ impl CangurApp {
             }
             Pending::Example(i) => {
                 self.s.code = EXAMPLES[i].1.to_string();
+                self.scroll_top = true;
                 self.cursor = None;
                 self.s.path = None;
                 self.s.dirty = false;
@@ -1402,11 +1409,13 @@ impl CangurApp {
                     .corner_radius(10)
                     .inner_margin(Margin::same(4))
                     .show(ui, |ui| {
-                        egui::ScrollArea::both()
-                            .auto_shrink([false, false])
-                            .show(ui, |ui| {
-                                self.code_editor(ui, &pal, editable, title);
-                            });
+                        let mut area = egui::ScrollArea::both().auto_shrink([false, false]);
+                        if std::mem::take(&mut self.scroll_top) {
+                            area = area.scroll_offset(Vec2::ZERO);
+                        }
+                        area.show(ui, |ui| {
+                            self.code_editor(ui, &pal, editable, title);
+                        });
                     });
             });
     }
@@ -2360,6 +2369,9 @@ fn setup_style(ctx: &egui::Context) {
         v.hyperlink_color = Color32::from_rgb(0xF0, 0x8A, 0x3C);
     });
 }
+
+#[cfg(test)]
+mod demo;
 
 #[cfg(test)]
 mod tests {
