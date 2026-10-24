@@ -28,7 +28,7 @@ A **Rust** rewrite of the “Cangurul” program (version 2), used in schools in
 Moldova and Romania. `.cng` files from the old version open and run unchanged.
 *Cangurul* is Romanian for “the kangaroo”.
 
-<img src="docs/assets/screenshot.png" alt="Cangurul: an original example after running" />
+<img src="docs/assets/screenshot-en.png" alt="Cangurul: an original example after running" />
 
 ## Quick start
 
@@ -146,7 +146,7 @@ The kangaroo starts in the top-left corner, facing right.
 
 ## Code analyzer
 
-<img src="docs/assets/analizor.png" alt="The code analyzer with errors and suggestions" />
+<img src="docs/assets/analizor-en.png" alt="The code analyzer with errors and suggestions" />
 
 The program is analyzed on every change (this can be turned off in
 *Settings*; then analysis runs with **Check** / F7). The analyzer doesn't stop

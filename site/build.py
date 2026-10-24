@@ -133,12 +133,14 @@ def md_to_html(md):
 ROOT = Path(__file__).resolve().parent.parent
 SITE = ROOT / "site"
 LANGS = {"ro": "", "en": "en/", "ru": "ru/"}
+SHOT_SUFFIX = {"ro": "", "en": "-en", "ru": "-ru"}
 NEWS_COUNT = 3
 PLACEHOLDER = re.compile(r"\{\{\{\s*(\w+)\s*\}\}\}|\{\{\s*(\w+)\s*\}\}")
 IMAGES = {
     "logo.png": ROOT / "assets/logo.png",
-    "screenshot.png": ROOT / "docs/assets/screenshot.png",
-    "analizor.png": ROOT / "docs/assets/analizor.png",
+    # Capturile aplicației, câte una pentru fiecare limbă a paginii.
+    **{f"{shot}{SHOT_SUFFIX[lang]}.png": ROOT / f"docs/assets/{shot}{SHOT_SUFFIX[lang]}.png"
+       for shot in ("screenshot", "analizor") for lang in LANGS},
     "og.png": ROOT / "docs/assets/cangurul-banner.png",
     "kangaroo.svg": ROOT / "assets/art/east.svg",
     "kangaroo-tired.svg": ROOT / "assets/art/tired.svg",
@@ -189,6 +191,7 @@ def build(release, out):
         values.update({
             "root": "../" if path else "",
             "path": path,
+            "shot": SHOT_SUFFIX[lang],
             "home_ro": "../" if path else "./",
             "version": version,
             "date": format_date(release["publishedAt"], t["months"], t["date_format"]),

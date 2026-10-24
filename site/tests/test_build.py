@@ -16,7 +16,9 @@ import build  # noqa: E402
 class ChangelogTest(unittest.TestCase):
     def test_sections_from_real_changelog(self):
         md = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
-        s = build.changelog_sections(md, 2)
+        # Fără versiunile apărute după scrierea testului.
+        versions = [x["version"] for x in build.changelog_sections(md, 50)]
+        s = build.changelog_sections(md, versions.index("3.0.2") + 1)[-2:]
         self.assertEqual([x["version"] for x in s], ["3.0.3", "3.0.2"])
         self.assertEqual(s[0]["date"], "2026-10-23")
         self.assertNotIn("[3.0.2]: https://", s[1]["body"])
@@ -126,6 +128,15 @@ class BuildTest(unittest.TestCase):
             self.assertIn('href="mailto:nicolae.postica2@gmail.com"', html)
             self.assertRegex(html, r'<img class="author-photo" src="(\.\./)?assets/author\.png"')
         self.assertTrue((self.out / "assets" / "author.png").exists())
+
+    def test_screenshots_in_page_language(self):
+        for p, suffix in (("index.html", ""), ("en/index.html", "-en"), ("ru/index.html", "-ru")):
+            html = self.page(p)
+            imgs = re.findall(r'assets/(screenshot[^"]*|analizor[^"]*)\.png', html)
+            self.assertTrue(imgs, p)
+            self.assertEqual(set(imgs), {f"screenshot{suffix}", f"analizor{suffix}"}, p)
+            for name in set(imgs):
+                self.assertTrue((self.out / "assets" / f"{name}.png").exists(), name)
 
     def test_home_links_stay_in_language(self):
         self.assertIn('class="brand" href="./"', self.page("en/index.html"))

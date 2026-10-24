@@ -2457,6 +2457,98 @@ mod tests {
             shot(&mut h, "help-author");
         }
 
+        /// Exemplul „Cangur” cu cuvintele și procedurile în limba `lang`.
+        fn translate(src: &str, lang: Lang) -> String {
+            const WORDS: &[[&str; 3]] = &[
+                ["PAS", "step", "шаг"],
+                ["SALT", "jump", "прыжок"],
+                ["ROTIRE", "rotate", "поворот"],
+                ["PROCEDURA", "procedure", "процедура"],
+                ["SFIRSITUL", "end", "конец"],
+                ["PROCEDURII", "procedure", "процедуры"],
+                ["EXECUTA", "execute", "выполнить"],
+                ["CIT", "while", "пока"],
+                ["NU", "not", "не"],
+                ["E_MARGINE", "is_border", "край"],
+                ["CICLULUI", "cycle", "цикла"],
+                ["RIND_NOU", "New_Line", "Новая_строка"],
+            ];
+            let i = match lang {
+                Lang::Ro => return src.to_string(),
+                Lang::En => 1,
+                Lang::Ru => 2,
+            };
+            let mut out = String::new();
+            let mut word = String::new();
+            let flush = |word: &mut String, out: &mut String| {
+                let n = lang::normalize(word);
+                if let Some(w) = WORDS.iter().find(|w| w[0] == n) {
+                    out.push_str(w[i]);
+                } else if let Some(l) = word.strip_prefix("Litera_") {
+                    out.push_str(["", "Letter_", "Буква_"][i]);
+                    out.push_str(l);
+                } else {
+                    out.push_str(word);
+                }
+                word.clear();
+            };
+            for c in src.chars() {
+                if c.is_alphanumeric() || c == '_' {
+                    word.push(c);
+                } else {
+                    flush(&mut word, &mut out);
+                    out.push(c);
+                }
+            }
+            flush(&mut word, &mut out);
+            out
+        }
+
+        /// Capturile pentru pagina web, în fiecare limbă:
+        /// `CANGURUL_SHOTS=docs/assets cargo test --release site_screenshots`.
+        #[test]
+        fn site_screenshots() {
+            let analyzer = [
+                (
+                    Lang::Ro,
+                    "",
+                    "PROCEDURA Patrat\nREPETĂ 4 ORI\n    PAS\n    ROTRE\nSFÎRȘITUL REPETĂRII\nSFÎRȘITUL PROCEDURII\n\n[\nSARI\nEXECUTĂ Patat\nCÎT NU E_MARGINE\n    ROTIRE\nSFÎRȘITUL CICLULUI\n]\n",
+                ),
+                (
+                    Lang::En,
+                    "-en",
+                    "PROCEDURE Square\nREPEAT 4 TIMES\n    STEP\n    ROTAE\nEND REPEAT\nEND PROCEDURE\n\n[\nJUMPP\nEXECUTE Sqare\nWHILE NOT IS_BORDER\n    ROTATE\nEND CYCLE\n]\n",
+                ),
+                (
+                    Lang::Ru,
+                    "-ru",
+                    "ПРОЦЕДУРА Квадрат\nПОВТОРИ 4 РАЗА\n    ШАГ\n    ПОВРОТ\nКОНЕЦ ПОВТОРЕНИЯ\nКОНЕЦ ПРОЦЕДУРЫ\n\n[\nПРЫЖК\nВЫПОЛНИТЬ Квдрат\nПОКА НЕ КРАЙ\n    ПОВОРОТ\nКОНЕЦ ЦИКЛА\n]\n",
+                ),
+            ];
+            for (lang, suffix, bad) in analyzer {
+                let mut h = harness();
+                h.ctx.set_theme(ThemePreference::Light);
+                h.state_mut().s.lang = lang;
+                h.state_mut().s.code = translate(EXAMPLES[0].1, lang);
+                h.state_mut().s.instant = true;
+                h.run_steps(3);
+                h.state_mut().start(Mode::Running);
+                run_until_idle(&mut h);
+                assert!(matches!(h.state().status, Status::Finished), "{lang:?}");
+                shot(&mut h, &format!("screenshot{suffix}"));
+
+                let mut h = harness();
+                h.ctx.set_theme(ThemePreference::Light);
+                h.state_mut().s.lang = lang;
+                h.state_mut().s.code = bad.into();
+                h.run_steps(3);
+                let errs: Vec<usize> = h.state().analysis.errors.iter().map(|e| e.line).collect();
+                assert_eq!(errs, vec![4, 9, 10], "{lang:?}");
+                assert_eq!(h.state().analysis.warnings.len(), 2, "{lang:?}");
+                shot(&mut h, &format!("analizor{suffix}"));
+            }
+        }
+
         #[test]
         fn run_example_from_ui() {
             let mut h = harness();
