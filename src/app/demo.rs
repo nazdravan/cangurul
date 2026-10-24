@@ -132,6 +132,12 @@ impl Rec<'_> {
         self.click_at(at);
     }
 
+    /// Mausul pe butonul cu exact acest text, fără click: butonul se aprinde cât timp vocea îl numește.
+    fn hover(&mut self, label: &str) {
+        let at = self.h.get_by_label(label).rect().center();
+        self.move_to(at);
+    }
+
     /// Trage glisorul Viteza până la valoarea `v` (1–10).
     fn drag_speed(&mut self, v: f32) {
         let rect = self.h.get_by_role(egui::accesskit::Role::Slider).rect();
@@ -225,7 +231,12 @@ fn scenario(r: &mut Rec<'_>) {
     r.at("p03", 0.3);
     r.until_idle();
     r.click_on("Nou");
-    r.at("p04", 1.5);
+    // Comenzile, arătate cât sunt numite; momentele sunt ale cuvintelor din voce (Whisper pe voice.mp3).
+    for (b, t) in [("PAS", 2.4), ("SALT", 7.1), ("ROTIRE", 10.0)] {
+        r.at("p03", t);
+        r.hover(b);
+    }
+    r.at("p04", 3.2);
     for b in ["REPETĂ N", "PAS", "PAS", "PAS", "ROTIRE"] {
         r.click(b);
         r.wait(0.6);
@@ -238,11 +249,12 @@ fn scenario(r: &mut Rec<'_>) {
     r.at("p06", 0.3);
     r.until_idle();
     r.drag_speed(6.0);
-    r.at("p06", 4.0);
-    for _ in 0..6 {
+    r.at("p06", 3.0);
+    for _ in 0..5 {
         r.click_on("Pas cu pas");
         r.wait(0.7);
     }
+    r.at("p06", 11.0);
     r.click_on("Instant");
     r.click_on("Execută");
     r.wait(1.0);
@@ -270,7 +282,10 @@ fn scenario(r: &mut Rec<'_>) {
     r.type_text("A");
     r.wait(0.5);
     r.shot("typo");
-    r.at("p08", 0.5);
+    r.at("p08", 1.8);
+    let fix = r.h.get_by_label_contains("Corectează").rect().center();
+    r.move_to(fix);
+    r.at("p08", 4.2);
     r.click_on("Corectează");
     r.wait(0.8);
     r.click_on("Execută");
@@ -283,18 +298,21 @@ fn scenario(r: &mut Rec<'_>) {
     r.click("Spirala (RO)");
     r.drag_speed(9.0);
     r.click_on("Execută");
-    r.wait(2.5);
+    r.at("p09", 6.4);
     r.click_on("Exemple");
     r.click("Spiral (EN)");
     r.click_on("Instant");
     r.click_on("Execută");
-    r.wait(1.0);
-    r.click_on("Setări");
-    r.click_on("Întunecată");
+    // „interfața are aceleași trei limbi și o temă întunecată”
+    r.at("p09", 11.4);
+    r.click_on("Română");
+    r.click("English");
+    r.click_on("Settings");
+    r.click_on("Dark");
     r.key(Key::Escape);
 
     r.move_to(pos2(SIZE.x - 40.0, SIZE.y - 60.0));
-    while r.now() < r.duration + 1.5 {
+    while r.now() < r.duration + 3.0 {
         r.tick();
     }
 }
