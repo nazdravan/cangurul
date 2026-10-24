@@ -5,6 +5,19 @@
 Modificările importante din fiecare versiune. Numerotarea urmează
 [Semantic Versioning](https://semver.org/lang/ro/).
 
+## [3.0.6] — 2026-10-24
+
+### Adăugat
+
+- În fereastra **Ajutor**: linkuri spre pagina programului, adresa de email și
+  codul sursă, cu etichetele în limba interfeței.
+
+### Schimbat
+
+- Imaginea `.dmg` pentru macOS conține doar aplicația și scurtătura
+  *Applications*; licențele sunt în aplicație, iar exemplele în meniul
+  **Exemple**.
+
 ## [3.0.5] — 2026-10-24
 
 ### Reparat

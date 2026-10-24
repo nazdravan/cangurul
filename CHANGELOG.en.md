@@ -5,6 +5,18 @@
 The notable changes in each version. Versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [3.0.6] — 2026-10-24
+
+### Added
+
+- In the **Help** window: links to the program's website, the email address
+  and the source code, labelled in the interface language.
+
+### Changed
+
+- The macOS `.dmg` contains only the app and the *Applications* shortcut; the
+  licenses are inside the app and the examples in the **Examples** menu.
+
 ## [3.0.5] — 2026-10-24
 
 ### Fixed
