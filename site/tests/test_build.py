@@ -120,7 +120,8 @@ class BuildTest(unittest.TestCase):
             for a in ("ce-face", "comparatie", "noutati", "descarca"):
                 self.assertIn(f'id="{a}"', html)
             self.assertIn("Nicolae Postica", html)
-            self.assertIn('href="https://github.com/nazdravan"', html)
+            self.assertIn('href="https://github.com/nicolaepostica"', html)
+            self.assertNotIn('href="https://github.com/nazdravan"', html)
 
     def test_author_portrait_and_email(self):
         for p in ("index.html", "en/index.html", "ru/index.html"):
