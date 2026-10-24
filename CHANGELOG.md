@@ -5,6 +5,13 @@
 Modificările importante din fiecare versiune. Numerotarea urmează
 [Semantic Versioning](https://semver.org/lang/ro/).
 
+## [3.0.5] — 2026-10-24
+
+### Reparat
+
+- Linkurile din fereastra **Ajutor** se deschid în browser (adresa de email,
+  în programul de email).
+
 ## [3.0.4] — 2026-10-24
 
 ### Reparat

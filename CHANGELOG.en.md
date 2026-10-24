@@ -5,6 +5,13 @@
 The notable changes in each version. Versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [3.0.5] — 2026-10-24
+
+### Fixed
+
+- The links in the **Help** window open in the browser (the email address in
+  the mail app).
+
 ## [3.0.4] — 2026-10-24
 
 ### Fixed
