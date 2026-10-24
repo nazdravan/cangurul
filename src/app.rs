@@ -155,6 +155,29 @@ struct Sprites {
     logo: Sprite,
 }
 
+/// Colțul de sus-stânga al câmpului și latura unei celule în zona `area`.
+/// Sus rămâne loc pentru cangurul din rândul 0: stă deasupra nodului și, la
+/// mărimea maximă, ar ieși din zonă (urechile ar fi tăiate).
+fn field_layout(area: Rect, cols: f32, rows: f32) -> (Pos2, f32) {
+    let pad: f32 = 40.0;
+    let pad_top = pad.max(sprite_size(f32::MAX) * 0.88);
+    let cell = ((area.width() - 2.0 * pad) / cols)
+        .min((area.height() - pad - pad_top) / rows)
+        .max(4.0);
+    let size = vec2(cell * cols, cell * rows);
+    let free_y = area.height() - pad - pad_top - size.y;
+    let origin = pos2(
+        area.center().x - size.x / 2.0,
+        area.top() + pad_top + free_y / 2.0,
+    );
+    (origin, cell)
+}
+
+/// Mărimea cangurului pe câmp, după latura celulei.
+fn sprite_size(cell: f32) -> f32 {
+    (cell * 1.6).clamp(28.0, 72.0)
+}
+
 impl Sprites {
     fn load(ctx: &egui::Context) -> Sprites {
         Sprites {
@@ -1129,7 +1152,13 @@ impl CangurApp {
                         if ui.button(format!("❓  {}", t.help)).clicked() {
                             self.show_help = !self.show_help;
                         }
-                        ui.menu_button(format!("⚙  {}", t.settings), |ui| self.settings_menu(ui));
+                        // Setările rămân deschise cât timp se bifează; se închid la click în afară.
+                        egui::containers::menu::MenuButton::new(format!("⚙  {}", t.settings))
+                            .config(
+                                egui::containers::menu::MenuConfig::new()
+                                    .close_behavior(egui::PopupCloseBehavior::CloseOnClickOutside),
+                            )
+                            .ui(ui, |ui| self.settings_menu(ui));
                         ui.menu_button(format!("🌐  {}", self.s.lang.name()), |ui| {
                             for l in Lang::ALL {
                                 ui.selectable_value(&mut self.s.lang, l, l.name());
@@ -1839,12 +1868,8 @@ impl CangurApp {
         let area = resp.rect;
         let w = &self.world;
         let (cols, rows) = (w.width as f32, w.height as f32);
-        let pad = 40.0;
-        let cell = ((area.width() - 2.0 * pad) / cols)
-            .min((area.height() - 2.0 * pad) / rows)
-            .max(4.0);
+        let (origin, cell) = field_layout(area, cols, rows);
         let size = vec2(cell * cols, cell * rows);
-        let origin = area.center() - size / 2.0;
         let node = |(x, y): (i32, i32)| origin + vec2(x as f32 * cell, y as f32 * cell);
         let field_rect = Rect::from_min_size(origin, size);
 
@@ -1947,7 +1972,7 @@ impl CangurApp {
             _ => (node(w.pos), w.dir),
         };
         let here = node(w.pos);
-        let sprite = (cell * 1.6).clamp(28.0, 72.0);
+        let sprite = sprite_size(cell);
 
         painter.circle_filled(here, (thick * 1.6).max(4.0), pal.accent);
         let (dx, dy) = dir.delta();
@@ -2043,6 +2068,25 @@ impl CangurApp {
                     ui.label(RichText::new(t.shortcuts).color(pal.muted));
                     ui.add_space(6.0);
                     ui.label(RichText::new(t.about).color(pal.muted));
+                    ui.add_space(10.0);
+                    ui.separator();
+                    ui.add_space(4.0);
+                    ui.horizontal_wrapped(|ui| {
+                        ui.label(RichText::new(format!("{}:", t.author)).color(pal.muted));
+                        ui.label(RichText::new("Nicolae Postica").strong());
+                    });
+                    ui.horizontal_wrapped(|ui| {
+                        ui.hyperlink_to(
+                            RichText::new("nicolae.postica2@gmail.com").underline(),
+                            "mailto:nicolae.postica2@gmail.com",
+                        );
+                        ui.label(RichText::new("·").color(pal.muted));
+                        ui.hyperlink_to(
+                            RichText::new("github.com/nazdravan/cangurul").underline(),
+                            "https://github.com/nazdravan/cangurul",
+                        );
+                    });
+                    ui.add_space(4.0);
                     ui.label(
                         RichText::new(concat!("v", env!("CARGO_PKG_VERSION")))
                             .color(pal.muted)
@@ -2307,6 +2351,26 @@ fn setup_style(ctx: &egui::Context) {
 mod tests {
     use super::*;
 
+    /// Cangurul din colțul de sus (0, 0), la mărimea maximă, încape în zona
+    /// câmpului (altfel urechile sunt tăiate pe un ecran mare).
+    #[test]
+    fn kangaroo_fits_above_top_row() {
+        for area in [
+            Rect::from_min_size(pos2(500.0, 140.0), vec2(1500.0, 1050.0)),
+            Rect::from_min_size(pos2(0.0, 0.0), vec2(800.0, 600.0)),
+        ] {
+            let (origin, cell) = field_layout(area, 20.0, 20.0);
+            let sprite = sprite_size(cell);
+            let top = origin.y - sprite * 0.38 - sprite / 2.0;
+            assert!(
+                top >= area.top(),
+                "cangurul iese cu {} px",
+                area.top() - top
+            );
+            assert!(origin.y + cell * 20.0 <= area.bottom());
+        }
+    }
+
     #[test]
     fn decodes_legacy_encodings() {
         let rus = encoding_rs::WINDOWS_1251.encode("[\r\nШАГ\r\n]").0;
@@ -2360,6 +2424,37 @@ mod tests {
                 }
             }
             h.step();
+        }
+
+        #[test]
+        fn settings_stay_open_after_checkbox() {
+            let mut h = harness();
+            h.run_steps(3);
+            h.get_by_label("⚙  Setări").click();
+            h.run_steps(3);
+            let grid = h.state().s.show_grid;
+            h.get_by_label("Arată grila").click();
+            h.run_steps(3);
+            assert_eq!(h.state().s.show_grid, !grid);
+            h.get_by_label("Arată salturile").click();
+            h.run_steps(3);
+            assert!(
+                h.query_by_label("Arată grila").is_some(),
+                "setările s-au închis"
+            );
+        }
+
+        #[test]
+        fn help_shows_author_links_apart() {
+            let mut h = harness();
+            h.ctx.set_theme(ThemePreference::Light);
+            h.state_mut().show_help = true;
+            h.run_steps(3);
+            h.get_by_role_and_label(egui::accesskit::Role::Link, "nicolae.postica2@gmail.com");
+            h.get_by_role_and_label(egui::accesskit::Role::Link, "github.com/nazdravan/cangurul")
+                .scroll_to_me();
+            h.run_steps(3);
+            shot(&mut h, "help-author");
         }
 
         #[test]
