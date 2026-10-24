@@ -112,6 +112,10 @@ pub struct Strings {
     pub about: &'static str,
     /// „Autor” în fereastra de ajutor, urmat de nume și de linkuri.
     pub author: &'static str,
+    /// Etichetele linkurilor de sub autor, în fereastra de ajutor.
+    pub website: &'static str,
+    pub email: &'static str,
+    pub source: &'static str,
     pub shortcuts: &'static str,
 }
 
@@ -446,6 +450,9 @@ pub static RO: Strings = Strings {
     ],
     about: "Cangurul — mediu de învățare a algoritmilor pentru elevi.",
     author: "Autor",
+    website: "Pagina web",
+    email: "Email",
+    source: "Cod sursă",
     shortcuts: "F5 — execută · F6 — pas cu pas · Esc — stop · F7 — verifică · Ctrl+Shift+F — formatează · Ctrl+S/O/N — fișiere",
 };
 
@@ -576,6 +583,9 @@ pub static RU: Strings = Strings {
     ],
     about: "Кенгуренок — среда для изучения алгоритмов.",
     author: "Автор",
+    website: "Сайт",
+    email: "Почта",
+    source: "Исходный код",
     shortcuts: "F5 — выполнить · F6 — по шагам · Esc — стоп · F7 — проверить · Ctrl+Shift+F — форматировать · Ctrl+S/O/N — файлы",
 };
 
@@ -715,5 +725,8 @@ pub static EN: Strings = Strings {
     ],
     about: "Kangaroo — a learning environment for algorithms.",
     author: "Author",
+    website: "Website",
+    email: "Email",
+    source: "Source",
     shortcuts: "F5 — run · F6 — step · Esc — stop · F7 — check · Ctrl+Shift+F — format · Ctrl+S/O/N — files",
 };
