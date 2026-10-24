@@ -82,7 +82,9 @@ p { margin: 0; }
   line-height: 0.98;
   letter-spacing: -0.045em;
 }
-.hero h1 .line { display: block; overflow: hidden; padding-bottom: 0.06em; margin-bottom: -0.06em; }
+/* overflow ascunde rândul înainte de animație; rezerva (padding compensat de
+   margin) lasă loc cozilor (g, у) și semnelor de deasupra (Й, Î, Ă). */
+.hero h1 .line { display: block; overflow: hidden; padding: 0.14em 0 0.28em; margin: -0.14em 0 -0.28em; }
 .hero h1 .line > span { display: inline-block; }
 .hero h1 .roo {
   display: inline-block;
@@ -261,7 +263,7 @@ p { margin: 0; }
   .reveal-ready .feature:nth-of-type(2) { transition-delay: 120ms; }
   .reveal-ready .feature:nth-of-type(3) { transition-delay: 180ms; }
 }
-@keyframes rise { from { transform: translateY(105%); } to { transform: none; } }
+@keyframes rise { from { transform: translateY(140%); } to { transform: none; } }
 @keyframes hop {
   0% { opacity: 0; transform: translate(-0.6em, 0) rotate(-8deg); }
   45% { opacity: 1; transform: translate(-0.25em, -0.35em) rotate(-4deg); }
