@@ -166,6 +166,21 @@ impl Rec<'_> {
         self.wait(0.12);
     }
 
+    /// Tasta cu Ctrl (Cmd pe macOS), de exemplu Ctrl+A.
+    fn command_key(&mut self, key: Key) {
+        for pressed in [true, false] {
+            self.event(Event::Key {
+                key,
+                physical_key: None,
+                pressed,
+                repeat: false,
+                modifiers: Modifiers::COMMAND,
+            });
+        }
+        self.tick();
+        self.wait(0.12);
+    }
+
     fn type_text(&mut self, text: &str) {
         for c in text.chars() {
             self.event(Event::Text(c.to_string()));
@@ -315,6 +330,16 @@ fn scenario(r: &mut Rec<'_>) {
     while r.now() < r.duration + 3.0 {
         r.tick();
     }
+}
+
+/// Programul „copiat din altă parte”: corect, dar fără indentare.
+const PASTED: &str = "PROCEDURA Linie\nCÎT NU E_MARGINE\nPAS\nSFÎRȘITUL CICLULUI\nSFÎRȘITUL PROCEDURII\n[\nREPETĂ 4 ORI\nEXECUTĂ Linie\nDACĂ E_MARGINE ROTIRE ALTFEL SALT\nSFÎRȘITUL REPETĂRII\n]\n";
+
+/// Programul lipit în demo se compilează, iar Formatează chiar îl schimbă.
+#[test]
+fn pasted_program() {
+    assert!(crate::lang::compile(PASTED).is_ok());
+    assert_ne!(crate::lang::format_program(PASTED), PASTED);
 }
 
 #[test]
