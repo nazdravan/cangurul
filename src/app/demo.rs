@@ -25,7 +25,6 @@ struct Rec<'a> {
     ff: Child,
     frame: u64,
     mouse: Pos2,
-    paras: Vec<(String, f64)>,
     duration: f64,
     /// Eticheta cu linkul (link.png din dosarul demo-ului) și de când apare.
     link: Option<(image::RgbaImage, f64)>,
@@ -76,15 +75,9 @@ impl Rec<'_> {
         }
     }
 
-    /// Așteaptă începutul paragrafului `id` din voce, plus `delay` secunde.
-    fn at(&mut self, id: &str, delay: f64) {
-        let start = self
-            .paras
-            .iter()
-            .find(|(p, _)| p == id)
-            .unwrap_or_else(|| panic!("nu e paragraful {id} în voice.json"))
-            .1;
-        while self.now() < start + delay {
+    /// Așteaptă până la secunda `t` din voice.mp3.
+    fn till(&mut self, t: f64) {
+        while self.now() < t {
             self.tick();
         }
     }
@@ -235,48 +228,64 @@ fn read_voice(json: &str) -> (Vec<(String, f64)>, f64) {
 }
 
 fn scenario(r: &mut Rec<'_>) {
+    // Momentele sunt secunde din voice.mp3: cuvântul care numește acțiunea, după Whisper
+    // (🟡informatica-gimnaziu/tools/words.py). Granițele de paragraf din voice.json se abat de la voce cu până la 3 s.
+
     // Ce este: exemplul „Cangur” scrie CANGUR pe câmp.
-    r.at("p01", 0.6);
+    r.till(0.6);
     r.click_on("Exemple");
     r.click("Cangur");
     r.wait(0.5);
     r.click_on("Execută");
 
-    // Primul program: pătratul, numai din butoane.
-    r.at("p03", 0.3);
+    // Câmpul: mărimea în Setări, apoi salturile arătate punctat pe desenul CANGUR.
+    r.till(36.4);
     r.until_idle();
+    r.click_on("Setări");
+    r.till(37.6);
+    // Eticheta și glisorul poartă același nume; mausul merge pe glisor.
+    let cols = r.h.get_all_by_label("Coloane").last().unwrap().rect().center();
+    r.move_to(cols);
+    r.till(39.0);
+    r.click_on("Arată salturile");
+    r.shot("jumps");
+    r.till(43.2);
+    r.key(Key::Escape);
+
+    // Primul program: pătratul, numai din butoane; comenzile arătate cât sunt numite.
+    r.till(44.8);
     r.click_on("Nou");
-    // Comenzile, arătate cât sunt numite; momentele sunt ale cuvintelor din voce (Whisper pe voice.mp3).
-    for (b, t) in [("PAS", 2.4), ("SALT", 7.1), ("ROTIRE", 10.0)] {
-        r.at("p03", t);
+    for (b, t) in [("PAS", 48.0), ("SALT", 51.6), ("ROTIRE", 54.4)] {
+        r.till(t);
         r.hover(b);
     }
-    r.at("p04", 3.2);
+    r.till(63.6);
     for b in ["REPETĂ N", "PAS", "PAS", "PAS", "ROTIRE"] {
         r.click(b);
         r.wait(0.6);
     }
 
     // Execuția: viteza mai mică, ca să se vadă rândul curent.
-    r.at("p05", 0.0);
+    r.till(73.0);
     r.drag_speed(3.0);
+    r.till(74.6);
     r.click_on("Execută");
-    r.at("p06", 0.3);
+    r.till(85.2);
     r.until_idle();
     r.drag_speed(6.0);
-    r.at("p06", 3.0);
+    r.till(88.3);
     for _ in 0..5 {
         r.click_on("Pas cu pas");
         r.wait(0.7);
     }
-    r.at("p06", 11.0);
+    r.till(96.1);
     r.click_on("Instant");
     r.click_on("Execută");
     r.wait(1.0);
     r.click_on("Instant");
 
-    // Analizorul: ROTIRE devine ROTIRA, apoi „Corectează”.
-    r.at("p07", 0.3);
+    // Analizorul: ROTIRE devine ROTIRA, apoi „Corectează” când e numit.
+    r.till(102.4);
     // Click la dreapta de textul rândului cu ROTIRE: cursorul ajunge la capătul lui.
     let editor =
         r.h.get_by_role(egui::accesskit::Role::MultilineTextInput)
@@ -292,34 +301,58 @@ fn scenario(r: &mut Rec<'_>) {
         editor.left() + 180.0,
         editor.top() + 6.0 + LINE_H * (row as f32 + 0.5),
     ));
-    r.wait(0.5);
     r.key(Key::Backspace);
     r.type_text("A");
     r.wait(0.5);
     r.shot("typo");
-    r.at("p08", 1.8);
+    r.till(112.1);
     let fix = r.h.get_by_label_contains("Corectează").rect().center();
     r.move_to(fix);
-    r.at("p08", 4.2);
+    r.till(114.3);
     r.click_on("Corectează");
     r.wait(0.8);
     r.click_on("Execută");
 
-    // Exemple și limbi: spirala în română, apoi în engleză, apoi tema întunecată.
-    r.at("p09", 0.0);
+    // Editorul: variantele propuse la „cit”, apoi un program lipit strâmb și „Formatează”.
+    r.till(124.8);
     r.until_idle();
+    r.h.state_mut().s.dirty = false;
+    r.click_on("Nou");
+    let editor =
+        r.h.get_by_role(egui::accesskit::Role::MultilineTextInput)
+            .rect();
+    r.click_at(pos2(
+        editor.left() + 80.0,
+        editor.top() + 6.0 + LINE_H * 1.5,
+    ));
+    r.till(127.3);
+    r.type_text("cit");
+    r.wait(1.2);
+    r.shot("completion");
+    r.key(Key::Enter);
+    r.till(130.2);
+    r.command_key(Key::A);
+    r.event(Event::Paste(PASTED.into()));
+    r.tick();
+    r.shot("pasted");
+    r.till(134.3);
+    r.click_on("Formatează");
+    r.shot("formatted");
+
+    // Exemple și limbi: spirala în română, apoi în engleză; interfața în engleză, tema întunecată.
+    r.till(137.2);
     r.h.state_mut().s.dirty = false;
     r.click_on("Exemple");
     r.click("Spirala (RO)");
     r.drag_speed(9.0);
     r.click_on("Execută");
-    r.at("p09", 6.4);
+    r.till(144.0);
     r.click_on("Exemple");
     r.click("Spiral (EN)");
     r.click_on("Instant");
     r.click_on("Execută");
     // „interfața are aceleași trei limbi și o temă întunecată”
-    r.at("p09", 11.4);
+    r.till(149.6);
     r.click_on("Română");
     r.click("English");
     r.click_on("Settings");
@@ -400,7 +433,6 @@ fn demo() {
         link: image::open(dir.join("link.png"))
             .ok()
             .map(|i| (i.to_rgba8(), paras.last().unwrap().1)),
-        paras,
         duration,
     };
     scenario(&mut r);
