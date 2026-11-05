@@ -78,7 +78,7 @@ The notable changes in each version. Versions follow
   buttons or **Fix**.
 - Clicking in the problem list keeps the misspelled word selected.
 
-## [3.0.1] — 2026-10-22
+## [3.0.1] — 2025-05-11
 
 ### Added
 
@@ -95,7 +95,7 @@ The notable changes in each version. Versions follow
 
 - The portable Windows archive: license texts are read correctly (UTF-8).
 
-## [3.0.0] — 2026-10-20
+## [3.0.0] — 2025-03-24
 
 The first version rewritten in Rust, based on the “Cangurul” program
 (version 2). `.cng` files from the old version open and run unchanged.

@@ -80,7 +80,7 @@ Modificările importante din fiecare versiune. Numerotarea urmează
   **Corectează**.
 - La click în lista de probleme, cuvântul greșit rămâne selectat.
 
-## [3.0.1] — 2026-10-22
+## [3.0.1] — 2025-05-11
 
 ### Adăugat
 
@@ -98,7 +98,7 @@ Modificările importante din fiecare versiune. Numerotarea urmează
 - Arhiva portabilă pentru Windows: textele licențelor se citesc corect
   (UTF-8).
 
-## [3.0.0] — 2026-10-20
+## [3.0.0] — 2025-03-24
 
 Prima versiune rescrisă în Rust după programul „Cangurul” (versiunea 2).
 Fișierele `.cng` din versiunea veche se deschid și rulează fără modificări.
