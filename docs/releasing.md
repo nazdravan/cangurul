@@ -31,6 +31,15 @@ Fiecare versiune are o secțiune `## [3.1.0] — <data>` în `CHANGELOG.md`
 *Schimbat*, *Reparat*. Secțiunea din `CHANGELOG.md` devine nota release-ului;
 fără ea workflow-ul se oprește înainte de build-uri.
 
+`<data>` e data commit-ului „Versiunea 3.1.0” (cel pe care stă tagul), în ora
+Chișinăului — nu ziua publicării. Dacă commit-urile se mută în trecut
+(backdate), data din cele trei jurnale se pune după mutare, ca să fie aceeași
+cu a commit-ului:
+
+```sh
+TZ=Europe/Chisinau git log -1 --format=%cd --date=format-local:%Y-%m-%d v3.1.0
+```
+
 ```sh
 packaging/changelog.sh            # notele versiunii din Cargo.toml
 packaging/changelog.sh 3.1.0      # notele altei versiuni
