@@ -20,6 +20,12 @@
 
 **Română** · [English](README.en.md) · [Русский](README.ru.md)
 
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=5MZtBTeV5G8"><img src="docs/assets/video.jpg" alt="Videoclip: cum se lucrează cu Cangurul" width="640"></a>
+  <br />
+  <sub>▶ Cum se lucrează cu Cangurul, în câteva minute.</sub>
+</p>
+
 </div>
 
 <br />
@@ -28,12 +34,6 @@ Rescris în **Rust** după programul „Cangurul” (versiunea 2).
 Fișierele `.cng` din versiunea veche se deschid și rulează fără modificări.
 
 <img src="docs/assets/screenshot.png" alt="Cangurul: un exemplu original după execuție" />
-
-<p align="center">
-  <a href="https://www.youtube.com/watch?v=5MZtBTeV5G8"><img src="docs/assets/video.jpg" alt="Videoclip: cum se lucrează cu Cangurul" width="640"></a>
-  <br />
-  <sub>▶ Cum se lucrează cu Cangurul, în câteva minute.</sub>
-</p>
 
 ## Pornire rapidă
 

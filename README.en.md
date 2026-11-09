@@ -20,6 +20,12 @@
 
 [Română](README.md) · **English** · [Русский](README.ru.md)
 
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=5MZtBTeV5G8"><img src="docs/assets/video.jpg" alt="Video: how to work with Cangurul" width="640"></a>
+  <br />
+  <sub>▶ How to work with Cangurul, in a few minutes. The video is in Romanian.</sub>
+</p>
+
 </div>
 
 <br />
@@ -29,12 +35,6 @@ Moldova and Romania. `.cng` files from the old version open and run unchanged.
 *Cangurul* is Romanian for “the kangaroo”.
 
 <img src="docs/assets/screenshot-en.png" alt="Cangurul: an original example after running" />
-
-<p align="center">
-  <a href="https://www.youtube.com/watch?v=5MZtBTeV5G8"><img src="docs/assets/video.jpg" alt="Video: how to work with Cangurul" width="640"></a>
-  <br />
-  <sub>▶ How to work with Cangurul, in a few minutes. The video is in Romanian.</sub>
-</p>
 
 ## Quick start
 
