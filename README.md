@@ -16,7 +16,7 @@
 [![Linux](https://img.shields.io/badge/Linux-AppImage-FCC624?style=flat-square&logo=linux&logoColor=black)](packaging/linux/)
 [![macOS](https://img.shields.io/badge/macOS-Apple%20Silicon%20%7C%20Intel-000000?style=flat-square&logo=apple&logoColor=white)](#macos)
 
-[**Pagina programului**](https://nazdravan.github.io/cangurul/) · [Video](https://www.youtube.com/watch?v=5MZtBTeV5G8) · [Pornire rapidă](#pornire-rapidă) · [Limbajul](#limbajul) · [Analizorul de cod](#analizorul-de-cod) · [Modificări](CHANGELOG.md) · [Releases](../../releases) · [Issues](../../issues)
+[**Pagina programului**](https://nazdravan.github.io/cangurul/) · [Videoclip](https://www.youtube.com/watch?v=5MZtBTeV5G8) · [Pornire rapidă](#pornire-rapidă) · [Limbajul](#limbajul) · [Analizorul de cod](#analizorul-de-cod) · [Modificări](CHANGELOG.md) · [Releases](../../releases) · [Issues](../../issues)
 
 **Română** · [English](README.en.md) · [Русский](README.ru.md)
 
@@ -28,6 +28,12 @@ Rescris în **Rust** după programul „Cangurul” (versiunea 2).
 Fișierele `.cng` din versiunea veche se deschid și rulează fără modificări.
 
 <img src="docs/assets/screenshot.png" alt="Cangurul: un exemplu original după execuție" />
+
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=5MZtBTeV5G8"><img src="docs/assets/video.jpg" alt="Videoclip: cum se lucrează cu Cangurul" width="640"></a>
+  <br />
+  <sub>▶ Cum se lucrează cu Cangurul, în câteva minute.</sub>
+</p>
 
 ## Pornire rapidă
 
