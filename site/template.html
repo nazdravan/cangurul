@@ -53,15 +53,24 @@
         <span class="line"><span>{{ hero_title_2 }}</span><img class="roo" src="{{ root }}assets/kangaroo.svg" width="100" height="100" alt=""></span>
       </h1>
       <div class="hero-text">
-        <p class="lead">{{{ hero_lead }}}</p>
-        <p class="compat">{{{ hero_compat }}}</p>
-        <div class="cta">
-          <a id="download-main" class="button" href="#descarca"
-             data-kinds="{{ kinds_json }}"
-             data-label-windows="{{ btn_windows }}" data-label-win7="{{ btn_win7 }}" data-label-mac="{{ btn_mac }}" data-label-linux="{{ btn_linux }}">{{{ btn_default }}}</a>
-          <a class="cta-other" href="#descarca">{{{ btn_other }}} ↓</a>
+        <div class="hero-copy">
+          <p class="lead">{{{ hero_lead }}}</p>
+          <p class="compat">{{{ hero_compat }}}</p>
+          <div class="cta">
+            <a id="download-main" class="button" href="#descarca"
+               data-kinds="{{ kinds_json }}"
+               data-label-windows="{{ btn_windows }}" data-label-win7="{{ btn_win7 }}" data-label-mac="{{ btn_mac }}" data-label-linux="{{ btn_linux }}">{{{ btn_default }}}</a>
+            <a class="cta-other" href="#descarca">{{{ btn_other }}} ↓</a>
+          </div>
+          <p class="version">{{{ hero_version }}} {{ version }} · {{{ hero_free }}}</p>
         </div>
-        <p class="version">{{{ hero_version }}} {{ version }} · {{{ hero_free }}}</p>
+        <figure id="video" class="hero-video">
+          <a class="video" href="https://www.youtube.com/watch?v=5MZtBTeV5G8" data-video="5MZtBTeV5G8" data-title="{{ video_iframe_title }}" aria-label="{{ video_play }}">
+            <img src="{{ root }}assets/video.jpg" width="1280" height="720" alt="">
+            <span class="play" aria-hidden="true"></span>
+          </a>
+          <figcaption>{{{ video_lead }}}</figcaption>
+        </figure>
       </div>
     </div>
     <div class="shot-band">
@@ -195,6 +204,7 @@
       <a href="https://github.com/nazdravan/cangurul">{{{ footer_source }}}</a>
       <a href="https://github.com/nazdravan/cangurul/blob/main/{{ readme_file }}">{{{ footer_docs }}}</a>
       <a href="https://github.com/nazdravan/cangurul/blob/main/{{ changelog_file }}">{{{ footer_changelog }}}</a>
+      <a href="https://www.youtube.com/watch?v=5MZtBTeV5G8">{{{ footer_video }}}</a>
       <a href="https://github.com/nazdravan/cangurul/issues">{{{ footer_issues }}}</a>
       <a href="https://github.com/nazdravan/cangurul/blob/main/LICENSE">{{{ footer_license }}}</a>
     </p>

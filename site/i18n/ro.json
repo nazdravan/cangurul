@@ -28,6 +28,10 @@
   "btn_other": "Alte sisteme",
   "screenshot_alt": "Fereastra programului Cangurul: în stânga programul, în dreapta câmpul pe care cangurul a scris CANGUR",
 
+  "video_lead": "Cum se lucrează cu Cangurul, în câteva minute.",
+  "video_play": "Pornește videoclipul",
+  "video_iframe_title": "Videoclip despre Cangurul",
+
   "features_title": "Ce face programul",
   "f1_title": "Editorul ajută la scris",
   "f1_text": "Comenzile sunt colorate, rândurile numerotate. În timp ce scrii apar variante de completare, indentarea se pune singură, iar <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd> aranjează tot programul.",
@@ -89,5 +93,6 @@
   "footer_license": "Licență GPL-3.0",
   "footer_changelog": "Jurnalul modificărilor",
   "footer_issues": "Raportează o problemă",
+  "footer_video": "Videoclipul pe YouTube",
   "footer_docs": "Limbajul și analizorul"
 }

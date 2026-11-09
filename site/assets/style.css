@@ -96,16 +96,17 @@ p { margin: 0; }
 .hero-text {
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: 20px 48px;
+  gap: 32px 48px;
   margin-top: clamp(32px, 4vw, 48px);
-  align-items: end;
+  align-items: center;
 }
+.hero-copy { display: grid; gap: 20px; justify-items: start; }
 .lead { font-size: var(--step-lead); line-height: 1.45; max-width: 36ch; }
 .lead code { font-size: 0.85em; font-weight: 700; }
-.compat { grid-column: 1; font-weight: 600; max-width: 42ch; }
+.compat { font-weight: 600; max-width: 42ch; }
 .compat code { font-size: 0.9em; }
-.cta { grid-column: 2; grid-row: 1 / span 2; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; justify-self: end; }
-.version { grid-column: 2; justify-self: end; font-size: var(--step-small); color: var(--soft); }
+.cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-top: 8px; }
+.version { margin-top: -8px; font-size: var(--step-small); color: var(--soft); }
 
 .button {
   display: inline-flex;
@@ -163,6 +164,50 @@ p { margin: 0; }
   width: calc(1280 / var(--w) * 100%);
   left: calc(var(--x) / var(--w) * -100%);
   top: calc(var(--y) / var(--h) * -100%);
+}
+
+/* Videoclipul, în dreapta textului din hero */
+.hero-video { margin: 0; }
+.hero-video .video { margin-top: 0; border: 1px solid rgba(20, 20, 20, 0.18); }
+.hero-video figcaption { margin-top: 12px; font-size: var(--step-small); color: var(--soft); }
+.video {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin-top: clamp(32px, 4vw, 48px);
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--tone);
+}
+a.video img { width: 100%; height: 100%; object-fit: cover; }
+.play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: clamp(64px, 9vw, 96px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: translate(-50%, -50%);
+  transition: transform 160ms var(--ease-out), background-color 160ms ease;
+}
+.play::after {
+  /* Triunghiul, puțin spre dreapta ca să pară centrat. */
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 54%;
+  border-style: solid;
+  border-width: 0.6em 0 0.6em 1em;
+  border-color: transparent transparent transparent var(--ink);
+  font-size: clamp(16px, 2.2vw, 24px);
+  transform: translate(-50%, -50%);
+}
+a.video:active .play { transform: translate(-50%, -50%) scale(0.95); }
+@media (hover: hover) and (pointer: fine) {
+  a.video:hover .play { background: var(--accent-press); transform: translate(-50%, -50%) scale(1.06); }
 }
 
 /* Față de Cangurul 2 */
@@ -285,7 +330,7 @@ p { margin: 0; }
 /* Telefon */
 @media (max-width: 680px) {
   .hero-text { grid-template-columns: minmax(0, 1fr); }
-  .cta, .version { grid-column: 1; grid-row: auto; justify-self: start; }
+  .hero-copy { justify-items: stretch; }
   .cta { width: 100%; }
   .button { width: 100%; justify-content: center; }
   .shot-band::before { inset: 30% 0 0; }

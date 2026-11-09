@@ -28,6 +28,10 @@
   "btn_other": "Other systems",
   "screenshot_alt": "The Cangurul window: the program on the left, the field where the kangaroo wrote CANGUR on the right",
 
+  "video_lead": "How to work with Cangurul, in a few minutes. The video is in Romanian.",
+  "video_play": "Play the video",
+  "video_iframe_title": "Video about Cangurul",
+
   "features_title": "What it does",
   "f1_title": "The editor helps you write",
   "f1_text": "Commands are highlighted and lines are numbered. While you type, completions appear, indentation takes care of itself, and <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd> tidies up the whole program.",
@@ -89,5 +93,6 @@
   "footer_license": "GPL-3.0 license",
   "footer_changelog": "Changelog",
   "footer_issues": "Report a problem",
+  "footer_video": "Video on YouTube",
   "footer_docs": "The language and the analyzer"
 }
