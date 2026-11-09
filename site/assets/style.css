@@ -183,31 +183,18 @@ p { margin: 0; }
 }
 a.video img { width: 100%; height: 100%; object-fit: cover; }
 .play {
+  /* Butonul YouTube: arată de unde e videoclipul. */
   position: absolute;
   top: 50%;
   left: 50%;
-  width: clamp(64px, 9vw, 96px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: var(--accent);
+  width: clamp(68px, 9vw, 96px);
+  height: auto;
   transform: translate(-50%, -50%);
-  transition: transform 160ms var(--ease-out), background-color 160ms ease;
-}
-.play::after {
-  /* Triunghiul, puțin spre dreapta ca să pară centrat. */
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 54%;
-  border-style: solid;
-  border-width: 0.6em 0 0.6em 1em;
-  border-color: transparent transparent transparent var(--ink);
-  font-size: clamp(16px, 2.2vw, 24px);
-  transform: translate(-50%, -50%);
+  transition: transform 160ms var(--ease-out);
 }
 a.video:active .play { transform: translate(-50%, -50%) scale(0.95); }
 @media (hover: hover) and (pointer: fine) {
-  a.video:hover .play { background: var(--accent-press); transform: translate(-50%, -50%) scale(1.06); }
+  a.video:hover .play { transform: translate(-50%, -50%) scale(1.08); }
 }
 
 /* Față de Cangurul 2 */
