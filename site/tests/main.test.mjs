@@ -1,7 +1,7 @@
 // Testele butonului de descărcare: node --test site/tests/
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { pickDownload, withHash, embedUrl } from "../assets/main.js";
+import { pickDownload, withHash } from "../assets/main.js";
 
 test("windows", () => assert.equal(pickDownload("Mozilla/5.0 (Windows NT 10.0; Win64; x64)", "Win32"), "windows"));
 test("mac", () => assert.equal(pickDownload("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)", "MacIntel"), "mac"));
@@ -14,4 +14,3 @@ test("Windows 8.1 tot arhiva pentru Windows 7", () => assert.equal(pickDownload(
 test("limba păstrează secțiunea", () => assert.equal(withHash("../en/", "#descarca"), "../en/#descarca"));
 test("limba fără secțiune", () => assert.equal(withHash("./", ""), "./"));
 test("Chromebook", () => assert.equal(pickDownload("Mozilla/5.0 (X11; CrOS x86_64 14541.0.0)", "Linux x86_64"), null));
-test("videoclipul se încorporează fără cookie-uri", () => assert.equal(embedUrl("5MZtBTeV5G8"), "https://www.youtube-nocookie.com/embed/5MZtBTeV5G8?autoplay=1&rel=0"));

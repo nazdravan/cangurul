@@ -20,6 +20,12 @@
 
 [Română](README.md) · [English](README.en.md) · **Русский**
 
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=5MZtBTeV5G8"><img src="docs/assets/video.jpg" alt="Видео: как работать с Cangurul" width="640"></a>
+  <br />
+  <sub>▶ Как работать с Cangurul — за несколько минут. Видео на румынском языке.</sub>
+</p>
+
 </div>
 
 <br />
