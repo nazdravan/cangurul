@@ -34,6 +34,30 @@ function setupDownload() {
   button.textContent = label;
 }
 
+// Videoclipul: până la click e doar imaginea, fără nicio cerere spre YouTube;
+// fără JavaScript linkul duce la YouTube.
+export function embedUrl(id) {
+  return `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0`;
+}
+
+function setupVideo() {
+  for (const a of document.querySelectorAll("a.video[data-video]")) {
+    a.addEventListener("click", (e) => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+      e.preventDefault();
+      const f = document.createElement("iframe");
+      f.className = "video";
+      f.src = embedUrl(a.dataset.video);
+      f.title = a.dataset.title || "";
+      f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+      f.allowFullscreen = true;
+      f.referrerPolicy = "strict-origin-when-cross-origin";
+      a.replaceWith(f);
+      f.focus();
+    });
+  }
+}
+
 // Secțiunile apar lin când ajung pe ecran; conținutul e vizibil și fără script.
 function setupReveal() {
   const items = document.querySelectorAll("[data-reveal]");
@@ -53,4 +77,5 @@ if (typeof document !== "undefined") {
   setupDownload();
   setupLanguages();
   setupReveal();
+  setupVideo();
 }

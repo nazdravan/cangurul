@@ -123,6 +123,14 @@ class BuildTest(unittest.TestCase):
             self.assertIn('href="https://github.com/nicolaepostica"', html)
             self.assertNotIn('href="https://github.com/nazdravan"', html)
 
+    def test_video_click_to_play(self):
+        for p in ("index.html", "en/index.html", "ru/index.html"):
+            html = self.page(p)
+            self.assertIn('id="video"', html)
+            self.assertRegex(html, r'<a class="video" href="https://www.youtube.com/watch\?v=5MZtBTeV5G8" data-video="5MZtBTeV5G8"')
+            self.assertNotIn("<iframe", html)
+        self.assertTrue((self.out / "assets" / "video.jpg").exists())
+
     def test_author_portrait_and_email(self):
         for p in ("index.html", "en/index.html", "ru/index.html"):
             html = self.page(p)
