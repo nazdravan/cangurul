@@ -28,8 +28,7 @@ sed -e "s/@VERSION@/$VERSION/g" -e "s/@MIN_MACOS@/$MACOSX_DEPLOYMENT_TARGET/g" \
 cp assets/cangurul.icns "$app/Contents/Resources/cangurul.icns"
 # În fereastra .dmg-ului rămân doar aplicația și Applications; licențele
 # merg în aplicație, iar exemplele sunt deja în program (meniul Exemple).
-cp LICENSE "$app/Contents/Resources/LICENSE.txt"
-{ cat assets/license-header.txt; cat assets/fonts/LICENSE.txt; } >"$app/Contents/Resources/LICENTE.txt"
+copy_docs "$app/Contents/Resources" txt
 
 # Semnătură ad-hoc: fără ea, pe Apple Silicon aplicația nici nu pornește.
 # Nu înlocuiește semnarea cu un certificat Apple Developer (vezi README, secțiunea macOS).

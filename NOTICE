@@ -1,0 +1,45 @@
+Cangurul 3
+Copyright (C) 2024 Nicolae Postica
+
+Cangurul 3 este software liber: îl puteți redistribui și modifica în termenii licenței GNU General
+Public License, versiunea 3 sau, la alegere, orice versiune ulterioară, publicată de Free Software
+Foundation. Programul este distribuit FĂRĂ NICIO GARANȚIE. Textul complet al licenței este în
+fișierul LICENSE. Componentele terțe incluse au licențele lor, enumerate mai jos.
+
+This program is free software: you can redistribute it and/or modify it under the terms of the
+GNU General Public License as published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version. See LICENSE.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Source code: https://github.com/nazdravan/cangurul
+
+Third-party material
+--------------------
+
+Cangurul bundles the parts below, each under its own licence.
+
+Fonts built into the program (all packages):
+
+- Noto Sans (assets/fonts/NotoSans-*.ttf): Copyright 2022 The Noto Project Authors.
+  SIL Open Font License 1.1, see OFL-NotoSans.txt.
+- Fira Code (assets/fonts/FiraCode-Regular.ttf): Copyright 2014-2021 The Fira Code Project
+  Authors. SIL Open Font License 1.1, see OFL-FiraCode.txt.
+- egui's fonts, compiled in through the epaint_default_fonts crate: Ubuntu Light (Copyright 2011
+  Canonical Ltd., Ubuntu Font Licence 1.0), Hack (Copyright 2018 Source Foundry Authors, MIT;
+  Copyright 2003 Bitstream, Inc., Bitstream Vera License), Noto Emoji (Copyright 2013 Google
+  Inc., SIL Open Font License 1.1) and emoji-icon-font (Copyright 2014 John Slegers, MIT). Their
+  licence texts are in THIRD-PARTY.txt.
+
+Rust crates (all packages): the crates Cangurul is built from, with the full text of each licence
+and the crates under it, are listed in THIRD-PARTY.txt (generated with cargo-about from
+about.toml at release time).
+
+Windows 7 package only:
+
+- Mesa 3D 26.2.4 (soft-gl/), the build from mesa-dist-win: MIT and the other Mesa licences, see
+  licenses/mesa/README.txt.
+
+The landing page (site/) serves Noto Sans Bold under the SIL Open Font License 1.1, see
+site/assets/OFL-NotoSans.txt.

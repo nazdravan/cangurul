@@ -20,18 +20,34 @@ install -m 644 assets/logo.png "$root/usr/share/icons/hicolor/256x256/apps/cangu
 install -m 644 packaging/linux/cangurul-mime.xml "$root/usr/share/mime/packages/cangurul.xml"
 install -m 644 examples/*.cng "$root/usr/share/doc/cangurul/exemple/"
 install -m 644 README.md "$root/usr/share/doc/cangurul/README.md"
+copy_docs "$root/usr/share/doc/cangurul"
+# Formatul DEP-5. Notițele de copyright se citesc din NOTICE și din licențele fonturilor (prima linie),
+# ca să nu rămână în urmă; fonturile egui și crate-urile sunt în THIRD-PARTY.txt.
+font_copyright() { sed -n '1s/^Copyright //p' "assets/fonts/OFL-$1.txt"; }
 {
     echo "Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/"
     echo "Upstream-Name: cangurul"
     echo "Source: https://github.com/nazdravan/cangurul"
+    echo "Comment: The Rust crates and egui's fonts built into usr/bin/cangurul, with the full text"
+    echo " of each licence, are listed in /usr/share/doc/cangurul/THIRD-PARTY.txt."
     echo
     echo "Files: *"
+    echo "Copyright: $(sed -n 's/^Copyright (C) //p' NOTICE | head -1)"
+    echo "License: GPL-3.0-or-later"
+    echo
+    echo "Files: assets/fonts/NotoSans-*"
+    echo "Copyright: $(font_copyright NotoSans)"
+    echo "License: OFL-1.1"
+    echo
+    echo "Files: assets/fonts/FiraCode-*"
+    echo "Copyright: $(font_copyright FiraCode)"
+    echo "License: OFL-1.1"
+    echo
     echo "License: GPL-3.0-or-later"
     echo " On Debian systems, the full text is in /usr/share/common-licenses/GPL-3."
     echo
-    echo "Files: fonts"
     echo "License: OFL-1.1"
-    sed 's/^/ /; s/^ $/ ./' assets/fonts/LICENSE.txt
+    sed '1,2d; s/^/ /; s/^ $/ ./' assets/fonts/OFL-NotoSans.txt
 } >"$root/usr/share/doc/cangurul/copyright"
 
 # Versiunile Debian folosesc ~ pentru pre-release-uri: 3.1.0-rc.1 -> 3.1.0~rc.1.

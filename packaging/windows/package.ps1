@@ -9,6 +9,14 @@ param(
 $ErrorActionPreference = 'Stop'
 Set-Location (Join-Path $PSScriptRoot '..\..')
 
+# Geamănul lui copy_docs din packaging/env.sh: licențele care intră în pachet.
+function Copy-Docs([string]$Dest) {
+    if (-not (Test-Path dist/THIRD-PARTY.txt)) { throw 'Lipseste dist/THIRD-PARTY.txt: ruleaza packaging/licente.sh' }
+    Copy-Item LICENSE "$Dest/LICENSE.txt"
+    Copy-Item NOTICE "$Dest/NOTICE.txt"
+    Copy-Item dist/THIRD-PARTY.txt, assets/fonts/OFL-*.txt $Dest
+}
+
 $target = @{ x64 = 'x86_64-pc-windows-msvc'; x86 = 'i686-pc-windows-msvc' }[$Arch]
 # Singurul loc al versiunii: [package] version din Cargo.toml (primul `version =`).
 $version = (Select-String -Path Cargo.toml -Pattern '^version = "(.+)"' | Select-Object -First 1).Matches[0].Groups[1].Value
@@ -22,7 +30,6 @@ if (Test-Path $stage) { Remove-Item -Recurse -Force $stage }
 New-Item -ItemType Directory -Force "$stage/Exemple", 'dist/release' | Out-Null
 Copy-Item "target/$target/release/cangurul.exe" "$stage/Cangurul.exe"
 Copy-Item examples/*.cng "$stage/Exemple/"
-Get-Content -Encoding utf8 assets/license-header.txt, assets/fonts/LICENSE.txt | Set-Content -Encoding utf8 "$stage/LICENTE.txt"
-Copy-Item LICENSE "$stage/LICENSE.txt"
+Copy-Docs $stage
 Compress-Archive -Path $stage -DestinationPath "dist/release/$name.zip" -Force
 Write-Host "Gata: dist/release/$name.zip"

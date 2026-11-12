@@ -13,7 +13,6 @@ mkdir -p "$stage/exemple" "$OUT"
 install -m 755 target/release/cangurul "$stage/cangurul"
 cp examples/*.cng "$stage/exemple/"
 cp README.md "$stage/"
-{ cat assets/license-header.txt; cat assets/fonts/LICENSE.txt; } > "$stage/LICENTE.txt"
-cp LICENSE "$stage/LICENSE.txt"
+copy_docs "$stage" txt
 tar -C "$ROOT/dist/stage" -czf "$OUT/$name.tar.gz" "$name"
 echo "Gata: $OUT/$name.tar.gz"

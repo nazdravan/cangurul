@@ -79,11 +79,14 @@ cp "$CACHE"/mesa/x86/*.dll "$DIST/soft-gl/"
 cp examples/*.cng "$DIST/Exemple/"
 # Notepad-ul din Windows 7 recunoaște UTF-8 doar cu BOM și vrea CRLF.
 { printf '\xEF\xBB\xBF'; sed 's/$/\r/' "$HERE/CITESTE.txt"; } > "$DIST/CITESTE.txt"
-{
-    cat assets/license-header.txt assets/fonts/LICENSE.txt
-    echo "soft-gl: Mesa $MESA_VERSION (https://mesa3d.org), licență MIT, build mesa-dist-win (https://github.com/pal1000/mesa-dist-win)."
-} | sed 's/$/\r/' > "$DIST/LICENTE.txt"
-sed 's/$/\r/' LICENSE > "$DIST/LICENSE.txt"
+copy_docs "$DIST" txt
+mkdir -p "$DIST/licenses"
+cp -R licenses/mesa "$DIST/licenses/"
+grep -qF "Mesa 3D $MESA_VERSION " "$DIST/licenses/mesa/README.txt" ||
+    { echo "licenses/mesa/README.txt nu e pentru Mesa $MESA_VERSION: actualizează-l" >&2; exit 1; }
+# Notepad-ul din Windows 7 vrea CRLF și recunoaște UTF-8 doar cu BOM (THIRD-PARTY.txt are diacritice).
+find "$DIST" -name '*.txt' ! -name CITESTE.txt -exec sed -i 's/$/\r/' {} +
+sed -i '1s/^/\xEF\xBB\xBF/' "$DIST/THIRD-PARTY.txt"
 mkdir -p "$OUT"
 (cd "$DIST/.." && 7z a -tzip -mx9 "$OUT/$NAME.zip" "$NAME" >/dev/null)
 
