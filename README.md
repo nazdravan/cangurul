@@ -275,4 +275,8 @@ se salvează și capturi de ecran (cele din `docs/assets/` sunt făcute așa).
 
 Cangurul 3 este software liber, distribuit sub licența
 [GNU General Public License v3](LICENSE) sau, la alegere, orice versiune
-ulterioară (`GPL-3.0-or-later`).
+ulterioară (`GPL-3.0-or-later`). Copyright © 2024 Nicolae Postica.
+
+Fonturile incluse (Noto Sans, Fira Code și fonturile egui) și crate-urile Rust au licențele lor,
+enumerate în [NOTICE](NOTICE). Fiecare pachet conține `NOTICE`, licențele fonturilor și
+`THIRD-PARTY.txt`, cu textul complet al licenței fiecărui crate.

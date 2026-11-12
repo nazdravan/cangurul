@@ -280,4 +280,8 @@ interface: they press the real buttons, without a window. With
 
 Cangurul 3 is free software, distributed under the
 [GNU General Public License v3](LICENSE) or, at your option, any later version
-(`GPL-3.0-or-later`).
+(`GPL-3.0-or-later`). Copyright © 2024 Nicolae Postica.
+
+The bundled fonts (Noto Sans, Fira Code and egui's fonts) and the Rust crates have their own
+licences, listed in [NOTICE](NOTICE). Every package carries `NOTICE`, the font licences and
+`THIRD-PARTY.txt` with the full licence text of each crate.
