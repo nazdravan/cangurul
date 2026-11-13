@@ -5,7 +5,7 @@
 The notable changes in each version. Versions follow
 [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [3.0.7] — 2026-11-14
 
 ### Added
 
@@ -120,6 +120,10 @@ The first version rewritten in Rust, based on the “Cangurul” program
   diacritics.
 - Packages for Windows (including Windows 7), Linux and macOS.
 
+[3.0.7]: https://github.com/nazdravan/cangurul/compare/v3.0.6...v3.0.7
+[3.0.6]: https://github.com/nazdravan/cangurul/compare/v3.0.5...v3.0.6
+[3.0.5]: https://github.com/nazdravan/cangurul/compare/v3.0.4...v3.0.5
+[3.0.4]: https://github.com/nazdravan/cangurul/compare/v3.0.3...v3.0.4
 [3.0.3]: https://github.com/nazdravan/cangurul/compare/v3.0.2...v3.0.3
 [3.0.2]: https://github.com/nazdravan/cangurul/compare/v3.0.1...v3.0.2
 [3.0.1]: https://github.com/nazdravan/cangurul/compare/v3.0.0...v3.0.1
