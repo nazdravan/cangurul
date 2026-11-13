@@ -10,6 +10,8 @@ accepted = [
     "BSD-3-Clause",
     "BSL-1.0",
     "ISC",
+    # webpki-roots (rădăcinile TLS ale app-update): permisivă, compatibilă cu GPL-3.0-or-later.
+    "CDLA-Permissive-2.0",
     "Unicode-3.0",
     "Zlib",
     "OFL-1.1",
