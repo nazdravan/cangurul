@@ -1249,10 +1249,17 @@ impl CangurApp {
         ui.separator();
         ui.label(RichText::new(format!("{} {}", CANGURUL.display_name, CANGURUL.version)).weak());
         let check = app_update::texts(self.s.lang.update_lang()).check_button;
-        if ui
-            .add_enabled(!self.updater.is_busy(), egui::Button::new(check))
-            .clicked()
-        {
+        // Portocaliu plin, ca butonul „Execută”.
+        let accent = Pal::new(ui.visuals().dark_mode).accent;
+        let b = egui::Button::new(
+            RichText::new(format!("🔄  {check}"))
+                .color(Color32::WHITE)
+                .strong(),
+        )
+        .fill(accent);
+        // Spațiu liber înaintea iconului.
+        ui.spacing_mut().button_padding.x = 10.0;
+        if ui.add_enabled(!self.updater.is_busy(), b).clicked() {
             self.updater.check(ui.ctx());
             ui.close();
         }
@@ -2524,8 +2531,8 @@ mod tests {
         #[test]
         fn settings_has_update_button() {
             for (lang, label, menu) in [
-                (Lang::Ro, "Caută actualizări", "⚙  Setări"),
-                (Lang::En, "Check for updates", "⚙  Settings"),
+                (Lang::Ro, "🔄  Caută actualizări", "⚙  Setări"),
+                (Lang::En, "🔄  Check for updates", "⚙  Settings"),
             ] {
                 let mut h = harness();
                 h.state_mut().s.lang = lang;
