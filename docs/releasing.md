@@ -111,6 +111,27 @@ Toate scripturile din `packaging/` pot fi rulate și local (cel pentru macOS
 doar pe un Mac). Rezultatul ajunge în
 `dist/release/`.
 
+## Licențele din pachete
+
+Fiecare pachet conține `LICENSE`, `NOTICE`, `THIRD-PARTY.txt` și licențele fonturilor
+(`OFL-*.txt`); pachetul pentru Windows 7 are în plus `licenses/mesa/`. Scripturile le copiază
+doar prin `copy_docs` (`packaging/env.sh`; în `package.ps1`, `Copy-Docs`).
+
+- `THIRD-PARTY.txt` e generat, nu e în git: `packaging/licente.sh` (cere
+  `cargo install cargo-about --locked --features cli --version <CARGO_ABOUT_VERSION din env.sh>`)
+  îl scrie în `dist/` cu licența fiecărui crate și a fonturilor egui. În CI îl face jobul
+  `licente`, la fiecare rulare, iar jobul pică dacă un crate are o licență care nu e în
+  `about.toml`. O licență nouă se adaugă acolo doar dacă e compatibilă cu GPL-3.0-or-later.
+- După o actualizare a egui, sumele de control din `[epaint_default_fonts.clarify]`
+  (`about.toml`) nu se mai potrivesc și `packaging/licente.sh` se oprește: se verifică fișierele
+  `fonts/*.txt` din crate și se actualizează sumele (`shasum -a 256`).
+- Un font nou în `assets/fonts/` sau `site/assets/` cere `OFL-<Familie>.txt` lângă el, cu notița
+  de copyright a fontului pe prima linie, și o intrare în `NOTICE`: altfel pică
+  `cargo test` (`tests/licente.rs`).
+- La o versiune nouă de Mesa (`MESA_VERSION`), se actualizează `licenses/mesa/` din
+  `licenses/` a Mesa la tag-ul nou, `licenses/mesa/README.txt` și `NOTICE` (testul verifică
+  versiunea).
+
 ## De știut
 
 - **Fișierele nu sunt semnate digital.** La prima pornire (și la instalarea

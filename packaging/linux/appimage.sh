@@ -28,8 +28,7 @@ cp assets/logo.png "$appdir/usr/share/icons/hicolor/256x256/apps/cangurul.png"
 mkdir -p "$appdir/usr/share/mime/packages"
 cp packaging/linux/cangurul-mime.xml "$appdir/usr/share/mime/packages/cangurul.xml"
 cp README.md "$appdir/usr/share/doc/cangurul/"
-cp LICENSE "$appdir/usr/share/doc/cangurul/LICENSE.txt"
-{ cat assets/license-header.txt; cat assets/fonts/LICENSE.txt; } >"$appdir/usr/share/doc/cangurul/LICENTE.txt"
+copy_docs "$appdir/usr/share/doc/cangurul" txt
 # appimagetool cere fișierul .desktop și iconița și în rădăcina AppDir.
 ln -s usr/share/applications/cangurul.desktop "$appdir/cangurul.desktop"
 ln -s usr/share/icons/hicolor/256x256/apps/cangurul.png "$appdir/cangurul.png"

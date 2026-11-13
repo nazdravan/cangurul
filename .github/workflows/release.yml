@@ -107,16 +107,47 @@ jobs:
           key: test
       - run: cargo test --locked
 
+  licente:
+    timeout-minutes: 20
+    name: licențe
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8 # v1
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
+        with:
+          key: licente
+      # La fiecare rulare: un crate cu o licență neacceptată în about.toml oprește build-ul.
+      - name: cargo-about
+        run: |
+          . packaging/env.sh
+          if [ "$(cargo about --version 2>/dev/null)" != "cargo-about $CARGO_ABOUT_VERSION" ]; then
+            cargo install cargo-about --locked --features cli --version "$CARGO_ABOUT_VERSION"
+          fi
+      - run: packaging/licente.sh
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: third-party
+          path: dist/THIRD-PARTY.txt
+          if-no-files-found: error
+
   linux:
     timeout-minutes: 45
     name: Linux x86_64
-    needs: version
+    needs: [version, licente]
     if: needs.version.outputs.build == 'true'
     runs-on: ubuntu-22.04
     env:
       VERSION: ${{ needs.version.outputs.version }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # Licențele crate-urilor, generate o singură dată de jobul licente; copy_docs le cere.
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: third-party
+          path: dist
       - name: Dependențe de sistem
         # Uneori serverul de pachete Ubuntu nu răspunde: jobul pică după 10 minute,
         # nu după limita lui întreagă.
@@ -146,7 +177,7 @@ jobs:
   windows:
     timeout-minutes: 60
     name: Windows 10/11 ${{ matrix.arch }}
-    needs: version
+    needs: [version, licente]
     if: needs.version.outputs.build == 'true'
     runs-on: windows-latest
     strategy:
@@ -161,6 +192,11 @@ jobs:
       VERSION: ${{ needs.version.outputs.version }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # Licențele crate-urilor, generate o singură dată de jobul licente; copy_docs le cere.
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: third-party
+          path: dist
       - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8 # v1
         with:
           toolchain: stable
@@ -192,13 +228,18 @@ jobs:
   macos:
     timeout-minutes: 60
     name: macOS universal
-    needs: version
+    needs: [version, licente]
     if: needs.version.outputs.build == 'true'
     runs-on: macos-latest
     env:
       VERSION: ${{ needs.version.outputs.version }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # Licențele crate-urilor, generate o singură dată de jobul licente; copy_docs le cere.
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: third-party
+          path: dist
       - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8 # v1
         with:
           toolchain: stable
@@ -219,7 +260,7 @@ jobs:
   windows7:
     timeout-minutes: 90
     name: Windows 7+ x86
-    needs: version
+    needs: [version, licente]
     if: needs.version.outputs.build == 'true'
     runs-on: ubuntu-latest
     # Același mediu în care build-ul a fost testat local: Arch cu mingw-w64-gcc.
@@ -230,6 +271,11 @@ jobs:
       - name: Dependențe de sistem
         run: pacman -Syu --noconfirm --needed gcc mingw-w64-gcc p7zip zstd rustup git curl
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # Licențele crate-urilor, generate o singură dată de jobul licente; copy_docs le cere.
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: third-party
+          path: dist
       - name: Aplică versiunea de test
         if: inputs.version != ''
         run: |
@@ -249,7 +295,7 @@ jobs:
     if: >-
       github.event_name == 'push' && needs.version.outputs.build == 'true' &&
       !cancelled() && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
-    needs: [version, test, linux, macos, windows, windows7]
+    needs: [version, test, licente, linux, macos, windows, windows7]
     runs-on: ubuntu-latest
     permissions:
       contents: write

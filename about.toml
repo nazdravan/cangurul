@@ -1,0 +1,61 @@
+# Licențele crate-urilor incluse în Cangurul: `packaging/licente.sh` generează din ele
+# dist/THIRD-PARTY.txt, care intră în fiecare pachet. Un crate cu o licență care nu e aici
+# oprește generarea (--fail): adaug-o aici doar dacă e compatibilă cu GPL-3.0-or-later.
+# Toate sunt compatibile cu GPL-3.0-or-later. Ordinea contează: la un crate cu licență dublă
+# (MIT OR Apache-2.0) se alege prima din listă; MIT păstrează linia de copyright a autorului.
+accepted = [
+    "MIT",
+    "Apache-2.0",
+    "GPL-3.0-or-later",
+    "BSD-3-Clause",
+    "BSL-1.0",
+    "ISC",
+    # webpki-roots (rădăcinile TLS ale app-update): permisivă, compatibilă cu GPL-3.0-or-later.
+    "CDLA-Permissive-2.0",
+    "Unicode-3.0",
+    "Zlib",
+    "OFL-1.1",
+    "Ubuntu-font-1.0",
+    "Bitstream-Vera",
+]
+# În pachete intră doar dependențele normale: cele de test și de build nu sunt în binar.
+ignore-dev-dependencies = true
+ignore-build-dependencies = true
+# Țintele release-urilor (release.yml); Windows 7 se construiește pentru i686-win7-windows-gnu,
+# pe care cargo-about nu o cunoaște: i686-pc-windows-gnu are aceleași dependențe.
+targets = [
+    "x86_64-unknown-linux-gnu",
+    "x86_64-pc-windows-msvc",
+    "i686-pc-windows-msvc",
+    "i686-pc-windows-gnu",
+    "x86_64-apple-darwin",
+    "aarch64-apple-darwin",
+]
+
+# Fonturile egui (default_fonts, monochrome_emoji_fonts) sunt în binar. Crate-ul nu are fișiere
+# LICENSE, doar fonts/*.txt, pe care cargo-about nu le găsește singur: fără asta ar pune textele
+# generice MIT/OFL, fără Hack (Bitstream Vera) și fără emoji-icon-font. La o versiune nouă de
+# egui sumele de control nu se mai potrivesc și generarea se oprește: verifică fișierele și
+# actualizează sumele (shasum -a 256).
+[epaint_default_fonts.clarify]
+license = "(MIT OR Apache-2.0) AND OFL-1.1 AND Ubuntu-font-1.0 AND MIT AND Bitstream-Vera"
+
+[[epaint_default_fonts.clarify.files]]
+path = "fonts/UFL.txt"
+license = "Ubuntu-font-1.0"
+checksum = "2f0015108d68627bd788d313f529c21ff4da2c2c42a5e1f3883acc83480f9002"
+
+[[epaint_default_fonts.clarify.files]]
+path = "fonts/OFL.txt"
+license = "OFL-1.1"
+checksum = "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+
+[[epaint_default_fonts.clarify.files]]
+path = "fonts/Hack-Regular.txt"
+license = "Bitstream-Vera"
+checksum = "47c0cccbeec7e8614548cc485588b28149e7874188df5f41b36efebcee285c87"
+
+[[epaint_default_fonts.clarify.files]]
+path = "fonts/emoji-icon-font-mit-license.txt"
+license = "MIT"
+checksum = "b9d2c1d909aa149996fd4c91dcb92b2362a04431640c1d200959da94caf8cde1"

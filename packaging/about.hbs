@@ -1,0 +1,23 @@
+Cangurul - licențele componentelor terțe / third-party licences
+=====================================================================
+
+Cangurul e construită din crate-urile Rust de mai jos. Fiecare licență e dată o singură dată,
+cu toate crate-urile care o folosesc.
+Cangurul is built from the Rust crates below. Each licence is given once, with every crate under it.
+
+{{#each overview}}
+- {{{name}}} ({{id}}): {{count}} crate-uri
+{{/each}}
+
+{{#each licenses}}
+--------------------------------------------------------------------------------
+{{{name}}} ({{id}})
+
+Folosită de / used by:
+{{#each used_by}}
+  - {{crate.name}} {{crate.version}}{{#if crate.repository}} <{{{crate.repository}}}>{{/if}}
+{{/each}}
+
+{{{text}}}
+
+{{/each}}

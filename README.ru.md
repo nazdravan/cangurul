@@ -280,4 +280,8 @@ cargo test
 
 Cangurul 3 — свободная программа, распространяемая по лицензии
 [GNU General Public License v3](LICENSE) или, по вашему выбору, любой более
-поздней версии (`GPL-3.0-or-later`).
+поздней версии (`GPL-3.0-or-later`). Copyright © 2024 Nicolae Postica.
+
+У встроенных шрифтов (Noto Sans, Fira Code и шрифты egui) и у Rust-крейтов свои лицензии,
+перечисленные в [NOTICE](NOTICE). В каждом пакете есть `NOTICE`, лицензии шрифтов и
+`THIRD-PARTY.txt` с полным текстом лицензии каждого крейта.

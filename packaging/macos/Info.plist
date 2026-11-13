@@ -33,6 +33,6 @@
 	<key>NSHighResolutionCapable</key>
 	<true/>
 	<key>NSHumanReadableCopyright</key>
-	<string>GPL-3.0-or-later</string>
+	<string>Copyright © 2024 Nicolae Postica. GPL-3.0-or-later.</string>
 </dict>
 </plist>
