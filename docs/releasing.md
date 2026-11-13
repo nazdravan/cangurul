@@ -154,3 +154,10 @@ doar prin `copy_docs` (`packaging/env.sh`; în `package.ps1`, `Copy-Docs`).
   după un build de test reușit.
 - Acțiunile GitHub sunt fixate pe SHA. Se actualizează manual, împreună cu
   comentariul cu versiunea de lângă SHA.
+- **Actualizarea din program** (butonul din Setări, biblioteca `app-update`)
+  se bazează pe numele fișierelor din tabelul de mai sus și pe
+  `SHA256SUMS.txt` (linii `<sumă>  <nume>`) din același release: fără ele nu
+  poate alege fișierul și nu poate verifica descărcarea. Numele nu se
+  redenumesc, iar tagul rămâne `v<versiune>`. Zip-urile portabile păstrează
+  `LICENSE.txt` lângă `Cangurul.exe`: după el recunoaște programul un dosar
+  portabil, iar un exe aflat singur primește doar linkul.

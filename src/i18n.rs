@@ -15,6 +15,15 @@ pub enum Lang {
 impl Lang {
     pub const ALL: [Lang; 3] = [Lang::Ro, Lang::Ru, Lang::En];
 
+    /// Limba ferestrei de actualizare (biblioteca `app-update`).
+    pub fn update_lang(self) -> app_update::Lang {
+        match self {
+            Lang::Ro => app_update::Lang::Ro,
+            Lang::Ru => app_update::Lang::Ru,
+            Lang::En => app_update::Lang::En,
+        }
+    }
+
     pub fn name(self) -> &'static str {
         match self {
             Lang::Ro => "Română",

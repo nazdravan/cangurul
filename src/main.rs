@@ -12,6 +12,13 @@ mod world;
 use std::path::PathBuf;
 
 fn main() -> eframe::Result {
+    // `--check-update` arată ce găsește o verificare, fără fereastră.
+    if let Some(code) = app_update::run_cli(&app::CANGURUL) {
+        std::process::exit(code);
+    }
+    // Șterge resturile unei actualizări anterioare.
+    app_update::cleanup(&app::CANGURUL);
+
     #[cfg(windows)]
     let software = software_gl::enable_if_requested();
 
@@ -31,7 +38,11 @@ fn main() -> eframe::Result {
             // Ecranele calculatoarelor vechi sunt mici (1024×768, 1366×768).
             .with_maximized(true)
             .with_icon(egui::IconData {
-                rgba: icon.pixels.iter().flat_map(|c| c.to_srgba_unmultiplied()).collect(),
+                rgba: icon
+                    .pixels
+                    .iter()
+                    .flat_map(|c| c.to_srgba_unmultiplied())
+                    .collect(),
                 width: icon.size[0] as u32,
                 height: icon.size[1] as u32,
             }),
