@@ -51,8 +51,10 @@ fn copyright(data: &[u8]) -> Option<String> {
         let (len, off) = (u16_at(rec + 8)? as usize, u16_at(rec + 10)? as usize);
         let raw = data.get(strings + off..strings + off + len)?;
         let units: Vec<u16> = raw
-            .chunks_exact(2)
-            .map(|c| u16::from_be_bytes([c[0], c[1]]))
+            .as_chunks::<2>()
+            .0
+            .iter()
+            .map(|c| u16::from_be_bytes(*c))
             .collect();
         String::from_utf16(&units).ok()
     })
