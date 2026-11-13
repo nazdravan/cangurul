@@ -5,6 +5,14 @@
 Modificările importante din fiecare versiune. Numerotarea urmează
 [Semantic Versioning](https://semver.org/lang/ro/).
 
+## [Nelansat]
+
+### Adăugat
+
+- În **Setări**: butonul **Caută actualizări** găsește versiunea nouă și o
+  instalează (`.msi`, `.zip` portabil, `.deb`, AppImage, `.dmg`); pentru
+  `.tar.gz` deschide pagina versiunii. Nu verifică nimic singur, doar la apăsare.
+
 ## [3.0.6] — 2026-10-24
 
 ### Adăugat

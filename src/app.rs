@@ -16,6 +16,18 @@ use crate::lang::{self, Action, CompileError, TokenClass};
 use crate::vm::{RuntimeError, Tick, Vm};
 use crate::world::{Dir, Move, World};
 
+/// Datele programului pentru actualizarea din GitHub Releases (biblioteca `app-update`).
+pub const CANGURUL: app_update::AppInfo = app_update::AppInfo {
+    name: "cangurul",
+    display_name: "Cangurul",
+    repo: "nazdravan/cangurul",
+    version: env!("CARGO_PKG_VERSION"),
+    windows_exe: "Cangurul.exe",
+    msi_registry_key: r"Software\nazdravan\Cangurul",
+    deb_package: "cangurul",
+    mac_bundle: "Cangurul.app",
+};
+
 pub const EXAMPLES: &[(&str, &str)] = &[
     ("Cangur", include_str!("../examples/Cangur.cng")),
     ("Litera L", include_str!("../examples/Litera_L.cng")),
@@ -110,6 +122,7 @@ enum Pending {
     Open,
     Example(usize),
     Quit,
+    Restart,
 }
 
 /// O imagine în trei mărimi (1, 1/2, 1/4). Filtrarea liniară arată bine doar până la
@@ -307,6 +320,9 @@ pub struct CangurApp {
     /// `None` până la primul click.
     cursor: Option<Range<usize>>,
     allow_close: bool,
+    updater: app_update::Updater,
+    #[cfg(test)]
+    restarted_for_test: bool,
     title: String,
     analysis: lang::Analysis,
     /// Textul pentru care e valabilă `analysis` (`None` = neanalizat).
@@ -418,6 +434,9 @@ impl CangurApp {
             show_help: false,
             cursor: None,
             allow_close: false,
+            updater: app_update::Updater::new(CANGURUL),
+            #[cfg(test)]
+            restarted_for_test: false,
             title: String::new(),
             analysis: lang::Analysis::default(),
             analyzed: None,
@@ -745,6 +764,24 @@ impl CangurApp {
             Pending::Quit => {
                 self.allow_close = true;
                 ctx.send_viewport_cmd(ViewportCommand::Close);
+            }
+            Pending::Restart => {
+                #[cfg(test)]
+                {
+                    self.restarted_for_test = true;
+                }
+                #[cfg(not(test))]
+                match self.updater.restart() {
+                    Ok(()) => {
+                        self.allow_close = true;
+                        ctx.send_viewport_cmd(ViewportCommand::Close);
+                    }
+                    Err(e) => {
+                        let texts = app_update::texts(self.s.lang.update_lang());
+                        let msg = texts.error(&e).unwrap_or_else(|| e.to_string());
+                        self.status = Status::File(msg);
+                    }
+                }
             }
         }
     }
@@ -1209,6 +1246,16 @@ impl CangurApp {
         ui.checkbox(&mut self.s.show_jumps, t.show_jumps);
         ui.separator();
         ui.checkbox(&mut self.s.live_check, t.live_check);
+        ui.separator();
+        ui.label(RichText::new(format!("{} {}", CANGURUL.display_name, CANGURUL.version)).weak());
+        let check = app_update::texts(self.s.lang.update_lang()).check_button;
+        if ui
+            .add_enabled(!self.updater.is_busy(), egui::Button::new(check))
+            .clicked()
+        {
+            self.updater.check(ui.ctx());
+            ui.close();
+        }
     }
 
     fn status_bar(&mut self, ui: &mut Ui) {
@@ -2186,6 +2233,10 @@ impl eframe::App for CangurApp {
 
         self.help_window(&ctx);
         self.unsaved_dialog(&ctx);
+        let lang = self.s.lang.update_lang();
+        if let Some(app_update::UpdaterEvent::RestartRequested) = self.updater.show(&ctx, lang) {
+            self.request(Pending::Restart, &ctx);
+        }
     }
 
     fn save(&mut self, storage: &mut dyn eframe::Storage) {
@@ -2468,6 +2519,41 @@ mod tests {
                 h.query_by_label("Arată grila").is_some(),
                 "setările s-au închis"
             );
+        }
+
+        #[test]
+        fn settings_has_update_button() {
+            for (lang, label, menu) in [
+                (Lang::Ro, "Caută actualizări", "⚙  Setări"),
+                (Lang::En, "Check for updates", "⚙  Settings"),
+            ] {
+                let mut h = harness();
+                h.state_mut().s.lang = lang;
+                h.run_steps(3);
+                h.get_by_label(menu).click();
+                h.run_steps(3);
+                h.get_by_label(label);
+            }
+        }
+
+        #[test]
+        fn restart_asks_about_unsaved() {
+            let mut h = harness();
+            h.run_steps(3);
+            h.state_mut().s.dirty = true;
+            h.state_mut()
+                .updater
+                .set_state_for_test(app_update::State::Ready {
+                    version: "9.9.9".into(),
+                });
+            h.run_steps(3);
+            h.get_by_label("Repornește").click();
+            h.run_steps(3);
+            assert!(matches!(h.state().pending, Some(Pending::Restart)));
+            h.get_by_label("Anulare").click();
+            h.run_steps(3);
+            assert!(h.state().pending.is_none());
+            assert!(!h.state().restarted_for_test);
         }
 
         #[test]

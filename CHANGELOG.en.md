@@ -5,6 +5,15 @@
 The notable changes in each version. Versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- In **Settings**: the **Check for updates** button finds the new version and
+  installs it (`.msi`, portable `.zip`, `.deb`, AppImage, `.dmg`); for
+  `.tar.gz` it opens the release page. Nothing is checked on its own, only
+  when the button is pressed.
+
 ## [3.0.6] — 2026-10-24
 
 ### Added
