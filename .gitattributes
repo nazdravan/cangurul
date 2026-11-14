@@ -1,0 +1,3 @@
+# Exemplele intră în program cu include_str!: pe disc rămân cu LF pe orice
+# sistem (și cu core.autocrlf=true pe Windows), ca în CI.
+*.cng text eol=lf
